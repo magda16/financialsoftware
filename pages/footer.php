@@ -1,0 +1,1 @@
+    <strong>Copyright &copy; 2020 <a href="http://www.ues.edu.sv/">Universidad de El Salvador</a>.</strong> Todos los Derechos Reservados.
