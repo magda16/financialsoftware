@@ -5,11 +5,18 @@
     include ("conexion.php");
         
     $codigo=$_POST["codigo"];
-   
-    $stmt= $pdo->prepare("SELECT * FROM producto WHERE codigo=:codigo");
-    $stmt->bindParam(":codigo",$codigo,PDO::PARAM_STR);
+
+    $stmt= $pdo->prepare("SELECT * FROM sucursal WHERE id_sucursal=1");
     $stmt->execute();
-    $result=$stmt->fetchAll(PDO::FETCH_ASSOC);  			     	
+    $result=$stmt->fetchAll(PDO::FETCH_ASSOC);
+    foreach($result as $lista_sucursal){ 
+      $iva_r=$lista_sucursal['iva'];
+    }
+   
+    $stmt1= $pdo->prepare("SELECT * FROM producto WHERE codigo=:codigo AND cantidad > 0");
+    $stmt1->bindParam(":codigo",$codigo,PDO::PARAM_STR);
+    $stmt1->execute();
+    $result=$stmt1->fetchAll(PDO::FETCH_ASSOC);  			     	
     foreach($result as $fila){
              
         $datos = array(
@@ -20,6 +27,7 @@
           4 => $fila["precio"],
           5 => $fila["descripcion"],
           6 => $fila["categoria"],
+          7 => $iva_r,
         );
       
     }			

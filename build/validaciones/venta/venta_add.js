@@ -105,7 +105,8 @@ $(document).ready(function(){
         $('#existencias').val(datos[4]);
         var precio = parseFloat(datos[5]);
         var ganancia = parseFloat((((datos[3]/100)*precio)).toFixed(2));
-        var precio_venta = parseFloat(ganancia + precio);
+        var iva = parseFloat((((datos[7]/100)*precio)).toFixed(2));
+        var precio_venta = parseFloat(ganancia + iva + precio);
         $('#precio_venta').val(precio_venta);
       })
       .fail(function(){
@@ -148,7 +149,8 @@ $(document).ready(function(){
         $('#existencias').val(datos[3]);
         var precio = parseFloat(datos[4]);
         var ganancia = parseFloat((((datos[2]/100)*precio)).toFixed(2));
-        var precio_venta = parseFloat(ganancia + precio);
+        var iva = parseFloat((((datos[7]/100)*precio)).toFixed(2));
+        var precio_venta = parseFloat(ganancia + iva + precio);
         $('#precio_venta').val(precio_venta);
       })
       .fail(function(){
