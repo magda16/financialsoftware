@@ -2,12 +2,29 @@ $(document).ready(function(){
     //Money Euro
     $('[data-mask]').inputmask()
 
-    //Date picker
-    $('#fecha_nacimiento').datepicker({
-      autoclose: true
-    })
-
-   // $('.select2').select2()
+    $('#preview').hover(
+      function() {
+          $(this).find('a').fadeIn();
+      }, function() {
+          $(this).find('a').fadeOut();
+    });
+  
+    $('#file-select').on('click', function(e) {
+      e.preventDefault();
+          
+      $('#file').click();
+    });
+  
+    $('input[type=file]').change(function() {
+      var file = (this.files[0].name).toString();
+      var reader = new FileReader();
+          
+      reader.onload = function (e) {
+        $('#preview img').attr('src', e.target.result);
+      }
+           
+      reader.readAsDataURL(this.files[0]);
+    });
 
     $.validator.addMethod("letrasOespacio", function(value, element) {
         return /^[ a-záéíóúüñ]*$/i.test(value);
@@ -53,15 +70,20 @@ $(document).ready(function(){
           required: true,
           minlength: 17
         },
-        giro: {
+        nrc: {
+          numero: true,
           required: true,
-          minlength: 3,
-          maxlength: 200
+          minlength: 8
         },
         iva: {
           num: true,
           required: true,
           minlength: 1,
+        },
+        giro: {
+          required: true,
+          minlength: 3,
+          maxlength: 200
         },
         direccion: {
           required: true,
@@ -77,8 +99,10 @@ $(document).ready(function(){
           numero: true,
           required: true,
           minlength: 9
-        }/*,
-        file:"required"*/
+        },
+        file: {
+          required: false,
+        }
       },
       messages: {
         nombre: {
@@ -94,14 +118,18 @@ $(document).ready(function(){
           required: "Por favor, ingrese NIT.",
           minlength: "Debe ingresar m&iacute;nimo 17 dígitos."
         },
-        giro: {
-          required: "Por favor, ingrese giro.",
-          maxlength: "Debe ingresar m&aacute;ximo 200 dígitos.",
-          minlength: "Debe ingresar m&iacute;nimo 3 dígitos."
+        nrc: {
+          required: "Por favor, ingrese NRC.",
+          minlength: "Debe ingresar m&iacute;nimo 8 dígitos."
         },
         iva: {
           required: "Por favor, ingrese impuesto iva.",
           minlength: "Debe ingresar m&iacute;nimo 1 dígitos."
+        },
+        giro: {
+          required: "Por favor, ingrese giro.",
+          maxlength: "Debe ingresar m&aacute;ximo 200 dígitos.",
+          minlength: "Debe ingresar m&iacute;nimo 3 dígitos."
         },
         direccion: {
           required: "Por favor, ingrese direcci&oacute;n.",
@@ -115,9 +143,10 @@ $(document).ready(function(){
         telefono: {
           required: "Por favor, ingrese n&uacute;mero tel&eacute;fonico",
           minlength: "Debe ingresar m&iacute;nimo 9 dígitos."
+        },
+        file: {
+          required: "Por favor, seleccione logo."
         }
-        /*,
-        file: "Por favor, seleccione una foto."*/
       }
     });
 });
@@ -125,10 +154,17 @@ $(document).ready(function(){
 $("#btneditar").click(function(){
     if($("#form_sucursal").valid()){
         $("#bandera").val("edit");
+       
+        var formData = new FormData($("#form_sucursal")[0]);
         $.ajax({
           type: 'POST',
           url: '../../build/controladores/crud_sucursal.php',
-          data: $("#form_sucursal").serialize()
+          //datos del formulario
+          data: formData,
+          //necesario para subir archivos via ajax
+          cache: false,
+          contentType: false,
+          processData: false,
         })
         .done(function(resultado_ajax){
            // alert(resultado_ajax);
@@ -136,7 +172,7 @@ $("#btneditar").click(function(){
             $("#btneditar").attr("disabled",true);
             PNotify.success({
               title: 'Éxito',
-              text: 'Registro almacenado.',
+              text: 'Registro actualizado.',
               styling: 'bootstrap3',
               icons: 'bootstrap3',
               hide: false,

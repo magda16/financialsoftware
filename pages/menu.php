@@ -168,8 +168,8 @@
         </li>
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-cart-plus"></i>
-            <span>Venta</span>
+            <i class="fa fa-cart-arrow-down"></i>
+            <span>Venta Contado</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>

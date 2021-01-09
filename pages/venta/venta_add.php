@@ -45,7 +45,7 @@
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1><i class="fa fa-cart-plus"></i>
+      <h1><i class="fa fa-cart-arrow-down"></i>
         Venta
         <small>Registro</small>
       </h1>
@@ -59,8 +59,9 @@
     <!-- Main content -->
     <section class="content">
       <div class="row">
-      <form id="form_venta" name="form_venta" action="" method="POST">
-        <input type="hidden" name="bandera" id="bandera">
+      
+
+      <form id="form_agregar_venta" name="form_agregar_venta" action="" method="POST">
         <input type="hidden" name="id_producto" id="id_producto">
 
         <!-- left column -->
@@ -71,26 +72,28 @@
               <h3 class="box-title">Carrito de Venta</h3>
             </div>
             <div class="box-body">
-
+              
+             
+              <span class="label label-info fa fa-search">&nbsp;&nbsp;Buscar por Nombre: &nbsp;</span>
               <div class="row">
-               
                 <div class="col-xs-6 form-group">
                   <label class="control-label" for="categoria"><i class="ic"></i> Categoría</label>
                   <select class="form-control" id="categoria" name="categoria">
                   </select>
                   <span class="help-block"></span>
-                </div>    
+                </div> 
+
+                <div class="col-xs-6 form-group">
+                  <label class="control-label" for="s_producto"><i class="ic"></i> Producto</label>
+                  <select class="form-control" id="s_producto" name="s_producto">
+                  </select>
+                  <span class="help-block"></span>
+                </div>     
 
               </div>
 
+              <span class="label label-info fa fa-search">&nbsp;&nbsp;Buscar por Código: &nbsp;</span>
               <div class="row">
-
-                <div class="col-xs-6 form-group">
-                  <label class="control-label" for="producto"><i class="ic"></i> Producto</label>
-                  <select class="form-control" id="producto" name="producto">
-                  </select>
-                  <span class="help-block"></span>
-                </div>  
 
                 <div class="col-xs-6 form-group">
                   <label class="control-label" for="codigo"><i class="ic"></i> Código</label>
@@ -101,24 +104,11 @@
                   <span class="help-block"></span>
                 </div>   
 
-              </div>
-
-              <div class="row">
-
                 <div class="col-xs-6 form-group">
-                  <label class="control-label" for="precio_venta"><i class="ic"></i> Precio de venta Unitario</label>
+                  <label class="control-label" for="existencias"><i class="ic"></i> Existencias</label>
                   <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-usd"></i></span>
-                    <input type="text" id="precio_venta" name="precio_venta" class="form-control" placeholder="Ingrese Precio de venta">
-                  </div>
-                  <span class="help-block"></span>
-                </div>
-
-                <div class="col-xs-6 form-group">
-                  <label class="control-label" for="subtotal"><i class="ic"></i> Subtotal</label>
-                  <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-usd"></i></span>
-                    <input type="text" id="subtotal" name="subtotal" class="form-control" readonly>
+                    <span class="input-group-addon"><i class="fa fa-quora"></i></span>
+                    <input type="text" id="existencias" name="existencias" class="form-control" readonly>
                   </div>
                   <span class="help-block"></span>
                 </div>
@@ -134,13 +124,26 @@
                 <span class="help-block"></span>
               </div>
 
-              <div class="form-group">
-                <label class="control-label" for="proveedor"><i class="ic"></i> Proveedor</label>
-                <div class="input-group">
-                  <span class="input-group-addon"><i class="fa fa-building-o"></i></span>
-                  <input type="text" id="proveedor" name="proveedor" class="form-control" readonly>
+              <div class="row">
+
+                <div class="col-xs-6 form-group">
+                  <label class="control-label" for="precio_venta"><i class="ic"></i> Precio de Venta Unitario</label>
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-usd"></i></span>
+                    <input type="text" id="precio_venta" name="precio_venta" class="form-control" readonly>
+                  </div>
+                  <span class="help-block"></span>
                 </div>
-                <span class="help-block"></span>
+
+                <div class="col-xs-6 form-group">
+                  <label class="control-label" for="cantidad"><i class="ic"></i> Cantidad a Vender</label>
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-quora"></i></span>
+                    <input type="text" id="cantidad" name="cantidad" class="form-control" placeholder="Ingrese Cantidad">
+                  </div>
+                  <span class="help-block"></span>
+                </div>
+
               </div>
 
             </div>
@@ -156,29 +159,23 @@
 
         </div>
         <!--/.col (left) -->
+      </form>
+
+      <form id="form_venta" name="form_venta" action="../../report/venta/ticket.php" method="POST" target="_blank">
+        <input type="hidden" name="bandera" id="bandera">
+          
         <!-- right column -->
         <div class="col-md-6">
 
           <!-- general form elements disabled -->
           <div class="box box-success">
             <div class="box-header with-border">
-              <h3 class="box-title">Datos Generales</h3>
+              <h3 class="box-title">Datos Comprobante</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
 
-              <div class="form-group">
-                <label class="control-label" for="tipo_comprobante"><i class="ic"></i> Tipo de Comprobante</label>
-                <select class="form-control" id="tipo_comprobante" name="tipo_comprobante">
-                  <option selected="selected" value="">Seleccione Tipo de Comprobante...</option>
-                  <option value="Ticket">Ticket</option>
-                  <option value="Contado">Contado Consumidor Final</option>
-                  <option value="Contado">Contado Crédito Fiscal</option>
-                  <option value="Credito">Crédito Consumidor Final</option>
-                </select>
-                <span class="help-block"></span>
-              </div>
-                
+ <!--
               <div class="row">
 
                 <div class="col-xs-6 form-group">
@@ -188,7 +185,54 @@
                     <input type="text" id="fecha" name="fecha" class="form-control" placeholder="Ingrese Fecha" data-date-end-date = "0d">
                   </div>
                   <span class="help-block"></span>
+                </div>     
+
+              </div>
+-->
+              <div class="row">
+
+                <div class="col-xs-6 form-group">
+                  <label class="control-label" for="tipo_comprobante"><i class="ic"></i> Tipo de Comprobante</label>
+                  <select class="form-control" id="tipo_comprobante" name="tipo_comprobante">
+                    <option selected="selected" value="">Seleccione Tipo Comprobante...</option>
+                    <option value="Ticket">Ticket</option>
+                    <option value="Consumidor Final">Consumidor Final</option>
+                    <option value="Credito Fiscal">Crédito Fiscal</option>
+                  </select>
+                  <span class="help-block"></span>
                 </div>
+
+                <div class="col-xs-6 form-group">
+                  <label class="control-label" for="correlativo"><i class="ic"></i> No:</label>
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-usd"></i></span>
+                    <input type="text" id="correlativo" name="correlativo" class="form-control" readonly>
+                  </div>
+                  <span class="help-block"></span>
+                </div>
+
+              </div>
+
+              <div class="form-group">
+                <label class="control-label" for="cliente"><i class="ic"></i> Cliente</label>
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                  <input type="text" id="cliente" name="cliente" class="form-control" placeholder="Ingrese Cliente">
+                </div>
+                <span class="help-block"></span>
+              </div>
+
+              <div class="row">
+
+                <div class="col-xs-6 form-group">
+                  <label class="control-label" for="productos"><i class="ic"></i> Productos</label>
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-quora"></i></span>
+                    <input type="text" id="productos" name="productos" class="form-control" readonly>
+                  </div>
+                  <span class="help-block"></span>
+                </div>
+
 
                 <div class="col-xs-6 form-group">
                   <label class="control-label" for="total"><i class="ic"></i> Total</label>
@@ -199,7 +243,27 @@
                   <span class="help-block"></span>
                 </div>
 
-                
+              </div>
+
+              <div class="row">
+
+                <div class="col-xs-6 form-group">
+                  <label class="control-label" for="efectivo"><i class="ic"></i> Efectivo</label>
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-usd"></i></span>
+                    <input type="text" id="efectivo" name="efectivo" class="form-control" placeholder="Ingrese Efectivo">
+                  </div>
+                  <span class="help-block"></span>
+                </div>   
+
+                <div class="col-xs-6 form-group">
+                  <label class="control-label" for="cambio"><i class="ic"></i> Cambio</label>
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-usd"></i></span>
+                    <input type="text" id="cambio" name="cambio" class="form-control" readonly>
+                  </div>
+                  <span class="help-block"></span>
+                </div>
 
               </div>
             
@@ -231,10 +295,10 @@
             <table id="example1" class="table table-bordered table-striped">
               <thead>
                   <tr>
-                    <th>Producto</th>
                     <th>cantidad</th>
-                    <th>Precio</th>
-                    <th>Subtotal</th>
+                    <th>Detalle</th>
+                    <th>Precio por unidad</th>
+                    <th>Total</th>
                     <th>Acciones</th>
                   </tr>
               </thead>

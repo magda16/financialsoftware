@@ -6,7 +6,7 @@
         
     $codigo=$_POST["codigo"];
    
-    $stmt= $pdo->prepare("SELECT p.id_producto, p.nombre AS producto, pr.id_proveedor ,pr.nombre AS proveedor FROM producto AS p INNER JOIN proveedor AS pr ON (p.proveedor=pr.id_proveedor) WHERE codigo=:codigo");
+    $stmt= $pdo->prepare("SELECT * FROM producto WHERE codigo=:codigo");
     $stmt->bindParam(":codigo",$codigo,PDO::PARAM_STR);
     $stmt->execute();
     $result=$stmt->fetchAll(PDO::FETCH_ASSOC);  			     	
@@ -14,13 +14,17 @@
              
         $datos = array(
           0 => $fila["id_producto"],
-          1 => $fila["producto"],
-          2 => $fila["proveedor"],
+          1 => $fila["nombre"],
+          2 => $fila["margen_ganancia"],
+          3 => $fila["cantidad"],
+          4 => $fila["precio"],
+          5 => $fila["descripcion"],
+          6 => $fila["categoria"],
         );
       
     }			
 
     echo json_encode($datos);
         
-  }        
+    }        
 ?>

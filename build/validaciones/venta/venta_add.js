@@ -11,7 +11,7 @@ $(document).ready(function(){
         return /^[ 0-9]*$/i.test(value);
     }, "Ingrese sólo números");
 
-    $("#form_venta").validate({
+    $("#form_agregar_venta").validate({
       errorPlacement: function (error, element) {
             $(element).closest('.form-group').find('.help-block').html(error.html());
         },
@@ -25,6 +25,12 @@ $(document).ready(function(){
             $(element).closest('.form-group').find('.help-block').html('');
         },
       rules: {
+        categoria: {
+          required: true
+        },
+        s_producto: {
+          required: true
+        },
         codigo: {
           required: true,
           minlength: 6
@@ -33,13 +39,15 @@ $(document).ready(function(){
           numero: true,
           required: true,
           minlength: 1
-        },
-        precio_venta: {
-          required: true,
-          minlength: 1
         }
       },
       messages: {
+        categoria: {
+          required: "Por favor, seleccione categoría."
+        },
+        s_producto: {
+          required: "Por favor, seleccione producto."
+        },
         codigo: {
           required: "Por favor, ingrese código.",
           minlength: "Debe ingresar m&iacute;nimo 6 dígitos."
@@ -47,41 +55,16 @@ $(document).ready(function(){
         cantidad: {
           required: "Por favor, ingrese cantidad.",
           minlength: "Debe ingresar m&iacute;nimo 1 dígitos."
-        },
-        precio_venta: {
-          required: "Por favor, ingrese precio de venta.",
-          minlength: "Debe ingresar m&iacute;nimo 10 dígitos."
         }
       }
     });
 
-    $("#codigo").on('change', function() {
-      var codigo = $("#codigo").val();
-      
-      $.ajax({
-        type: 'POST',
-        url: '../../build/controladores/obtener_producto.php',
-        data: {'codigo': codigo}
-      })
-      .done(function(obtenerDatos){
-        var datos = eval(obtenerDatos);
-        $('#id_producto').val(datos[0]);
-        $('#producto').val(datos[1]);
-        $('#proveedor').val(datos[2]);
-      })
-      .fail(function(){
-        alert('Hubo un error al cargar el código')
-      })
-      
-    });
-
-
     $.ajax({
       type: 'POST',
-      url: '../../build/controladores/lista_categorias.php'
+      url: '../../build/controladores/lista_categoria_exis_pro.php'
     })
-    .done(function(lista_categorias){
-      $('#categoria').html(lista_categorias)
+    .done(function(lista_categoria_exis_pro){
+      $('#categoria').html(lista_categoria_exis_pro)
     })
     .fail(function(){
       alert('Error al cargar la Pagina Lista Categorías')
@@ -93,52 +76,113 @@ $(document).ready(function(){
   
       $.ajax({
         type: 'POST',
-        url: '../../build/controladores/lista_categoria_productos.php',
+        url: '../../build/controladores/lista_exis_pro.php',
         data: {'categoria': categoria}
       })
-      .done(function(lista_categoria_productos){
-        $('#producto').html(lista_categoria_productos)
+      .done(function(lista_exis_pro){
+        $('#s_producto').html(lista_exis_pro)
       })
       .fail(function(){
         alert('Error al cargar la Pagina Lista Productos')
       })
        
     });
+
+    $("#s_producto").on('change', function() {
+
+      var id_producto = $("#s_producto").val();
+      
+      $.ajax({
+        type: 'POST',
+        url: '../../build/controladores/obtener_exis_pro_nom.php',
+        data: {'id_producto': id_producto}
+      })
+      .done(function(obtenerDatos){
+        var datos = eval(obtenerDatos);
+        $('#id_producto').val(datos[0]);
+        $('#codigo').val(datos[1]);
+        $('#producto').val(datos[2]);
+        $('#existencias').val(datos[4]);
+        var precio = parseFloat(datos[5]);
+        var ganancia = parseFloat((((datos[3]/100)*precio)).toFixed(2));
+        var precio_venta = parseFloat(ganancia + precio);
+        $('#precio_venta').val(precio_venta);
+      })
+      .fail(function(){
+        alert('Hubo un error al cargar el Producto')
+      })
+      
+    });
+
+
+    $("#codigo").on('change', function() {
+
+      var codigo = $("#codigo").val();
+      
+      $.ajax({
+        type: 'POST',
+        url: '../../build/controladores/obtener_exis_pro_cod.php',
+        data: {'codigo': codigo}
+      })
+      .done(function(obtenerDatos){
+        var datos = eval(obtenerDatos)
+        $('#id_producto').val(datos[0]);
+        $('#categoria').val(datos[6]);
+        var categoria = $("#categoria").val();
   
+        $.ajax({
+          type: 'POST',
+          url: '../../build/controladores/lista_exis_pro.php',
+          data: {'categoria': categoria}
+        })
+        .done(function(lista_exis_pro){
+          $('#s_producto').html(lista_exis_pro)
+          var id_producto= $("#id_producto").val();
+          $("#s_producto option[value='"+ id_producto +"']").attr("selected",true);
+        })
+        .fail(function(){
+          alert('Error al cargar la Pagina Lista Productos')
+        })
 
-    $("#precio_venta").on('change', function() {
-      var cantidad = parseFloat($("#cantidad").val());
-      var precio_venta = parseFloat($("#precio_venta").val());
-
-      if(cantidad != "" && precio_venta != ""){
-        if(isNaN(cantidad)){ cantidad=0; }
-        if(isNaN(precio_venta)){ precio_venta=0; }
-        var subtotal = parseFloat((cantidad * precio_venta).toFixed(2));
-        $("#subtotal").val(subtotal);
-      }
+        $('#producto').val(datos[1]);
+        $('#existencias').val(datos[3]);
+        var precio = parseFloat(datos[4]);
+        var ganancia = parseFloat((((datos[2]/100)*precio)).toFixed(2));
+        var precio_venta = parseFloat(ganancia + precio);
+        $('#precio_venta').val(precio_venta);
+      })
+      .fail(function(){
+        alert('Hubo un error al cargar el Código')
+      })
       
     });
 
     $("#cantidad").on('change', function() {
-      var cantidad = parseFloat($("#cantidad").val());
-      var precio_venta = parseFloat($("#precio_venta").val());
-
-      if(cantidad != "" && precio_venta != ""){
-        if(isNaN(cantidad)){ cantidad=0; }
-        if(isNaN(precio_venta)){ precio_venta=0; }
-        var subtotal = parseFloat((cantidad * precio_venta).toFixed(2));
-        $("#subtotal").val(subtotal);
+      var existencias = parseInt($("#existencias").val());
+      var cantidad = parseInt($("#cantidad").val());
+      if(cantidad>existencias){
+        PNotify.notice({
+          title: 'Advertencia',
+          text: 'Cantidad NO puede ser mayor a Existencias.',
+          styling: 'bootstrap3',
+          icons: 'bootstrap3'
+        });
+        $("#cantidad").val("");  
       }
       
     });
 
     $("#btnagregar").click(function(){
-      if($("#form_venta").valid()){
+      if($("#form_agregar_venta").valid()){
         var id_producto = $("#id_producto").val();
         var producto = $("#producto").val();
         var cantidad = parseInt($("#cantidad").val());
         var precio_venta = parseFloat($("#precio_venta").val());
-        var subtotal = parseFloat($("#subtotal").val());
+        var subtotal = parseFloat((cantidad*precio_venta).toFixed(2));
+
+        var num_producto = parseInt($("#productos").val());
+        if(isNaN(num_producto)){ num_producto=0; }
+        var sumproductos = cantidad + num_producto;
 
         var total = parseFloat($("#total").val());
         if(isNaN(total)){ total=0; }
@@ -146,25 +190,27 @@ $(document).ready(function(){
     
         $("#filas").append("<tr id=tr"+ cont +" name=tr" + cont 
         +"><input type='hidden' id='id_product"+cont+"' name='id_product[]' value=" + id_producto
+        +"><input type='hidden' id='product"+cont+"' name='product[]' value=" + producto
         +"><input type='hidden' id='cantida"+cont+"' name='cantida[]' value=" + cantidad
-        +"><input type='hidden' id='precio_compr"+cont+"' name='precio_compr[]' value=" + precio_venta
-        +"><td>" + producto 
-        +"</td><td>" + cantidad 
+        +"><input type='hidden' id='precio_vent"+cont+"' name='precio_vent[]' value=" + precio_venta
+        +"><td>" + cantidad 
+        +"</td><td>" + producto
         +"</td><td> $ " + precio_venta 
         +"</td><td> $ " + subtotal + "</td><td><i class='btn btn-danger fa fa-trash-o' onclick=borrar('" + cont 
         + "')></i></td></tr>");
     
+        $("#productos").val(sumproductos);
         $("#total").val(sumtotal);
         cont=cont+1;
 
-        //$("#form_venta")[0].reset();
+        $("#form_agregar_venta")[0].reset();
         
-        $("#codigo").val("");
+       /* $("#codigo").val("");
         $("#producto").val("");
         $("#proveedor").val("");
         $("#cantidad").val("");
         $("#precio_venta").val("");
-        $("#subtotal").val("");
+        $("#subtotal").val("");*/
         $(".form-group").find(".ic").removeClass("fa fa-check");
         $(".form-group").removeClass("has-success");
         
@@ -181,11 +227,98 @@ $(document).ready(function(){
             
     });
 
+
+    $("#form_venta").validate({
+      errorPlacement: function (error, element) {
+            $(element).closest('.form-group').find('.help-block').html(error.html());
+        },
+        highlight: function (element) {
+            $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+            $(element).closest('.form-group').find('.ic').removeClass('fa fa-check').addClass('fa fa-times-circle-o');
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).closest('.form-group').removeClass('has-error').addClass('has-success');
+            $(element).closest('.form-group').find('.ic').removeClass('fa fa-times-circle-o').addClass('fa fa-check');
+            $(element).closest('.form-group').find('.help-block').html('');
+        },
+      rules: {
+        tipo_comprobante: {
+          required: true
+        },
+        cliente: {
+          required: false,
+          minlength: 6
+        },
+        efectivo: {
+          required: true,
+          minlength: 1
+        }
+      },
+      messages: {
+        tipo_comprobante: {
+          required: "Por favor, seleccione tipo de comprobante."
+        },
+        cliente: {
+          required: "Por favor, ingrese cliente.",
+          minlength: "Debe ingresar m&iacute;nimo 6 dígitos."
+        },
+        efectivo: {
+          required: "Por favor, ingrese efectivo.",
+          minlength: "Debe ingresar m&iacute;nimo 1 dígitos."
+        }
+      }
+    });
+
+    $("#tipo_comprobante").on('change', function() {
+
+      var tipo_comprobante = $("#tipo_comprobante").val();
+      
+      $.ajax({
+        type: 'POST',
+        url: '../../build/controladores/obtener_tc_correlativo.php',
+        data: {'tipo_comprobante': tipo_comprobante}
+      })
+      .done(function(obtenerDatos){
+        var datos = eval(obtenerDatos);
+        $('#correlativo').val(datos[0]);
+      })
+      .fail(function(){
+        alert('Hubo un error al cargar el Tipo Comprobante')
+      })
+      
+    });
+
+    $("#efectivo").on('change', function() {
+      var total = parseFloat($("#total").val());
+      var efectivo = parseFloat($("#efectivo").val());
+      if(total>efectivo){
+        PNotify.notice({
+          title: 'Advertencia',
+          text: 'Efectivo NO puede ser menor que el Total.',
+          styling: 'bootstrap3',
+          icons: 'bootstrap3'
+        });
+        $("#efectivo").val("");  
+      }else{
+        var total = parseFloat($("#total").val());
+        var efectivo = parseFloat($("#efectivo").val());
+        if(isNaN(total)){ total=0; }
+        var resta = parseFloat((efectivo - total).toFixed(2));
+        $("#cambio").val(resta);
+      }
+      
+    });
+
 });
 
 function borrar(id){
   var cantidad  = parseInt($("#cantida"+id).val());
-  var precio_venta = parseFloat($("#precio_compr"+id).val());
+  var precio_venta = parseFloat($("#precio_vent"+id).val());
+  var num_producto = parseInt($("#productos").val());
+
+  if(isNaN(num_producto)){ num_producto=0; }
+  var sumproductos = num_producto - cantidad;
+  $("#productos").val(sumproductos);
  
   var subtotal = parseFloat((cantidad * precio_venta).toFixed(2));
   var total = parseFloat($("#total").val());
@@ -197,8 +330,8 @@ function borrar(id){
 }
 
 
-$("#btnguardar").click(function(){
-    if($("#fecha").val() != ""){
+  $("#btnguardar").click(function(){
+    if($("#form_venta").valid()){
         $("#bandera").val("add");
         $.ajax({
           type: 'POST',
@@ -223,7 +356,10 @@ $("#btnguardar").click(function(){
                     primary: true,
                     click: function(notice) {
                       notice.close();
-                      location.href='../../pages/venta/venta_add.php';
+
+                     $("#form_venta").submit();
+                     location.href='../../pages/venta/venta_add.php';
+
                     }
                   }]
                 },

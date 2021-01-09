@@ -14,6 +14,7 @@ $nivel_usu=$_SESSION['nivel'];*/
     $nombre_r=$lista_sucursal['nombre'];
     $codigo_r=$lista_sucursal['codigo'];
     $nit_r=$lista_sucursal['nit'];
+    $nrc_r=$lista_sucursal['nrc'];
     $giro_r=$lista_sucursal['giro'];
     $iva_r=$lista_sucursal['iva'];
     $direccion_r=$lista_sucursal['direccion'];
@@ -58,6 +59,31 @@ $nivel_usu=$_SESSION['nivel'];*/
 
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+  <style>
+    #preview {
+      width: 45%;
+      margin: 0 auto;
+      margin-bottom: 10px;
+      position: relative;
+    }
+         
+    #preview a {
+      position: absolute;
+      bottom: 5px;
+      left: 5px;
+      right: 5px;
+      display: none;
+    }
+
+    input[type=file] {
+      position: absolute;
+      visibility: hidden;
+      width: 0;
+      z-index: -9999;
+    }      
+  </style>
+
 </head>
 <body class="hold-transition skin-blue-light sidebar-mini">
 <div class="wrapper">
@@ -88,6 +114,8 @@ $nivel_usu=$_SESSION['nivel'];*/
       <div class="row">
       <form id="form_sucursal" name="form_sucursal" action="" method="POST" enctype="multipart/form-data">
         <input type="hidden" name="bandera" id="bandera">
+        <input type="hidden" name="logo_r" id="logo_r" value="<?php echo $logo_r; ?>">
+
 
         <!-- left column -->
         <div class="col-md-6">
@@ -98,7 +126,20 @@ $nivel_usu=$_SESSION['nivel'];*/
             </div>
             <div class="box-body">
 
-              <input type="file" id="foto" name="foto" accept="image/*"/>
+              <!--inicia el div para capturar la imagen -->
+              <div class="form-group" align="center" >
+                <label for="control-label" for="foto">Logo:</label>
+                <div name="preview" id="preview" class="thumbnail">
+                  <a href="#" id="file-select" class="btn btn-primary"><span class="fa fa-camera">&nbsp;&nbsp;&nbsp;</span>Elegir archivo</a>
+                  <img src="<?php echo "../../".$logo_r; ?>"/>
+                </div>
+
+                <div id="file-submit" >
+                  <input id="file" name="file" type="file" accept="image/*" />
+                  <span class="help-block" id="error"></span>
+                </div> 
+              </div>
+              <!--finaliza el div para capturar la imagen -->
 
               <div class="form-group">
                 <label class="control-label" for="nombre"><i class="ic"></i> Nombre</label>
@@ -134,13 +175,13 @@ $nivel_usu=$_SESSION['nivel'];*/
               <div class="row">
 
                 <div class="col-xs-6 form-group">
-                  <label class="control-label" for="giro"><i class="ic"></i> Giro</label>
+                  <label class="control-label" for="nrc"><i class="ic"></i> NRC</label>
                   <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-bullseye"></i></span>
-                    <input type="text" id="giro" name="giro" class="form-control" placeholder="Ingrese Giro" value="<?php echo $giro_r; ?>">
+                    <span class="input-group-addon"><i class="fa fa-id-card-o"></i></span>
+                    <input type="text" id="nrc" name="nrc" class="form-control" placeholder="Ingrese NRC" data-inputmask='"mask": "999999-9"' data-mask value="<?php echo $nrc_r; ?>">
                   </div>
                   <span class="help-block"></span>
-                </div>
+                </div>      
 
                 <div class="col-xs-6 form-group">
                   <label class="control-label" for="iva"><i class="ic"></i> Impuesto Iva</label>
@@ -151,6 +192,15 @@ $nivel_usu=$_SESSION['nivel'];*/
                   <span class="help-block"></span>
                 </div>
 
+              </div>
+
+              <div class="form-group">
+                <label class="control-label" for="giro"><i class="ic"></i> Giro</label>
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-bullseye"></i></span>
+                  <input type="text" id="giro" name="giro" class="form-control" placeholder="Ingrese Giro" value="<?php echo $giro_r; ?>">
+                </div>
+                <span class="help-block"></span>
               </div>
 
             </div>

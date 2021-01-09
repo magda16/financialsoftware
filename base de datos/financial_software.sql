@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 06-01-2021 a las 23:20:29
+-- Tiempo de generación: 09-01-2021 a las 02:02:51
 -- Versión del servidor: 5.7.21
 -- Versión de PHP: 5.6.35
 
@@ -96,6 +96,14 @@ CREATE TABLE IF NOT EXISTS `compra` (
   `id_usuario` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `compra`
+--
+
+INSERT INTO `compra` (`id_compra`, `tipo_pago`, `monto`, `fecha`, `fecha_ingreso`, `estado`, `id_usuario`) VALUES
+(1, 'Contado', '7000.00', '2021-01-03', '2021-01-07 00:59:49', 'Cancelado', 1),
+(2, 'Contado', '8000.00', '2021-01-03', '2021-01-07 22:58:25', 'Cancelado', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -135,7 +143,15 @@ CREATE TABLE IF NOT EXISTS `detalle_compra` (
   `id_producto` int(11) NOT NULL,
   `id_compra` int(11) NOT NULL,
   PRIMARY KEY (`id_d_c`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `detalle_compra`
+--
+
+INSERT INTO `detalle_compra` (`id_d_c`, `cantidad`, `precio`, `id_producto`, `id_compra`) VALUES
+(1, 20, '350.00', 1, 1),
+(2, 20, '400.00', 2, 2);
 
 --
 -- Disparadores `detalle_compra`
@@ -143,6 +159,50 @@ CREATE TABLE IF NOT EXISTS `detalle_compra` (
 DROP TRIGGER IF EXISTS `update_producto`;
 DELIMITER $$
 CREATE TRIGGER `update_producto` AFTER INSERT ON `detalle_compra` FOR EACH ROW UPDATE producto SET cantidad=cantidad+NEW.cantidad, precio=(((cantidad-NEW.cantidad)*precio)+(NEW.cantidad*NEW.precio))/(cantidad) WHERE id_producto=NEW.id_producto
+$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `detalle_venta_contado`
+--
+
+DROP TABLE IF EXISTS `detalle_venta_contado`;
+CREATE TABLE IF NOT EXISTS `detalle_venta_contado` (
+  `id_d_v_c` int(11) NOT NULL AUTO_INCREMENT,
+  `cantidad` int(11) NOT NULL,
+  `precio` decimal(10,2) NOT NULL,
+  `id_producto` int(11) NOT NULL,
+  `id_venta_contado` int(11) NOT NULL,
+  PRIMARY KEY (`id_d_v_c`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `detalle_venta_contado`
+--
+
+INSERT INTO `detalle_venta_contado` (`id_d_v_c`, `cantidad`, `precio`, `id_producto`, `id_venta_contado`) VALUES
+(2, 1, '385.00', 1, 1),
+(3, 2, '460.00', 2, 2),
+(5, 1, '385.00', 1, 3),
+(6, 1, '385.00', 1, 4),
+(7, 1, '460.00', 2, 5),
+(8, 1, '460.00', 2, 6),
+(9, 1, '385.00', 1, 7),
+(10, 1, '385.00', 1, 8),
+(11, 1, '460.00', 2, 9),
+(13, 1, '460.00', 2, 10),
+(14, 1, '460.00', 2, 11),
+(15, 2, '460.00', 2, 12),
+(16, 1, '460.00', 2, 13);
+
+--
+-- Disparadores `detalle_venta_contado`
+--
+DROP TRIGGER IF EXISTS `update_producto_venta`;
+DELIMITER $$
+CREATE TRIGGER `update_producto_venta` AFTER INSERT ON `detalle_venta_contado` FOR EACH ROW UPDATE producto SET cantidad=cantidad-NEW.cantidad WHERE id_producto=NEW.id_producto
 $$
 DELIMITER ;
 
@@ -208,7 +268,8 @@ CREATE TABLE IF NOT EXISTS `producto` (
 --
 
 INSERT INTO `producto` (`id_producto`, `codigo`, `nombre`, `marca`, `modelo`, `margen_ganancia`, `stock_minimo`, `cantidad`, `precio`, `descripcion`, `categoria`, `proveedor`, `fecha_ingreso`, `estado`, `id_usuario`) VALUES
-(1, 'la0001', 'lavadora', 'cetro', 'eco', 10, 5, 0, '0.00', 'lavadora blanca', 'Lavadoras', 1, '2021-01-06 17:27:39', 'Activo', 1);
+(1, 'la0001', 'lavadora', 'cetro', 'eco', 10, 5, 0, '350.00', 'lavadora blanca', 'Lavadoras', 1, '2021-01-06 17:27:39', 'Activo', 1),
+(2, 'ca0002', 'camarote', 'cetro', 'eco', 15, 3, 2, '400.00', 'color cafe', 'Muebles', 1, '2021-01-07 22:56:54', 'Activo', 1);
 
 -- --------------------------------------------------------
 
@@ -253,6 +314,7 @@ CREATE TABLE IF NOT EXISTS `sucursal` (
   `nombre` varchar(200) NOT NULL,
   `codigo` varchar(10) NOT NULL,
   `nit` varchar(17) NOT NULL,
+  `nrc` varchar(10) NOT NULL,
   `giro` varchar(200) NOT NULL,
   `iva` decimal(10,2) NOT NULL,
   `direccion` text NOT NULL,
@@ -266,8 +328,8 @@ CREATE TABLE IF NOT EXISTS `sucursal` (
 -- Volcado de datos para la tabla `sucursal`
 --
 
-INSERT INTO `sucursal` (`id_sucursal`, `nombre`, `codigo`, `nit`, `giro`, `iva`, `direccion`, `correo`, `telefono`, `logo`, `fecha_update`) VALUES
-(1, 'sucursal', 'su0001', '4755-555555-555-5', 'Ventas', '13.00', 'San Vicente', 'su@gmail.com', '2258-9684', '', '2021-01-06 15:45:12');
+INSERT INTO `sucursal` (`id_sucursal`, `nombre`, `codigo`, `nit`, `nrc`, `giro`, `iva`, `direccion`, `correo`, `telefono`, `logo`, `fecha_update`) VALUES
+(1, 'sucursal casa matriz', 'su0001', '4755-555555-555-5', '755645-6', 'Ventas', '13.00', 'San Vicente', 'sucursal@gmail.com', '2258-9684', 'files/logo.png', '2021-01-09 01:56:05');
 
 -- --------------------------------------------------------
 
@@ -297,6 +359,44 @@ CREATE TABLE IF NOT EXISTS `usuario` (
 
 INSERT INTO `usuario` (`id`, `usuario`, `password`, `nombre`, `correo`, `last_session`, `activacion`, `token`, `token_password`, `password_request`, `id_tipo`) VALUES
 (1, 'Magda', '$2y$10$2G9tGEYDdZ5v.zGmC9tz3.dGwRb/CqMYwebFlaAEn2VKWhdErsXwa', 'Magdalena', 'magdacordova2@gmail.com', '2020-09-10 16:59:52', 1, '93e23525a4ad5ae54a43c89ba48cea5a', '', 0, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `venta_contado`
+--
+
+DROP TABLE IF EXISTS `venta_contado`;
+CREATE TABLE IF NOT EXISTS `venta_contado` (
+  `id_venta_contado` int(11) NOT NULL,
+  `tipo_comprobante` varchar(200) NOT NULL,
+  `codigo` varchar(10) NOT NULL,
+  `monto` decimal(10,2) NOT NULL,
+  `cliente` text NOT NULL,
+  `fecha_ingreso` timestamp NOT NULL,
+  `estado` varchar(9) NOT NULL,
+  `id_usuario` int(11) NOT NULL,
+  PRIMARY KEY (`id_venta_contado`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `venta_contado`
+--
+
+INSERT INTO `venta_contado` (`id_venta_contado`, `tipo_comprobante`, `codigo`, `monto`, `cliente`, `fecha_ingreso`, `estado`, `id_usuario`) VALUES
+(1, 'Ticket', '000001', '385.00', 'marcos vega', '2021-01-08 02:24:46', 'Cancelado', 1),
+(2, 'Ticket', '000002', '920.00', '', '2021-01-08 12:10:14', 'Cancelado', 1),
+(3, 'Ticket', '000003', '385.00', '', '2021-01-08 12:15:41', 'Cancelado', 1),
+(4, 'Ticket', '000003', '385.00', '', '2021-01-08 12:15:41', 'Cancelado', 1),
+(5, 'Ticket', '000005', '460.00', '', '2021-01-08 12:19:45', 'Cancelado', 1),
+(6, 'Ticket', '000006', '460.00', 'samuel', '2021-01-08 13:28:29', 'Cancelado', 1),
+(7, 'Ticket', '000007', '385.00', 'maria vega', '2021-01-08 13:34:24', 'Cancelado', 1),
+(8, 'Ticket', '000007', '385.00', 'maria vega', '2021-01-08 13:34:24', 'Cancelado', 1),
+(9, 'Ticket', '000009', '460.00', '', '2021-01-08 14:26:33', 'Cancelado', 1),
+(10, 'Ticket', '000010', '460.00', '', '2021-01-08 22:32:49', 'Cancelado', 1),
+(11, 'Ticket', '000011', '460.00', '', '2021-01-08 22:52:09', 'Cancelado', 1),
+(12, 'Ticket', '000012', '920.00', '', '2021-01-09 01:08:40', 'Cancelado', 1),
+(13, 'Ticket', '000013', '460.00', '', '2021-01-09 01:17:34', 'Cancelado', 1);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

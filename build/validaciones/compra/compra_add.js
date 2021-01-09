@@ -70,7 +70,7 @@ $(document).ready(function(){
         $('#proveedor').val(datos[2]);
       })
       .fail(function(){
-        alert('Hubo un error al cargar el código')
+        alert('Hubo un error al cargar el Código')
       })
       
     });
