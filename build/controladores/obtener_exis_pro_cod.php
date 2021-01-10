@@ -13,7 +13,7 @@
       $iva_r=$lista_sucursal['iva'];
     }
    
-    $stmt1= $pdo->prepare("SELECT * FROM producto WHERE codigo=:codigo AND cantidad > 0");
+    $stmt1= $pdo->prepare("SELECT * FROM producto WHERE codigo=:codigo");
     $stmt1->bindParam(":codigo",$codigo,PDO::PARAM_STR);
     $stmt1->execute();
     $result=$stmt1->fetchAll(PDO::FETCH_ASSOC);  			     	

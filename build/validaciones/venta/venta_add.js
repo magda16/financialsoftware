@@ -126,32 +126,45 @@ $(document).ready(function(){
         data: {'codigo': codigo}
       })
       .done(function(obtenerDatos){
-        var datos = eval(obtenerDatos)
-        $('#id_producto').val(datos[0]);
-        $('#categoria').val(datos[6]);
-        var categoria = $("#categoria").val();
-  
-        $.ajax({
-          type: 'POST',
-          url: '../../build/controladores/lista_exis_pro.php',
-          data: {'categoria': categoria}
-        })
-        .done(function(lista_exis_pro){
-          $('#s_producto').html(lista_exis_pro)
-          var id_producto= $("#id_producto").val();
-          $("#s_producto option[value='"+ id_producto +"']").attr("selected",true);
-        })
-        .fail(function(){
-          alert('Error al cargar la Pagina Lista Productos')
-        })
+        var datos = eval(obtenerDatos);
+       
+        if(datos[3] > 0){
+          $('#id_producto').val(datos[0]);
+          $('#categoria').val(datos[6]);
+          var categoria = $("#categoria").val();
+    
+          $.ajax({
+            type: 'POST',
+            url: '../../build/controladores/lista_exis_pro.php',
+            data: {'categoria': categoria}
+          })
+          .done(function(lista_exis_pro){
+            $('#s_producto').html(lista_exis_pro)
+            var id_producto= $("#id_producto").val();
+            $("#s_producto option[value='"+ id_producto +"']").attr("selected",true);
+          })
+          .fail(function(){
+            alert('Error al cargar la Pagina Lista Productos')
+          })
 
-        $('#producto').val(datos[1]);
-        $('#existencias').val(datos[3]);
-        var precio = parseFloat(datos[4]);
-        var ganancia = parseFloat((((datos[2]/100)*precio)).toFixed(2));
-        var iva = parseFloat((((datos[7]/100)*precio)).toFixed(2));
-        var precio_venta = parseFloat(ganancia + iva + precio);
-        $('#precio_venta').val(precio_venta);
+          $('#producto').val(datos[1]);
+          $('#existencias').val(datos[3]);
+          var precio = parseFloat(datos[4]);
+          var ganancia = parseFloat((((datos[2]/100)*precio)).toFixed(2));
+          var iva = parseFloat((((datos[7]/100)*precio)).toFixed(2));
+          var precio_venta = parseFloat(ganancia + iva + precio);
+          $('#precio_venta').val(precio_venta);
+        }else{
+          PNotify.notice({
+            title: 'Advertencia',
+            text: 'Se ha agotado la existencia.',
+            styling: 'bootstrap3',
+            icons: 'bootstrap3'
+          });
+          $("#form_agregar_venta")[0].reset();
+          $(".form-group").find(".ic").removeClass("fa fa-check");
+          $(".form-group").removeClass("has-success");
+        }
       })
       .fail(function(){
         alert('Hubo un error al cargar el Código')

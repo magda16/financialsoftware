@@ -12,8 +12,8 @@
   <link rel="stylesheet" href="../../bower_components/font-awesome/css/font-awesome.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="../../bower_components/Ionicons/css/ionicons.min.css">
-  <!-- bootstrap-datepicker -->
-  <link href="../../plugins/bootstrap-datepicker/css/bootstrap-datepicker.css" rel="stylesheet">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="../../bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
   <!-- PNotify -->
   <link href="../../plugins/PNotify/dist/PNotifyBrightTheme.css" rel="stylesheet" type="text/css" />
   <!-- Theme style -->
@@ -45,9 +45,9 @@
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1><i class="fa fa-linode"></i>
-        Departamento
-        <small>Registro</small>
+      <h1><i class="fa fa-book"></i>
+        Catálogo de Activo Fijo
+        <small>Mantenimiento</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -59,61 +59,75 @@
     <!-- Main content -->
     <section class="content">
       <div class="row">
-      <form id="form_departamento" name="form_departamento" action="" method="POST">
+      <form id="form_proveedor" name="form_proveedor" action="" method="POST">
         <input type="hidden" name="bandera" id="bandera">
 
-        <!-- left column -->
-        <div class="col-md-6">
-          <!-- general form elements -->
-          <div class="box box-success">
-            <div class="box-header with-border">
-              <h3 class="box-title">Datos Departamento</h3>
+        <div class="col-xs-12">
+          <div class="box box-info">
+            <div class="box-header">
+              <h3 class="box-title">Lista Catálogo de Activo Fijo</h3>
             </div>
+            <!-- /.box-header -->
             <div class="box-body">
+              
+              <?php
 
-              <div class="form-group">
-                <label class="control-label" for="codigo"><i class="ic"></i> Código</label>
-                <div class="input-group">
-                  <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
-                  <input type="text" id="codigo" name="codigo" class="form-control" placeholder="Ingrese Código">
-                </div>
-                <span class="help-block"></span>
-              </div>
+                echo "<table id='datatable-responsive1' class='table table-striped table-bordered dt-responsive nowrap' cellspacing='0' width='100%'>";
 
-              <div class="form-group">
-                <label class="control-label" for="nombre"><i class="ic"></i> Nombre</label>
-                <div class="input-group">
-                  <span class="input-group-addon"><i class="fa fa-linode"></i></span>
-                  <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Ingrese Nombre">
-                </div>
-                <span class="help-block"></span>
-              </div>
+                  include ("../../build/controladores/conexion.php");
+                  $stmt= $pdo->prepare("SELECT * FROM activo_categoria ORDER BY categoria");
+                  $stmt->execute();
+                  $result=$stmt->fetchAll(PDO::FETCH_ASSOC);
+                  foreach($result as $lista_activo_categoria){
+                    $id_activo_categoria=$lista_activo_categoria['id_activo_categoria'];
 
-              <div class="form-group">
-                <label class="control-label" for="descripcion"><i class="ic"></i> Descripción</label>
-                <div class="input-group">
-                  <span class="input-group-addon"><i class="fa fa-pencil-square-o"></i></span>
-                  <textarea id="descripcion" name="descripcion" class="form-control" rows="2" placeholder="Ingrese Descripción"></textarea>
-                </div>
-                <span class="help-block"></span>
-              </div>
+                    echo "<input type='hidden' name='bandera' id='bandera'>";
+                    echo "<input type='hidden' name='baccion' id='baccion'>";
 
+                    echo "<thead>";
+                    echo "<tr>";
+                    echo "<th colspan='2'> <h4 style='color: #00c0ef;'>".$lista_activo_categoria['categoria'].".</h4></th>";                    
+                    echo "<th ><div align='center'><a id='paso4' href='../../pages/catalogo_activos/catalogo_subcategoria_add.php' class='btn btn-info' type='button' onclick='imprecepciondocumentos(".$id_activo_categoria.")' data-toggle='tooltip' data-placement='top' title='Agregar Tipo de Bien'><i class='fa fa-plus'></i></a>";
+                    echo "</tr>";
+
+                    echo "<tr>";
+                    echo "<th color: RGB(0, 0, 128);'>No.</th>";
+                    echo "<th color: RGB(0, 0, 128);'>C&oacute;digo</th>";
+                    echo "<th color: RGB(0, 0, 128);'>Tipo de Bien</th>";
+
+                    echo "</tr>";
+                    echo "</thead>";
+                    echo "<tbody>";
+
+                        
+                    $contador=1;
+                    $stmt1= $pdo->prepare("SELECT id_activo_subcategoria, codigo, subcategoria FROM activo_subcategoria WHERE id_activo_categoria=:id_activo_categoria ORDER BY subcategoria");
+                    $stmt1->bindParam(":id_activo_categoria",$id_activo_categoria,PDO::PARAM_INT);
+                    $stmt1->execute();
+                    $result1=$stmt1->fetchAll(PDO::FETCH_ASSOC);
+                    foreach($result1 as $lista_activo_subcategoria){
+                            
+                      echo "<tr>";
+                      echo "<td>" .$contador. "</td>";
+                      echo "<td>" . $lista_activo_subcategoria['codigo'] . "</td>";
+                      echo "<td>" . $lista_activo_subcategoria['subcategoria'] . "</td>";
+                      echo "</tr>";
+                
+                      $contador++;
+                    }
+        
+                  }
+
+                  echo "</tbody>";
+                  echo "</table>";
+                ?>
+              
             </div>
             <!-- /.box-body -->
-            <div class="box-footer" align="right">
-              <button type="button" id="btnguardar" name="btnguardar" class="btn btn-round btn-success">
-                <span class="fa fa-floppy-o">&nbsp;&nbsp;&nbsp;</span>Guardar Departamento
-              </button>
-                        
-              <button type="submit" class="btn btn-round btn-default" onclick="cancelar()">
-                <span class="fa fa-ban">&nbsp;&nbsp;&nbsp;</span>Cancelar Proceso
-              </button>
-            </div>   
           </div>
           <!-- /.box -->
 
         </div>
-        <!--/.col (left) -->
         </form>
       </div>
       <!-- /.row -->
@@ -329,8 +343,9 @@
 <script src="../../bower_components/fastclick/lib/fastclick.js"></script>
 <!-- InputMask -->
 <script src="../../plugins/input-mask/jquery.inputmask.js"></script>
-<!-- bootstrap-datepicker -->
-<script src="../../plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+<!-- DataTables -->
+<script src="../../bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="../../bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 <!-- PNotify -->
 <script src="../../plugins/PNotify/dist/iife/PNotify.js"></script>
 <script src="../../plugins/PNotify/dist/iife/PNotifyButtons.js"></script>
@@ -338,7 +353,7 @@
 <script src="../../plugins/PNotify/dist/iife/PNotifyMobile.js"></script>
 <!-- Validate -->
 <script src="../../plugins/validar/jquery.validate.js"></script>
-<script src="../../build/validaciones/departamento/departamento_add.js"></script>
+<script src="../../build/validaciones/proveedor/proveedor_list.js"></script>
 <!-- AdminLTE App -->
 <script src="../../dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->

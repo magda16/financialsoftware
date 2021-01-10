@@ -45,8 +45,8 @@
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1>
-        Catalogo Activos
+      <h1><i class="fa fa-book"></i>
+        Catálogo de Activo Fijo
         <small>Registro</small>
       </h1>
       <ol class="breadcrumb">
@@ -59,7 +59,7 @@
     <!-- Main content -->
     <section class="content">
       <div class="row">
-      <form id="form_catalogo_activos" name="form_catalogo_activos" action="" method="POST">
+      <form id="form_catalogo_categoria" name="form_catalogo_categoria" action="" method="POST">
         <input type="hidden" name="bandera" id="bandera">
 
         <!-- left column -->
@@ -74,7 +74,7 @@
               <div class="form-group">
                 <label class="control-label" for="codigo"><i class="ic"></i> Código</label>
                 <div class="input-group">
-                  <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                  <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
                   <input type="text" id="codigo" name="codigo" class="form-control" placeholder="Ingrese Código">
                 </div>
                 <span class="help-block"></span>
@@ -83,7 +83,7 @@
               <div class="form-group">
                 <label class="control-label" for="categoria"><i class="ic"></i> Categoría</label>
                 <div class="input-group">
-                  <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                  <span class="input-group-addon"><i class="fa fa-list-ul"></i></span>
                   <input type="text" id="categoria" name="categoria" class="form-control" placeholder="Ingrese Categoría">
                 </div>
                 <span class="help-block"></span>
@@ -340,7 +340,7 @@
 <script src="../../plugins/PNotify/dist/iife/PNotifyMobile.js"></script>
 <!-- Validate -->
 <script src="../../plugins/validar/jquery.validate.js"></script>
-<script src="../../build/validaciones/catalogo_activos/catalogo_activos_add.js"></script>
+<script src="../../build/validaciones/catalogo_activos/catalogo_categoria_add.js"></script>
 <!-- AdminLTE App -->
 <script src="../../dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->

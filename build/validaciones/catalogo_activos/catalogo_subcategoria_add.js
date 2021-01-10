@@ -1,4 +1,15 @@
 $(document).ready(function(){
+
+  $.ajax({
+    type: 'POST',
+    url: '../../build/controladores/lista_activo_categorias.php'
+  })
+  .done(function(lista_activo_categorias){
+    $('#categoria').html(lista_activo_categorias)
+  })
+  .fail(function(){
+    alert('Error al cargar la Pagina Lista Categorías')
+  })
     
     $.validator.addMethod("letrasOespacio", function(value, element) {
         return /^[ a-záéíóúüñ]*$/i.test(value);
@@ -16,7 +27,7 @@ $(document).ready(function(){
         return /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/i.test(value);
     }, "Ingrese un correo v&aacute;lido.");
 
-    $("#form_catalogo_activos").validate({
+    $("#form_catalogo_subcategoria").validate({
       errorPlacement: function (error, element) {
             $(element).closest('.form-group').find('.help-block').html(error.html());
         },
@@ -34,12 +45,12 @@ $(document).ready(function(){
           required: true,
           minlength: 3
         },
-        categoria: {
+        subcategoria: {
           letrasOespacio: true,
           required: true,
           minlength: 3
         },
-        tipo: {
+        categoria: {
           required: true
         }
       },
@@ -48,24 +59,25 @@ $(document).ready(function(){
           required: "Por favor, ingrese código.",
           minlength: "Debe ingresar m&iacute;nimo 3 dígitos."
         },
-        categoria: {
-          required: "Por favor, ingrese categoría.",
+        subcategoria: {
+          required: "Por favor, ingrese subcategoría.",
           minlength: "Debe ingresar m&iacute;nimo 3 dígitos."
         },
-        tipo: {
-          required: "Por favor, seleccione tipo según ley."
+        categoria: {
+          required: "Por favor, seleccione categoría."
         }
       }
     });
+    
 });
 
 $("#btnguardar").click(function(){
-    if($("#form_catalogo_activos").valid()){
+    if($("#form_catalogo_subcategoria").valid()){
         $("#bandera").val("add");
         $.ajax({
           type: 'POST',
-          url: '../../build/controladores/crud_catalogo_activos.php',
-          data: $("#form_catalogo_activos").serialize()
+          url: '../../build/controladores/crud_catalogo_subcategoria.php',
+          data: $("#form_catalogo_subcategoria").serialize()
         })
         .done(function(resultado_ajax){
             alert(resultado_ajax);
@@ -85,7 +97,7 @@ $("#btnguardar").click(function(){
                     primary: true,
                     click: function(notice) {
                       notice.close();
-                      location.href='../../pages/catalogo_activos/catalogo_activos_add.php';
+                      location.href='../../pages/catalogo_activos/catalogo_subcategoria_add.php';
                     }
                   }]
                 },
@@ -114,7 +126,7 @@ $("#btnguardar").click(function(){
                     primary: true,
                     click: function(notice) {
                       notice.close();
-                      location.href='../../pages/catalogo_activos/catalogo_activos_add.php';
+                      location.href='../../pages/catalogo_activos/catalogo_subcategoria_add.php';
                     }
                   }]
                 },

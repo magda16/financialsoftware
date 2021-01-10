@@ -1,28 +1,5 @@
 $(document).ready(function(){
-    //Money Euro
-    $('[data-mask]').inputmask()
-
-    $("#divcantidad_lote").hide();
-
-
-    $.ajax({
-      type: 'POST',
-      url: '../../build/controladores/lista_proveedores.php'
-    })
-    .done(function(lista_proveedores){
-      $('#proveedor').html(lista_proveedores)
-    })
-    .fail(function(){
-      alert('Error al cargar la Pagina Lista Proveedor')
-    })
-
-    //Date picker
-    $('#fecha_adquisicion').datepicker({
-      autoclose: true
-    })
-
-   // $('.select2').select2()
-
+    
     $.validator.addMethod("letrasOespacio", function(value, element) {
         return /^[ a-záéíóúüñ]*$/i.test(value);
     }, "Ingrese sólo letras o espacios.");
@@ -39,7 +16,7 @@ $(document).ready(function(){
         return /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/i.test(value);
     }, "Ingrese un correo v&aacute;lido.");
 
-    $("#form_activo_fijo").validate({
+    $("#form_catalogo_categoria").validate({
       errorPlacement: function (error, element) {
             $(element).closest('.form-group').find('.help-block').html(error.html());
         },
@@ -53,132 +30,42 @@ $(document).ready(function(){
             $(element).closest('.form-group').find('.help-block').html('');
         },
       rules: {
-        nombre: {
+        codigo: {
+          required: true,
+          minlength: 3
+        },
+        categoria: {
           letrasOespacio: true,
           required: true,
-          minlength: 3,
-          maxlength: 150
+          minlength: 3
         },
-        apellido: {
-          letrasOespacio: true,
-          required: true,
-          minlength: 3,
-          maxlength: 150
-        },
-        dui: {
-          numero: true,
-          required: true,
-          minlength: 10
-        },
-        nit: {
-          numero: true,
-          required: true,
-          minlength: 17
-        }/*,
-        telefono1:{
-          numero: true,
-          required: true,
-          minlength: 9
-        },
-        telefono2:{
-          numero: true,
-          required: false,
-          minlength: 9
-        }*/,
-        direccion: {
-          alfanumOespacio: true,
-          required: true,
-          minlength: 6
-        },
-        correo: {
-          correo: true,
-          required:true,
-          minlength: 8,
-          maxlength: 150
-        },
-        fecha_nacimiento: {
-          required:true,
-        }/*,
-        estadofam: {
+        tipo: {
           required: true
-        }*/,
-        puesto: {
-          required: true
-        }/*,
-        file:"required"*/
+        }
       },
       messages: {
-        nombre: {
-          required: "Por favor, ingrese nombre.",
-          maxlength: "Debe ingresar m&aacute;ximo 150 dígitos.",
+        codigo: {
+          required: "Por favor, ingrese código.",
           minlength: "Debe ingresar m&iacute;nimo 3 dígitos."
         },
-        apellido: {
-          required: "Por favor, ingrese apellido.",
-          maxlength: "Debe ingresar m&aacute;ximo 150 dígitos.",
+        categoria: {
+          required: "Por favor, ingrese categoría.",
           minlength: "Debe ingresar m&iacute;nimo 3 dígitos."
         },
-        dui: {
-          required: "Por favor, ingrese DUI.",
-          minlength: "Debe ingresar m&iacute;nimo 10 dígitos."
-        },
-        nit: {
-          required: "Por favor, ingrese NIT.",
-          minlength: "Debe ingresar m&iacute;nimo 17 dígitos."
-        }/*,
-        telefono1: {
-          required: "Por favor, ingrese n&uacute;mero tel&eacute;fonico",
-          minlength: "Debe ingresar m&iacute;nimo 9 dígitos."
-        },
-        telefono2: {
-          required: "Por favor, ingrese n&uacute;mero tel&eacute;fonico",
-          minlength: "Debe ingresar m&iacute;nimo 9 dígitos."
-        }*/,
-        direccion: {
-          required: "Por favor, ingrese direcci&oacute;n.",
-          minlength: "Debe ingresar m&iacute;nimo 6 dígitos."
-        },
-        correo: {
-          required: "Por favor, ingrese un correo v&aacute;lido",
-          maxlength: "Debe ingresar m&aacute;ximo 150 dígitos.",
-          minlength: "Debe ingresar m&iacute;nimo 8 dígitos."
-        },
-        fecha_nacimiento: {
-          required:"Por favor, ingrese fecha de nacimiento",
-        }/*,
-        estadofam: {
-          required: "Por favor, seleccione estado."
-        }*/,
-        puesto: {
-          required: "Por favor, seleccione puesto."
-        }/*,
-        file: "Por favor, seleccione una foto."*/
+        tipo: {
+          required: "Por favor, seleccione tipo según ley."
+        }
       }
     });
-
-
-    $('input[type=checkbox]').on('change', function() {
-      if ($(this).is(':checked') ) {
-          $("#divcantidad_lote").show();
-          $("#divserie").hide();
-          $("#nserie").val("");
-      } else {
-          $("#divcantidad_lote").hide();
-          $("#divserie").show();
-          $("#cantidad").val("");
-      }
-    });
-    
-    
 });
 
 $("#btnguardar").click(function(){
-    if($("#form_activo_fijo").valid()){
+    if($("#form_catalogo_categoria").valid()){
         $("#bandera").val("add");
         $.ajax({
           type: 'POST',
-          url: '../../build/controladores/crud_activo_fijo.php',
-          data: $("#form_activo_fijo").serialize()
+          url: '../../build/controladores/crud_catalogo_categoria.php',
+          data: $("#form_catalogo_categoria").serialize()
         })
         .done(function(resultado_ajax){
             alert(resultado_ajax);
@@ -198,7 +85,7 @@ $("#btnguardar").click(function(){
                     primary: true,
                     click: function(notice) {
                       notice.close();
-                      location.href='../../pages/activo_fijo/activo_fijo_add.php';
+                      location.href='../../pages/catalogo_activos/catalogo_categoria_add.php';
                     }
                   }]
                 },
@@ -227,7 +114,7 @@ $("#btnguardar").click(function(){
                     primary: true,
                     click: function(notice) {
                       notice.close();
-                      location.href='../../pages/activo_fijo/activo_fijo_add.php';
+                      location.href='../../pages/catalogo_activos/catalogo_categoria_add.php';
                     }
                   }]
                 },
@@ -244,7 +131,7 @@ $("#btnguardar").click(function(){
           }             
         })
         .fail(function(){
-          alert('Error al cargar la Pagina Activo Fijo')
+          alert('Error al cargar la Pagina Catalogo Activos')
         })
     }else{
       PNotify.info({

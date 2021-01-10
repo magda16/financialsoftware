@@ -68,22 +68,20 @@
         </li>
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-files-o"></i>
+            <i class="fa fa-linode"></i>
             <span>Departamento</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="../../pages/departamento/departamento_add.php"><i class="fa fa-circle-o"></i> Agregar</a></li>
-            <li><a href="../layout/boxed.html"><i class="fa fa-circle-o"></i> Boxed</a></li>
-            <li><a href="../layout/fixed.html"><i class="fa fa-circle-o"></i> Fixed</a></li>
-            <li><a href="../layout/collapsed-sidebar.html"><i class="fa fa-circle-o"></i> Collapsed Sidebar</a></li>
+            <li><a href="../../pages/departamento/departamento_add.php"><i class="fa fa-plus-circle"></i> Agregar</a></li>
+            <li><a href="../../pages/departamento/departamento_list.php"><i class="fa fa-wrench"></i> Mantenimiento</a></li>
           </ul>
         </li>
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-files-o"></i>
+            <i class="fa fa-ravelry"></i>
             <span>Activo Fijo</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
@@ -91,20 +89,18 @@
           </a>
           <ul class="treeview-menu">
             <li class="treeview">
-              <a href="#"><i class="fa fa-circle-o"></i> Catalogo
+              <a href="#"><i class="fa fa-book"></i> Catálogo
                 <span class="pull-right-container">
                   <i class="fa fa-angle-left pull-right"></i>
                 </span>
               </a>
               <ul class="treeview-menu">
-                <li><a href="../../pages/catalogo_activos/catalogo_activos_add.php"><i class="fa fa-plus-circle"></i> Agregar</a></li>
-                <li><a href="#"><i class="fa fa-circle-o"></i> Mantenimiento</a></li>
+                <li><a href="../../pages/catalogo_activos/catalogo_categoria_add.php"><i class="fa fa-plus-circle"></i> Agregar</a></li>
+                <li><a href="../../pages/catalogo_activos/catalogo_activos_list.php"><i class="fa fa-wrench"></i> Mantenimiento</a></li>
               </ul>
             </li>
             <li><a href="../../pages/activo_fijo/activo_fijo_add.php"><i class="fa fa-plus-circle"></i> Agregar</a></li>
-            <li><a href="../layout/boxed.html"><i class="fa fa-circle-o"></i> Boxed</a></li>
-            <li><a href="../layout/fixed.html"><i class="fa fa-circle-o"></i> Fixed</a></li>
-            <li><a href="../layout/collapsed-sidebar.html"><i class="fa fa-circle-o"></i> Collapsed Sidebar</a></li>
+            <li><a href="../../pages/proveedor/proveedor_list.php"><i class="fa fa-wrench"></i> Mantenimiento</a></li>
           </ul>
         </li>
         <li>

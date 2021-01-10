@@ -10,37 +10,34 @@
         include ("conexion.php");
           
         $codigo=$_POST["codigo"];
-        $categoria=$_POST["categoria"];
-        $tipo=$_POST["tipo"];
-         
-        $stmt = $pdo->prepare("SELECT MAX(id_catalogo_activos)+1 AS 'id' FROM catalogo_activos");
+        $subcategoria=$_POST["subcategoria"];
+        $id_activo_categoria=$_POST["categoria"];
+       
+        $stmt = $pdo->prepare("SELECT MAX(id_activo_subcategoria)+1 AS 'id' FROM activo_subcategoria");
         $stmt->execute();
         $result=$stmt->fetchAll(PDO::FETCH_ASSOC);  
         if ($result) {
           foreach($result as $get_id){
-            $id_catalogo_activos=$get_id['id'];
+            $id_activo_subcategoria=$get_id['id'];
           }
         }
 
-        if($id_catalogo_activos==null){
-          $id_catalogo_activos=1;
+        if($id_activo_subcategoria==null){
+          $id_activo_subcategoria=1;
         }
 
         date_default_timezone_set('America/El_Salvador');
         $fecha_ingreso=date("Y-m-d H:i:s");
 
         $estado="Activo";
-        //$id_usuario=$_POST["id_usuario"];
-        $id_usuario=1;
 
-        $stmt=$pdo->prepare("INSERT INTO catalogo_activos (id_catalogo_activos, codigo, categoria, tipo, fecha_ingreso, estado, id_usuario) VALUES (:id_catalogo_activos, :codigo, :categoria, :tipo, :fecha_ingreso, :estado, :id_usuario)");
-        $stmt->bindParam(":id_catalogo_activos",$id_catalogo_activos,PDO::PARAM_INT);
+        $stmt=$pdo->prepare("INSERT INTO activo_subcategoria (id_activo_subcategoria, codigo, subcategoria, id_activo_categoria, fecha_ingreso, estado) VALUES (:id_activo_subcategoria, :codigo, :subcategoria, :id_activo_categoria, :fecha_ingreso, :estado)");
+        $stmt->bindParam(":id_activo_subcategoria",$id_activo_subcategoria,PDO::PARAM_INT);
         $stmt->bindParam(":codigo",$codigo,PDO::PARAM_STR);
-        $stmt->bindParam(":categoria",$categoria,PDO::PARAM_STR);
-        $stmt->bindParam(":tipo",$tipo,PDO::PARAM_STR);
+        $stmt->bindParam(":subcategoria",$subcategoria,PDO::PARAM_STR);
+        $stmt->bindParam(":id_activo_categoria",$id_activo_categoria,PDO::PARAM_INT);
         $stmt->bindParam(":fecha_ingreso",$fecha_ingreso,PDO::PARAM_STR);
         $stmt->bindParam(":estado",$estado,PDO::PARAM_STR);
-        $stmt->bindParam(":id_usuario",$id_usuario,PDO::PARAM_INT);
           
         if($stmt->execute()){
           return "Exito";

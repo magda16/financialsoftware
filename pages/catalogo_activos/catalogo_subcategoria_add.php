@@ -45,8 +45,8 @@
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1><i class="fa fa-ravelry"></i>
-        Activo Fijo
+      <h1><i class="fa fa-book"></i>
+        Catálogo de Activo Fijo
         <small>Registro</small>
       </h1>
       <ol class="breadcrumb">
@@ -59,7 +59,7 @@
     <!-- Main content -->
     <section class="content">
       <div class="row">
-      <form id="form_activo_fijo" name="form_activo_fijo" action="" method="POST" enctype="multipart/form-data">
+      <form id="form_catalogo_subcategoria" name="form_catalogo_subcategoria" action="" method="POST">
         <input type="hidden" name="bandera" id="bandera">
 
         <!-- left column -->
@@ -67,237 +67,31 @@
           <!-- general form elements -->
           <div class="box box-success">
             <div class="box-header with-border">
-              <h3 class="box-title">Datos Generales</h3>
+              <h3 class="box-title">Datos Subcategoría</h3>
             </div>
             <div class="box-body">
+
+              <div class="form-group">
+                <label class="control-label" for="codigo"><i class="ic"></i> Código</label>
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
+                  <input type="text" id="codigo" name="codigo" class="form-control" placeholder="Ingrese Código">
+                </div>
+                <span class="help-block"></span>
+              </div>
+
+              <div class="form-group">
+                <label class="control-label" for="subcategoria"><i class="ic"></i> Subcategoría</label>
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-list-ol"></i></span>
+                  <input type="text" id="subcategoria" name="subcategoria" class="form-control" placeholder="Ingrese Subcategoría">
+                </div>
+                <span class="help-block"></span>
+              </div>
 
               <div class="form-group">
                 <label class="control-label" for="categoria"><i class="ic"></i> Categoría</label>
                 <select class="form-control" id="categoria" name="categoria">
-                  <option selected="selected" value="">Seleccione Categoría...</option>
-                  <option value="Edificaciones">Edificaciones</option>
-                  <option value="Maquinaria">Maquinaria</option>
-                  <option value="Otros Bienes Muebles">Otros Bienes Muebles</option>
-                </select>
-                <span class="help-block"></span>
-              </div>
-
-              <div class="form-group">
-                <label class="control-label" for="tipo"><i class="ic"></i> Tipo de Bien</label>
-                <select class="form-control" id="tipo" name="tipo">
-                  <option selected="selected" value="">Seleccione Tipo de Bien...</option>
-                  <option value="Edificaciones">Edificaciones</option>
-                  <option value="Maquinaria">Maquinaria</option>
-                  <option value="Otros Bienes Muebles">Otros Bienes Muebles</option>
-                </select>
-                <span class="help-block"></span>
-              </div>
-
-              <div class="row">
-
-                <div class="col-xs-6 form-group">
-                  <label class="control-label" for="codigo_inv"><i class="ic"></i> Código Inventario</label>
-                  <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
-                    <input type="text" id="codigo_inv" name="codigo_inv" class="form-control" readonly>
-                  </div>
-                  <span class="help-block"></span>
-                </div>
-
-                <div class="col-xs-6 form-group">
-                  <label class="control-label" for="correlativo"><i class="ic"></i> Correlativo</label>
-                  <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-hashtag"></i></span>
-                    <input type="text" id="correlativo" name="correlativo" class="form-control" readonly>
-                  </div>
-                  <span class="help-block"></span>
-                </div>
-
-              </div>
-              <div class="form-group">
-                <label class="control-label" for="descripcion"><i class="ic"></i> Descripción</label>
-                <div class="input-group">
-                  <span class="input-group-addon"><i class="fa fa-pencil-square-o"></i></span>
-                  <textarea id="descripcion" name="descripcion" class="form-control" rows="2" placeholder="Ingrese Descripción"></textarea>
-                </div>
-                <span class="help-block"></span>
-              </div>
-
-              <div class="form-group">
-                <label class="control-label" for="observacion"><i class="ic"></i> Observación</label>
-                <div class="input-group">
-                  <span class="input-group-addon"><i class="fa fa-pencil-square-o"></i></span>
-                  <textarea id="observacion" name="observacion" class="form-control" rows="2" placeholder="Ingrese Observación"></textarea>
-                </div>
-                <span class="help-block"></span>
-              </div>
-
-              <div class="form-group has-success">
-                <label class="control-label" for="calidad"><i class="fa fa-check"></i> Calidad</label>
-                <div class="radio">
-                  <label>
-                    <input type="radio" name="calidad" id="bueno" value="Bueno" checked>
-                    Bueno
-                  </label>
-                </div>
-                <div class="radio">
-                  <label>
-                    <input type="radio" name="calidad" id="regular" value="Regular">
-                    Regular
-                  </label>
-                </div>
-                <div class="radio">
-                  <label>
-                    <input type="radio" name="calidad" id="malo" value="Malo">
-                    Malo
-                  </label>
-                </div>
-              </div>
-
-            </div>
-            <!-- /.box-body -->     
-          </div>
-          <!-- /.box -->
-
-        </div>
-        <!--/.col (left) -->
-        <!-- right column -->
-        <div class="col-md-6">
-
-          <div class="box box-success">
-            <div class="box-header with-border">
-              <h3 class="box-title">Datos del Activo Fijo</h3>
-            </div>
-            <div class="box-body">
-
-              <div class="row">
-
-                <div class="col-xs-6 form-group">
-                  <label class="control-label" for="marca"><i class="ic"></i> Marca</label>
-                  <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-tag"></i></span>
-                    <input type="text" id="marca" name="marca" class="form-control" placeholder="Ingrese Marca">
-                  </div>
-                  <span class="help-block"></span>
-                </div>
-
-                <div class="col-xs-6 form-group">
-                  <label class="control-label" for="modelo"><i class="ic"></i> Modelo</label>
-                  <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-tasks"></i></span>
-                    <input type="text" id="modelo" name="modelo" class="form-control" placeholder="Ingrese Modelo">
-                  </div>
-                  <span class="help-block"></span>
-                </div>
-
-              </div>
-
-              <div class="row">
-
-                <div class="col-xs-6 form-group">
-                  <label class="control-label">Lote</label>
-                    <input type="checkbox" class="js-switch" id="switch1" name="switch1"/>
-                </div>
-
-                <div id="gruposerie">
-              
-                    <div class="col-xs-6 form-group" id="divserie">
-                      <label class="control-label" for="nserie"><i class="ic"></i> Número de Serie</label>
-                      <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-qrcode"></i></span>
-                        <input type="text" id="nserie" name="nserie" class="form-control" placeholder="Ingrese Número de Serie">
-                      </div>
-                      <span class="help-block"></span>
-                    </div>
-
-                </div>
-
-                <div class="col-xs-6 form-group" id="divcantidad_lote">
-                  <label class="control-label" for="cantidad"><i class="ic"></i> Cantidad</label>
-                  <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-quora"></i></span>
-                    <input type="text" id="cantidad" name="cantidad" class="form-control" placeholder="Ingrese Cantidad">
-                  </div>
-                  <span class="help-block"></span>
-                </div>
-
-              </div>
-
-            </div>
-            <!-- /.box-body -->
-          </div>
-          <!-- /.box -->
-
-          <!-- general form elements disabled -->
-          <div class="box box-success">
-            <div class="box-header with-border">
-              <h3 class="box-title">Forma de Financiamiento</h3>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-
-              <div class="row">
-
-                <div class="col-xs-6 form-group">
-                  <label class="control-label" for="fecha_adquisicion"><i class="ic"></i> Fecha de Adquisición</label>
-                  <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                    <input type="text" id="fecha_adquisicion" name="fecha_adquisicion" class="form-control" placeholder="Ingrese Fecha Adquisición">
-                  </div>
-                  <span class="help-block"></span>
-                </div>
-
-                <div class="col-xs-6 form-group">
-                  <label class="control-label" for="financiamiento"><i class="ic"></i> Financiamiento</label>
-                  <select class="form-control" id="financiamiento" name="financiamiento">
-                    <option selected="selected" value="">Seleccione Financiamiento...</option>
-                    <option value="Edificaciones">Edificaciones</option>
-                    <option value="Maquinaria">Maquinaria</option>
-                    <option value="Otros Bienes Muebles">Otros Bienes Muebles</option>
-                  </select>
-                  <span class="help-block"></span>
-                </div>
-
-              </div>
-
-              <div class="row">
-
-                <div class="col-xs-6 form-group">
-                  <label class="control-label" for="efectivo"><i class="ic"></i> Valor de Adquisición</label>
-                  <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-usd"></i></span>
-                    <input type="text" id="efectivo" name="efectivo" class="form-control" placeholder="Ingrese Efectivo">
-                  </div>
-                  <span class="help-block"></span>
-                </div>    
-
-                <div class="col-xs-6 form-group has-success">
-                  <label class="control-label" for="valor_estimado"><i class="fa fa-check"></i> Valor Estimado</label>
-                  <div class="radio">
-                    <label>
-                      <input type="radio" name="valor_estimado" id="si" value="Si" checked>
-                      Si
-                    </label>
-                  </div>
-                  <div class="radio">
-                    <label>
-                      <input type="radio" name="valor_estimado" id="no" value="No">
-                      No
-                    </label>
-                  </div>
-                </div>
-
-              </div>
-
-              <div class="form-group">
-                <label class="control-label" for="doc"><i class="ic"></i> Documento de Adquisición</label>
-                <input type="file" id="doc" name="doc" accept="image/*"/>
-                <span class="help-block"></span>
-              </div>
-
-              <div class="form-group">
-                <label class="control-label" for="proveedor"><i class="ic"></i> Proveedor</label>
-                <select class="form-control" id="proveedor" name="proveedor">
                 </select>
                 <span class="help-block"></span>
               </div>
@@ -306,17 +100,18 @@
             <!-- /.box-body -->
             <div class="box-footer" align="right">
               <button type="button" id="btnguardar" name="btnguardar" class="btn btn-round btn-success">
-                <span class="fa fa-floppy-o">&nbsp;&nbsp;&nbsp;</span>Guardar Activo Fijo
+                <span class="fa fa-floppy-o">&nbsp;&nbsp;&nbsp;</span>Guardar Subcategoría
               </button>
                         
               <button type="submit" class="btn btn-round btn-default" onclick="cancelar()">
                 <span class="fa fa-ban">&nbsp;&nbsp;&nbsp;</span>Cancelar Proceso
               </button>
-            </div>
+            </div>   
           </div>
           <!-- /.box -->
+
         </div>
-        <!--/.col (right) -->
+        <!--/.col (left) -->
         </form>
       </div>
       <!-- /.row -->
@@ -541,7 +336,7 @@
 <script src="../../plugins/PNotify/dist/iife/PNotifyMobile.js"></script>
 <!-- Validate -->
 <script src="../../plugins/validar/jquery.validate.js"></script>
-<script src="../../build/validaciones/activo_fijo/activo_fijo_add.js"></script>
+<script src="../../build/validaciones/catalogo_activos/catalogo_subcategoria_add.js"></script>
 <!-- AdminLTE App -->
 <script src="../../dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->

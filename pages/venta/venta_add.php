@@ -205,7 +205,7 @@
                 <div class="col-xs-6 form-group">
                   <label class="control-label" for="correlativo"><i class="ic"></i> No:</label>
                   <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-usd"></i></span>
+                    <span class="input-group-addon"><i class="fa fa-hashtag"></i></span>
                     <input type="text" id="correlativo" name="correlativo" class="form-control" readonly>
                   </div>
                   <span class="help-block"></span>
