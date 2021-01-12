@@ -1,9 +1,72 @@
 $(document).ready(function(){
-    //Money Euro
-    $('[data-mask]').inputmask()
-
+  
     $("#divcantidad_lote").hide();
 
+    $.ajax({
+      type: 'POST',
+      url: '../../build/controladores/lista_activo_categorias.php'
+    })
+    .done(function(lista_activo_categorias){
+      $('#categoria').html(lista_activo_categorias)
+    })
+    .fail(function(){
+      alert('Error al cargar la Pagina Lista Categorías')
+    })
+
+    $("#categoria").on('change', function() {
+
+      var categoria = $("#categoria").val();
+  
+      $.ajax({
+        type: 'POST',
+        url: '../../build/controladores/lista_activo_subcategorias.php',
+        data: {'categoria': categoria}
+      })
+      .done(function(lista_activo_subcategorias){
+        $('#tipo_bien').html(lista_activo_subcategorias)
+      })
+      .fail(function(){
+        alert('Error al cargar la Pagina Lista Subcategorías')
+      })
+       
+    });
+
+    $('#tipo_bien').on('change', function(){
+      var tipo_bien = $('#tipo_bien').val();
+      $.ajax({
+        type: 'POST',
+        url: '../../build/controladores/obtener_codigo_inventario.php',
+        data: {'tipo_bien':tipo_bien}
+      })
+      .done(function(obtenerDatos){
+        var datos = eval(obtenerDatos);
+        $('#codigo_inv').val(datos[3]+"-"+datos[0]+"-"+datos[1]);
+        $('#correlativo').val(datos[2]);
+       /* var num = numero(datos[1]);
+    
+        function numero(num){
+          numtmp='"'+num+'"';
+          largo=numtmp.length-2;
+          numtmp=numtmp.split('"').join('');
+          if(largo==5)return numtmp;
+          ceros='';
+          pendientes=5-largo;
+          for(i=0;i<pendientes;i++)ceros+='0';
+          return ceros+numtmp;
+        
+        }*/
+        //$('#correlativo_inv').val(num);
+        //$('#codigo_af').val(datos[0]);
+      })
+      .fail(function(){
+        alert('Hubo un error al cargar el Tipo de Bien')
+      })
+    });
+
+    //Date picker
+    $('#fecha_adquisicion').datepicker({
+      autoclose: true
+    })
 
     $.ajax({
       type: 'POST',
@@ -14,11 +77,6 @@ $(document).ready(function(){
     })
     .fail(function(){
       alert('Error al cargar la Pagina Lista Proveedor')
-    })
-
-    //Date picker
-    $('#fecha_adquisicion').datepicker({
-      autoclose: true
     })
 
    // $('.select2').select2()
@@ -32,12 +90,8 @@ $(document).ready(function(){
     }, "Ingrese sólo letras, números o espacios.");
 
     $.validator.addMethod("numero", function(value, element) {
-        return /^[ 0-9-()]*$/i.test(value);
+        return /^[ 0-9]*$/i.test(value);
     }, "Ingrese sólo números");
-
-    $.validator.addMethod("correo", function(value, element) {
-        return /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/i.test(value);
-    }, "Ingrese un correo v&aacute;lido.");
 
     $("#form_activo_fijo").validate({
       errorPlacement: function (error, element) {
@@ -53,109 +107,103 @@ $(document).ready(function(){
             $(element).closest('.form-group').find('.help-block').html('');
         },
       rules: {
-        nombre: {
-          letrasOespacio: true,
-          required: true,
-          minlength: 3,
-          maxlength: 150
+        categoria: {
+          required: true
         },
-        apellido: {
-          letrasOespacio: true,
-          required: true,
-          minlength: 3,
-          maxlength: 150
+        tipo_bien: {
+          required: true
         },
-        dui: {
-          numero: true,
+        descripcion: {
           required: true,
-          minlength: 10
+          minlength: 3
         },
-        nit: {
-          numero: true,
-          required: true,
-          minlength: 17
-        }/*,
-        telefono1:{
-          numero: true,
-          required: true,
-          minlength: 9
-        },
-        telefono2:{
-          numero: true,
+        observacion: {
           required: false,
-          minlength: 9
-        }*/,
-        direccion: {
-          alfanumOespacio: true,
+          minlength: 3
+        },
+        marca: {
           required: true,
-          minlength: 6
+          minlength: 3
         },
-        correo: {
-          correo: true,
-          required:true,
-          minlength: 8,
-          maxlength: 150
+        modelo: {
+          required: false,
+          minlength: 3
         },
-        fecha_nacimiento: {
+        nserie: {
+          required: true,
+          minlength: 3
+        },
+        cantidad: {
+          numero: true,
+          required: true,
+          minlength: 1
+        },
+        fecha_adquisicion: {
           required:true,
-        }/*,
-        estadofam: {
+        },
+        financiamiento: {
           required: true
-        }*/,
-        puesto: {
+        },
+        valor_adquisicion: {
+          required: true,
+          minlength: 1
+        },
+        doc_adquisicion: {
+          required: false
+        },
+        proveedor: {
           required: true
-        }/*,
-        file:"required"*/
+        }
       },
       messages: {
-        nombre: {
-          required: "Por favor, ingrese nombre.",
-          maxlength: "Debe ingresar m&aacute;ximo 150 dígitos.",
+        categoria: {
+          required: "Por favor, seleccione categoría."
+        },
+        tipo_bien: {
+          required: "Por favor, seleccione tipo de bien."
+        },
+        descripcion: {
+          required: "Por favor, ingrese descripción.",
           minlength: "Debe ingresar m&iacute;nimo 3 dígitos."
         },
-        apellido: {
-          required: "Por favor, ingrese apellido.",
-          maxlength: "Debe ingresar m&aacute;ximo 150 dígitos.",
+        observacion: {
+          required: "Por favor, ingrese observación.",
           minlength: "Debe ingresar m&iacute;nimo 3 dígitos."
         },
-        dui: {
-          required: "Por favor, ingrese DUI.",
-          minlength: "Debe ingresar m&iacute;nimo 10 dígitos."
+        marca: {
+          required: "Por favor, ingrese marca.",
+          minlength: "Debe ingresar m&iacute;nimo 3 dígitos."
         },
-        nit: {
-          required: "Por favor, ingrese NIT.",
-          minlength: "Debe ingresar m&iacute;nimo 17 dígitos."
-        }/*,
-        telefono1: {
-          required: "Por favor, ingrese n&uacute;mero tel&eacute;fonico",
-          minlength: "Debe ingresar m&iacute;nimo 9 dígitos."
+        modelo: {
+          required: "Por favor, ingrese modelo.",
+          minlength: "Debe ingresar m&iacute;nimo 3 dígitos."
         },
-        telefono2: {
-          required: "Por favor, ingrese n&uacute;mero tel&eacute;fonico",
-          minlength: "Debe ingresar m&iacute;nimo 9 dígitos."
-        }*/,
-        direccion: {
-          required: "Por favor, ingrese direcci&oacute;n.",
-          minlength: "Debe ingresar m&iacute;nimo 6 dígitos."
+        nserie: {
+          required: "Por favor, ingrese número de serie.",
+          minlength: "Debe ingresar m&iacute;nimo 3 dígitos."
         },
-        correo: {
-          required: "Por favor, ingrese un correo v&aacute;lido",
-          maxlength: "Debe ingresar m&aacute;ximo 150 dígitos.",
-          minlength: "Debe ingresar m&iacute;nimo 8 dígitos."
+        cantidad: {
+          required: "Por favor, ingrese cantidad.",
+          minlength: "Debe ingresar m&iacute;nimo 1 dígitos."
         },
-        fecha_nacimiento: {
-          required:"Por favor, ingrese fecha de nacimiento",
-        }/*,
-        estadofam: {
-          required: "Por favor, seleccione estado."
-        }*/,
-        puesto: {
-          required: "Por favor, seleccione puesto."
-        }/*,
-        file: "Por favor, seleccione una foto."*/
+        fecha_adquisicion: {
+          required:"Por favor, ingrese fecha de adquisición",
+        },
+        financiamiento: {
+          required: "Por favor, seleccione financiamiento."
+        },
+        valor_adquisicion: {
+          required: "Por favor, ingrese valor de adquisición.",
+          minlength: "Debe ingresar m&iacute;nimo 1 dígitos."
+        },
+        doc_adquisicion: {
+          required: "Por favor, ingrese documento de adquisición.",
+        },
+        proveedor: {
+          required: "Por favor, seleccione proveedor."
+        },
       }
     });
-
 
     $('input[type=checkbox]').on('change', function() {
       if ($(this).is(':checked') ) {
@@ -175,10 +223,16 @@ $(document).ready(function(){
 $("#btnguardar").click(function(){
     if($("#form_activo_fijo").valid()){
         $("#bandera").val("add");
+        var formData = new FormData($("#form_activo_fijo")[0]);
         $.ajax({
           type: 'POST',
           url: '../../build/controladores/crud_activo_fijo.php',
-          data: $("#form_activo_fijo").serialize()
+          //datos del formulario
+          data: formData,
+          //necesario para subir archivos via ajax
+          cache: false,
+          contentType: false,
+          processData: false,
         })
         .done(function(resultado_ajax){
             alert(resultado_ajax);

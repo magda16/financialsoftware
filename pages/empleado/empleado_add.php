@@ -113,7 +113,7 @@
                 <label class="control-label" for="fecha_nacimiento"><i class="ic"></i> Fecha Nacimiento</label>
                 <div class="input-group">
                   <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                  <input type="text" id="fecha_nacimiento" name="fecha_nacimiento" class="form-control" placeholder="Ingrese Fecha Nacimiento">
+                  <input type="text" id="fecha_nacimiento" name="fecha_nacimiento" class="form-control" placeholder="Ingrese Fecha: día/mes/año">
                 </div>
                 <span class="help-block"></span>
               </div>

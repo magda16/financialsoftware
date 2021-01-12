@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 09-01-2021 a las 02:02:51
+-- Tiempo de generación: 12-01-2021 a las 01:50:27
 -- Versión del servidor: 5.7.21
 -- Versión de PHP: 5.6.35
 
@@ -25,28 +25,84 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `catalogo_activos`
+-- Estructura de tabla para la tabla `activo_categoria`
 --
 
-DROP TABLE IF EXISTS `catalogo_activos`;
-CREATE TABLE IF NOT EXISTS `catalogo_activos` (
-  `id_catalogo_activos` int(11) NOT NULL AUTO_INCREMENT,
+DROP TABLE IF EXISTS `activo_categoria`;
+CREATE TABLE IF NOT EXISTS `activo_categoria` (
+  `id_activo_categoria` int(11) NOT NULL AUTO_INCREMENT,
   `codigo` text NOT NULL,
   `categoria` text NOT NULL,
   `tipo` varchar(20) NOT NULL,
   `fecha_ingreso` timestamp NOT NULL,
   `estado` varchar(8) NOT NULL,
   `id_usuario` int(11) NOT NULL,
-  PRIMARY KEY (`id_catalogo_activos`)
+  PRIMARY KEY (`id_activo_categoria`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
--- Volcado de datos para la tabla `catalogo_activos`
+-- Volcado de datos para la tabla `activo_categoria`
 --
 
-INSERT INTO `catalogo_activos` (`id_catalogo_activos`, `codigo`, `categoria`, `tipo`, `fecha_ingreso`, `estado`, `id_usuario`) VALUES
+INSERT INTO `activo_categoria` (`id_activo_categoria`, `codigo`, `categoria`, `tipo`, `fecha_ingreso`, `estado`, `id_usuario`) VALUES
 (1, 'AcT', 'Baterias', 'Otros Bienes Muebles', '2020-11-28 03:37:59', 'Activo', 1),
 (2, 'uj78', 'laptop', 'Otros Bienes Muebles', '2020-12-23 18:46:59', 'Activo', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `activo_fijo`
+--
+
+DROP TABLE IF EXISTS `activo_fijo`;
+CREATE TABLE IF NOT EXISTS `activo_fijo` (
+  `id_activo_fijo` int(11) NOT NULL AUTO_INCREMENT,
+  `codigo` text NOT NULL,
+  `descripcion` text NOT NULL,
+  `observacion` text NOT NULL,
+  `calidad` varchar(8) NOT NULL,
+  `marca` text NOT NULL,
+  `modelo` text NOT NULL,
+  `num_serie` text NOT NULL,
+  `lote` text NOT NULL,
+  `fecha_adquisicion` date NOT NULL,
+  `financiamiento` varchar(200) NOT NULL,
+  `valor_adquisicion` decimal(10,2) NOT NULL,
+  `valor_estimado` varchar(2) NOT NULL,
+  `doc_adquisicion` text NOT NULL,
+  `id_categoria` int(11) NOT NULL,
+  `id_subcategoria` int(11) NOT NULL,
+  `id_proveedor` int(11) NOT NULL,
+  `fecha_ingreso` timestamp NOT NULL,
+  `estado` varchar(8) NOT NULL,
+  `id_usuario` int(11) NOT NULL,
+  PRIMARY KEY (`id_activo_fijo`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `activo_subcategoria`
+--
+
+DROP TABLE IF EXISTS `activo_subcategoria`;
+CREATE TABLE IF NOT EXISTS `activo_subcategoria` (
+  `id_activo_subcategoria` int(11) NOT NULL AUTO_INCREMENT,
+  `codigo` text NOT NULL,
+  `subcategoria` text NOT NULL,
+  `id_activo_categoria` int(11) NOT NULL,
+  `fecha_ingreso` timestamp NOT NULL,
+  `estado` varchar(8) NOT NULL,
+  PRIMARY KEY (`id_activo_subcategoria`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `activo_subcategoria`
+--
+
+INSERT INTO `activo_subcategoria` (`id_activo_subcategoria`, `codigo`, `subcategoria`, `id_activo_categoria`, `fecha_ingreso`, `estado`) VALUES
+(1, 'ba0001', 'baterias', 1, '2021-01-09 20:24:40', 'Activo'),
+(2, 'bt0002', 'baterias para pc de escritorio', 1, '2021-01-11 22:38:29', 'Activo');
 
 -- --------------------------------------------------------
 

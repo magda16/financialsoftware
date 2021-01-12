@@ -2,7 +2,7 @@
     
     function obtenerCategoria(){
         require 'conexion.php';
-        $stmt= $pdo->prepare("SELECT id_activo_categoria, codigo, categoria FROM activo_categoria ORDER BY categoria");
+        $stmt= $pdo->prepare("SELECT DISTINCT ac.id_activo_categoria, ac.codigo, ac.categoria FROM activo_categoria AS ac INNER JOIN activo_subcategoria AS asub ON (ac.id_activo_categoria=asub.id_activo_categoria) ORDER BY ac.categoria");
         $stmt->execute();
         $result=$stmt->fetchAll(PDO::FETCH_ASSOC);  
         $listas = "<option value=''>Seleccione Categoría...</option>";

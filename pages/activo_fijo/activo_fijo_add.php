@@ -74,21 +74,13 @@
               <div class="form-group">
                 <label class="control-label" for="categoria"><i class="ic"></i> Categoría</label>
                 <select class="form-control" id="categoria" name="categoria">
-                  <option selected="selected" value="">Seleccione Categoría...</option>
-                  <option value="Edificaciones">Edificaciones</option>
-                  <option value="Maquinaria">Maquinaria</option>
-                  <option value="Otros Bienes Muebles">Otros Bienes Muebles</option>
                 </select>
                 <span class="help-block"></span>
               </div>
 
               <div class="form-group">
-                <label class="control-label" for="tipo"><i class="ic"></i> Tipo de Bien</label>
-                <select class="form-control" id="tipo" name="tipo">
-                  <option selected="selected" value="">Seleccione Tipo de Bien...</option>
-                  <option value="Edificaciones">Edificaciones</option>
-                  <option value="Maquinaria">Maquinaria</option>
-                  <option value="Otros Bienes Muebles">Otros Bienes Muebles</option>
+                <label class="control-label" for="tipo_bien"><i class="ic"></i> Tipo de Bien</label>
+                <select class="form-control" id="tipo_bien" name="tipo_bien">
                 </select>
                 <span class="help-block"></span>
               </div>
@@ -195,7 +187,7 @@
               <div class="row">
 
                 <div class="col-xs-6 form-group">
-                  <label class="control-label">Lote</label>
+                  <label class="control-label">Lote &nbsp;&nbsp;</label>
                     <input type="checkbox" class="js-switch" id="switch1" name="switch1"/>
                 </div>
 
@@ -242,7 +234,7 @@
                   <label class="control-label" for="fecha_adquisicion"><i class="ic"></i> Fecha de Adquisición</label>
                   <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                    <input type="text" id="fecha_adquisicion" name="fecha_adquisicion" class="form-control" placeholder="Ingrese Fecha Adquisición">
+                    <input type="text" id="fecha_adquisicion" name="fecha_adquisicion" class="form-control" placeholder="Ingrese Fecha: día/mes/año" data-date-end-date = "0d">
                   </div>
                   <span class="help-block"></span>
                 </div>
@@ -251,9 +243,9 @@
                   <label class="control-label" for="financiamiento"><i class="ic"></i> Financiamiento</label>
                   <select class="form-control" id="financiamiento" name="financiamiento">
                     <option selected="selected" value="">Seleccione Financiamiento...</option>
-                    <option value="Edificaciones">Edificaciones</option>
-                    <option value="Maquinaria">Maquinaria</option>
-                    <option value="Otros Bienes Muebles">Otros Bienes Muebles</option>
+                    <option value="Nuevo">Nuevo</option>
+                    <option value="Donado">Donado</option>
+                    <option value="Usado">Usado</option>
                   </select>
                   <span class="help-block"></span>
                 </div>
@@ -263,10 +255,10 @@
               <div class="row">
 
                 <div class="col-xs-6 form-group">
-                  <label class="control-label" for="efectivo"><i class="ic"></i> Valor de Adquisición</label>
+                  <label class="control-label" for="valor_adquisicion"><i class="ic"></i> Valor de Adquisición</label>
                   <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-usd"></i></span>
-                    <input type="text" id="efectivo" name="efectivo" class="form-control" placeholder="Ingrese Efectivo">
+                    <input type="text" id="valor_adquisicion" name="valor_adquisicion" class="form-control" placeholder="Ingrese Valor de Adquisición">
                   </div>
                   <span class="help-block"></span>
                 </div>    
@@ -290,8 +282,8 @@
               </div>
 
               <div class="form-group">
-                <label class="control-label" for="doc"><i class="ic"></i> Documento de Adquisición</label>
-                <input type="file" id="doc" name="doc" accept="image/*"/>
+                <label class="control-label" for="doc_adquisicion"><i class="ic"></i> Documento de Adquisición</label>
+                <input type="file" id="doc_adquisicion" name="doc_adquisicion" accept=".pdf,.jpg,.png"/>
                 <span class="help-block"></span>
               </div>
 
