@@ -86,7 +86,7 @@
 
                     echo "<thead>";
                     echo "<tr>";
-                    echo "<th colspan='2'> <h4 style='color: #00c0ef;'>".$lista_activo_categoria['categoria'].".</h4></th>";                    
+                    echo "<th colspan='2'> <h4 style='color: #00c0ef;'><strong>".$lista_activo_categoria['categoria'].".</strong></h4></th>";                    
                     echo "<th ><div align='center'><a id='paso4' href='../../pages/catalogo_activos/catalogo_subcategoria_add.php' class='btn btn-info' type='button' onclick='imprecepciondocumentos(".$id_activo_categoria.")' data-toggle='tooltip' data-placement='top' title='Agregar Tipo de Bien'><i class='fa fa-plus'></i></a>";
                     echo "</tr>";
 
@@ -94,12 +94,10 @@
                     echo "<th color: RGB(0, 0, 128);'>No.</th>";
                     echo "<th color: RGB(0, 0, 128);'>C&oacute;digo</th>";
                     echo "<th color: RGB(0, 0, 128);'>Tipo de Bien</th>";
-
                     echo "</tr>";
                     echo "</thead>";
                     echo "<tbody>";
 
-                        
                     $contador=1;
                     $stmt1= $pdo->prepare("SELECT id_activo_subcategoria, codigo, subcategoria FROM activo_subcategoria WHERE id_activo_categoria=:id_activo_categoria ORDER BY subcategoria");
                     $stmt1->bindParam(":id_activo_categoria",$id_activo_categoria,PDO::PARAM_INT);

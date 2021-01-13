@@ -12,8 +12,8 @@
   <link rel="stylesheet" href="../../bower_components/font-awesome/css/font-awesome.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="../../bower_components/Ionicons/css/ionicons.min.css">
-  <!-- bootstrap-datepicker -->
-  <link href="../../plugins/bootstrap-datepicker/css/bootstrap-datepicker.css" rel="stylesheet">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="../../bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
   <!-- PNotify -->
   <link href="../../plugins/PNotify/dist/PNotifyBrightTheme.css" rel="stylesheet" type="text/css" />
   <!-- Theme style -->
@@ -31,31 +31,6 @@
 
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-  
-  <style>
-    #preview {
-      width: 45%;
-      margin: 0 auto;
-      margin-bottom: 10px;
-      position: relative;
-    }
-         
-    #preview a {
-      position: absolute;
-      bottom: 5px;
-      left: 5px;
-      right: 5px;
-      display: none;
-    }
-
-    input[type=file] {
-      position: absolute;
-      visibility: hidden;
-      width: 0;
-      z-index: -9999;
-    }      
-  </style>
-
 </head>
 <body class="hold-transition skin-blue-light sidebar-mini">
 <div class="wrapper">
@@ -70,9 +45,9 @@
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1>
-        Empleado
-        <small>Registro</small>
+      <h1><i class="fa fa-cubes"></i>
+        Producto
+        <small>Mantenimiento</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -84,178 +59,73 @@
     <!-- Main content -->
     <section class="content">
       <div class="row">
-      <form id="form_empleado" name="form_empleado" action="" method="POST" enctype="multipart/form-data">
+      <form id="form_proveedor" name="form_proveedor" action="" method="POST">
         <input type="hidden" name="bandera" id="bandera">
 
-        <!-- left column -->
-        <div class="col-md-6">
-          <!-- general form elements -->
-          <div class="box box-success">
-            <div class="box-header with-border">
-              <h3 class="box-title">Datos Personales</h3>
-            </div>
-            <div class="box-body">
-
-              <!--inicia el div para capturar la imagen -->
-              <div class="form-group" align="center" >
-                <label for="control-label" for="foto">Fotografía:</label>
-                <div name="preview" id="preview" class="thumbnail">
-                  <a href="#" id="file-select" class="btn btn-success"><span class="fa fa-camera">&nbsp;&nbsp;&nbsp;</span>Elegir archivo</a>
-                  <img src="../../files/user5.png"/>
-                </div>
-
-                <div id="file-submit" >
-                  <input id="file" name="file" type="file" accept="image/*" />
-                  <span class="help-block" id="error"></span>
-                </div> 
-              </div>
-              <!--finaliza el div para capturar la imagen -->
-
-              <div class="form-group">
-                <label class="control-label" for="nombre"><i class="ic"></i> Nombre</label>
-                <div class="input-group">
-                  <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                  <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Ingrese Nombre">
-                </div>
-                <span class="help-block"></span>
-              </div>
-
-              <div class="form-group">
-                <label class="control-label" for="apellido"><i class="ic"></i> Apellido</label>
-                <div class="input-group">
-                  <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                  <input type="text" id="apellido" name="apellido" class="form-control" placeholder="Ingrese Apellido">
-                </div>
-                <span class="help-block"></span>
-              </div>
-
-              <div class="row">
-                <div class="col-xs-6 form-group">
-                  <label class="control-label" for="dui"><i class="ic"></i> DUI</label>
-                  <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-id-card-o"></i></span>
-                    <input type="text" id="dui" name="dui" class="form-control" placeholder="Ingrese DUI" data-inputmask='"mask": "99999999-9"' data-mask>
-                  </div>
-                  <span class="help-block"></span>
-                </div>
-
-                <div class="col-xs-6 form-group">
-                  <label class="control-label" for="nit"><i class="ic"></i> NIT</label>
-                  <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-id-card-o"></i></span>
-                    <input type="text" id="nit" name="nit" class="form-control" placeholder="Ingrese NIT" data-inputmask='"mask": "9999-999999-999-9"' data-mask>
-                  </div>
-                  <span class="help-block"></span>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-xs-6 form-group">
-                  <label class="control-label" for="fecha_nacimiento"><i class="ic"></i> Fecha de Nacimiento</label>
-                  <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                    <input type="text" id="fecha_nacimiento" name="fecha_nacimiento" class="form-control" placeholder="Ingrese Fecha: día/mes/año">
-                  </div>
-                  <span class="help-block"></span>
-                </div>
-
-                <div class="col-xs-6 form-group has-success">
-                  <label class="control-label" for="genero"><i class="fa fa-check"></i> G&eacute;nero</label>
-                  <div class="radio">
-                    <label>
-                      <input type="radio" name="genero" id="masculino" value="Masculino" checked>
-                      <i class="fa fa-male"></i> Masculino
-                    </label>
-                  </div>
-                  <div class="radio">
-                    <label>
-                      <input type="radio" name="genero" id="femenino" value="Femenino">
-                      <i class="fa fa-female"></i> Femenino
-                    </label>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-            <!-- /.box-body -->     
-          </div>
-          <!-- /.box -->
-
-        </div>
-        <!--/.col (left) -->
-        <!-- right column -->
-        <div class="col-md-6">
-
-          <div class="box box-success">
-            <div class="box-header with-border">
-              <h3 class="box-title">Datos Laborales</h3>
-            </div>
-            <div class="box-body">
-
-              <div class="form-group">
-                <label class="control-label" for="puesto"><i class="ic"></i> Puesto</label>
-                <select class="form-control" id="puesto" name="puesto">
-                  <option selected="selected" value="">Seleccione Puesto...</option>
-                  <option value="Administrador">Administrador</option>
-                  <option value="Vendedor">Vendedor</option>
-                </select>
-                <span class="help-block"></span>
-              </div>
-
-            </div>
-            <!-- /.box-body -->
-          </div>
-          <!-- /.box -->
-
-          <!-- general form elements disabled -->
-          <div class="box box-success">
-            <div class="box-header with-border">
-              <h3 class="box-title">Datos de Contacto</h3>
+        <div class="col-xs-12">
+          <div class="box box-info">
+            <div class="box-header">
+              <h3 class="box-title">Lista de Productos</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
+              
+              <?php
+
+                echo "<table id='datatable-responsive1' class='table table-striped table-bordered dt-responsive nowrap' cellspacing='0' width='100%'>";
+
+                  include ("../../build/controladores/conexion.php");
+                  $stmt= $pdo->prepare("SELECT * FROM activo_categoria ORDER BY categoria");
+                  $stmt->execute();
+                  $result=$stmt->fetchAll(PDO::FETCH_ASSOC);
+                  foreach($result as $lista_activo_categoria){
+                    $id_activo_categoria=$lista_activo_categoria['id_activo_categoria'];
+
+                    echo "<input type='hidden' name='bandera' id='bandera'>";
+                    echo "<input type='hidden' name='baccion' id='baccion'>";
+
+                    echo "<thead>";
+                    echo "<tr>";
+                    echo "<th colspan='2'> <h4 style='color: #00c0ef;'>".$lista_activo_categoria['categoria'].".</h4></th>";                    
+                    echo "<th ><div align='center'><a id='paso4' href='../../pages/catalogo_activos/catalogo_subcategoria_add.php' class='btn btn-info' type='button' onclick='imprecepciondocumentos(".$id_activo_categoria.")' data-toggle='tooltip' data-placement='top' title='Agregar Tipo de Bien'><i class='fa fa-plus'></i></a>";
+                    echo "</tr>";
+
+                    echo "<tr>";
+                    echo "<th color: RGB(0, 0, 128);'>No.</th>";
+                    echo "<th color: RGB(0, 0, 128);'>C&oacute;digo</th>";
+                    echo "<th color: RGB(0, 0, 128);'>Tipo de Bien</th>";
+                    echo "</tr>";
+                    echo "</thead>";
+                    echo "<tbody>";
+
+                    $contador=1;
+                    $stmt1= $pdo->prepare("SELECT id_activo_subcategoria, codigo, subcategoria FROM activo_subcategoria WHERE id_activo_categoria=:id_activo_categoria ORDER BY subcategoria");
+                    $stmt1->bindParam(":id_activo_categoria",$id_activo_categoria,PDO::PARAM_INT);
+                    $stmt1->execute();
+                    $result1=$stmt1->fetchAll(PDO::FETCH_ASSOC);
+                    foreach($result1 as $lista_activo_subcategoria){
+                            
+                      echo "<tr>";
+                      echo "<td>" .$contador. "</td>";
+                      echo "<td>" . $lista_activo_subcategoria['codigo'] . "</td>";
+                      echo "<td>" . $lista_activo_subcategoria['subcategoria'] . "</td>";
+                      echo "</tr>";
                 
-              <div class="form-group">
-                <label class="control-label" for="direccion"><i class="ic"></i> Dirección</label>
-                <div class="input-group">
-                  <span class="input-group-addon"><i class="fa fa-truck"></i></span>
-                  <input type="text" id="direccion" name="direccion" class="form-control" placeholder="Ingrese Dirección">
-                </div>
-                <span class="help-block"></span>
-              </div>
+                      $contador++;
+                    }
+        
+                  }
 
-              <div class="form-group">
-                <label class="control-label" for="correo"><i class="ic"></i> Correo Electrónico</label>
-                <div class="input-group">
-                  <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                  <input type="text" id="correo" name="correo" class="form-control" placeholder="Ingrese Correo Electrónico">
-                </div>
-                <span class="help-block"></span>
-              </div>
-
-              <div class="form-group">
-                <label class="control-label" for="telefono"><i class="ic"></i> Teléfono</label>
-                <div class="input-group col-xs-6">
-                  <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                  <input type="text" id="telefono" name="telefono" class="form-control" placeholder="Ingrese Teléfono" data-inputmask='"mask": "9999-9999"' data-mask>
-                </div>
-                <span class="help-block"></span>
-              </div>
-
+                  echo "</tbody>";
+                  echo "</table>";
+                ?>
+              
             </div>
             <!-- /.box-body -->
-            <div class="box-footer" align="right">
-              <button type="button" id="btnguardar" name="btnguardar" class="btn btn-round btn-success">
-                <span class="fa fa-floppy-o">&nbsp;&nbsp;&nbsp;</span>Guardar Empleado
-              </button>
-                        
-              <button type="submit" class="btn btn-round btn-default" onclick="location.href='../../pages/acceso/inicio.php'">
-                <span class="fa fa-ban">&nbsp;&nbsp;&nbsp;</span>Cancelar Proceso
-              </button>
-            </div>
           </div>
           <!-- /.box -->
+
         </div>
-        <!--/.col (right) -->
         </form>
       </div>
       <!-- /.row -->
@@ -471,8 +341,9 @@
 <script src="../../bower_components/fastclick/lib/fastclick.js"></script>
 <!-- InputMask -->
 <script src="../../plugins/input-mask/jquery.inputmask.js"></script>
-<!-- bootstrap-datepicker -->
-<script src="../../plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+<!-- DataTables -->
+<script src="../../bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="../../bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 <!-- PNotify -->
 <script src="../../plugins/PNotify/dist/iife/PNotify.js"></script>
 <script src="../../plugins/PNotify/dist/iife/PNotifyButtons.js"></script>
@@ -480,7 +351,7 @@
 <script src="../../plugins/PNotify/dist/iife/PNotifyMobile.js"></script>
 <!-- Validate -->
 <script src="../../plugins/validar/jquery.validate.js"></script>
-<script src="../../build/validaciones/empleado/empleado_add.js"></script>
+<script src="../../build/validaciones/proveedor/proveedor_list.js"></script>
 <!-- AdminLTE App -->
 <script src="../../dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->

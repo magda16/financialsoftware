@@ -11,8 +11,14 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
         
         function obtenerResultado(){
           include ("conexion.php");
+
+          /// todo activo mayor a 600 se calcula deprecion
+          // Edificios 40 años vida util
+          // moviliario 5 años
+          // maquinaria y equipo 10
+          // vehiculos 10 años
           
-         
+          
           $id_categoria=$_POST["categoria"];
           $id_subcategoria=$_POST["tipo_bien"];
           $codigo_inv=$_POST["codigo_inv"];
@@ -113,8 +119,6 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
           //$id_usuario=$_POST["id_usuario"];
           $id_usuario=1;
 
-          
-
           $pdo->beginTransaction();
 
           if($num_serie!=""){
@@ -210,7 +214,6 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
             }
             
           } 
-          
           
           $stmt->close();
         

@@ -159,9 +159,9 @@ $(document).ready(function(){
     });
 });
 
-$("#btnguardar").click(function(){
+$("#btneditar").click(function(){
     if($("#form_empleado").valid()){
-        $("#bandera").val("add");
+        $("#bandera").val("edit");
       
         var formData = new FormData($("#form_empleado")[0]);
         $.ajax({
@@ -177,10 +177,10 @@ $("#btnguardar").click(function(){
         .done(function(resultado_ajax){
             alert(resultado_ajax);
           if(resultado_ajax === "Exito"){
-            $("#btnguardar").attr("disabled",true);
+            $("#btneditar").attr("disabled",true);
             PNotify.success({
               title: 'Éxito',
-              text: 'Registro almacenado.',
+              text: 'Registro actualizado.',
               styling: 'bootstrap3',
               icons: 'bootstrap3',
               hide: false,
@@ -192,7 +192,7 @@ $("#btnguardar").click(function(){
                     primary: true,
                     click: function(notice) {
                       notice.close();
-                      location.href='../../pages/empleado/empleado_add.php';
+                      location.href='../../pages/empleado/empleado_list.php';
                     }
                   }]
                 },
@@ -221,7 +221,7 @@ $("#btnguardar").click(function(){
                     primary: true,
                     click: function(notice) {
                       notice.close();
-                      location.href='../../pages/empleado/empleado_add.php';
+                      location.href='../../pages/empleado/empleado_list.php';
                     }
                   }]
                 },

@@ -45,7 +45,7 @@
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1>
+      <h1><i class="fa fa-cubes"></i>
         Producto
         <small>Registro</small>
       </h1>
