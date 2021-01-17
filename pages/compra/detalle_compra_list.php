@@ -1,3 +1,18 @@
+<?php
+/*session_start();
+$logueo=$_SESSION['acceso'];
+if($logueo=='si'){
+include ("../build/conexion.php");
+$nivel_usu=$_SESSION['nivel'];*/
+
+  include ("../../build/controladores/conexion.php");
+
+  if(isset($_POST['id'])){
+    $id_compra=$_POST['id'];
+  }else{
+    header('location: compra_list.php');
+  }
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -45,8 +60,8 @@
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1><i class="fa fa-building-o"></i>
-        Proveedor
+      <h1><i class="fa fa-cart-plus"></i>
+        Compra
         <small>Mantenimiento</small>
       </h1>
     </section>
@@ -54,40 +69,54 @@
     <!-- Main content -->
     <section class="content">
       <div class="row">
-      
+    
         <div class="col-xs-12">
           <div class="box box-info">
             <div class="box-header">
-              <h3 class="box-title">Lista de Proveedores</h3>
+              <button type="button" class="btn bg-purple" onclick="location.href='../../pages/compra/compra_list.php'">
+                <span class="fa fa-arrow-circle-left">&nbsp;&nbsp;&nbsp;</span>Regresar
+              </button>
+              <h3 class="box-title">&nbsp;&nbsp;&nbsp;Detalle de Compras</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
 
-              <input type="hidden" id="id_usuario" name="id_usuario"  value="<?php // echo $_SESSION['id_usuario_admin']; ?>">
-              <input type="hidden" name="user" id="user" value="<?php //echo $_SESSION['nivel']; ?>">
-              <input type="hidden" name="estado" id="estado" value="<?php echo "Activo"; ?>">
-              
-              <div class="margin">
-                <div class="btn-group">
-                  <button type="button" class="btn btn-info">Acciones</button>
-                  <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-                    <span class="caret"></span>
-                    <span class="sr-only">Toggle Dropdown</span>
-                  </button>
-                  <ul class="dropdown-menu" role="menu">
-                    <li><a onclick="mostrar_activo()">Activo</a></li>
-                    <li><a onclick="mostrar_inactivo()">Inactivo</a></li>
-                  </ul>
-                </div>
-              </div>
-
-              <!-- /.inicio tabla -->
-              <div id="div_proveedor_table">
-              </div>
-
-              <form id="from_proveedor_edit" name="from_proveedor_edit" action="proveedor_edit.php" method="POST">
-                <input type="hidden" id="id" name="id">
-              </form>
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Producto</th>
+                      <th>Cantidad</th>
+                      <th>Precio</th>
+                      <th>Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php
+                    $contador=1;
+                                
+                    $stmt1= $pdo->prepare("SELECT dc.cantidad, dc.precio, dc.id_producto, p.nombre, (dc.cantidad * dc.precio) AS subtotal FROM detalle_compra AS dc INNER JOIN producto AS p ON (dc.id_producto=p.id_producto) WHERE id_compra=:id_compra");
+                    $stmt1->bindParam(":id_compra",$id_compra,PDO::PARAM_INT);
+                    $stmt1->execute();
+                    $result=$stmt1->fetchAll(PDO::FETCH_ASSOC);
+                    $total=0;
+                    foreach($result as $lista_detalle_compra){
+                      echo "<tr>";
+                        echo "<td>" .$contador. "</td>";
+                        echo "<td>" . $lista_detalle_compra['nombre'] . "</td>";
+                        echo "<td>" . $lista_detalle_compra['cantidad'] . "</td>";
+                        echo "<td> $ " . $lista_detalle_compra[ 'precio'] ."</td>";
+                        echo "<td> $ " . $lista_detalle_compra[ 'subtotal'] ."</td>";
+                      echo "</tr>";
+                      $contador++;
+                      $total= ($total + $lista_detalle_compra[ 'subtotal']);
+                    }
+                ?>
+                </tbody>
+                </tfoot>
+                <span class="label label-info fa fa-caret-right">&nbsp;&nbsp;<?php echo "TOTAL DETALLE DE COMPRA $".$total; ?> &nbsp;</span>
+                </br></br>
+              </table>
               
             </div>
             <!-- /.box-body -->
@@ -95,7 +124,6 @@
           <!-- /.box -->
 
         </div>
-      
       </div>
       <!-- /.row -->
     </section>

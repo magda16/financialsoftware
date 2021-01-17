@@ -8,7 +8,7 @@
     }
 
 ?>
-    </br></br>
+    </br>
     <table id="example1" class="table table-bordered table-striped">
         <thead>
             <tr>
@@ -39,9 +39,7 @@
                     echo "<td>" . $lista_proveedor['telefono'] . "</td>";
                     echo "<td>" . $lista_proveedor['correo'] . "</td>";
                     echo "<td>";
-                              
-                           
-                                
+                                   
                             if($estado_list=="Activo"){
                                 echo "<a class='btn btn-primary' onclick='editar_proveedor(".$lista_proveedor['id_proveedor'].")' data-toggle='tooltip' data-placement='top' title='Actualizar Proveedor'><i class='fa fa-refresh'></i></a>";
                                 echo "<a class='btn btn-danger' onclick='dar_baja_proveedor(".$lista_proveedor['id_proveedor'].")' data-toggle='tooltip' data-placement='top' title='Dar Baja Proveedor'><i class='fa fa-long-arrow-down'></i></a>";

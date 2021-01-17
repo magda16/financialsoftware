@@ -1,5 +1,58 @@
 <?php
-  $tipo_cliente_r="Persona";
+/*session_start();
+$logueo=$_SESSION['acceso'];
+if($logueo=='si'){
+include ("../build/conexion.php");
+$nivel_usu=$_SESSION['nivel'];*/
+ 
+  include ("../../build/controladores/conexion.php");
+//$id_cliente=1;
+  if(isset($_POST["id"])){
+    
+   $id_cliente=$_POST["id"];
+
+$tipo_r=$_POST["tipo"];
+    if ($tipo_r=="Persona") {
+  # code...
+      $stmt= $pdo->prepare("SELECT * FROM cliente WHERE id_cliente=:id_cliente");
+    $stmt->bindParam(":id_cliente",$id_cliente,PDO::PARAM_INT);
+    $stmt->execute();
+    $result=$stmt->fetchAll(PDO::FETCH_ASSOC);
+    foreach($result as $lista_cliente){ 
+      $nombre_r=$lista_cliente['nombre'];
+      $apellido_r=$lista_cliente['apellido'];
+      $dui_r=$lista_cliente['dui'];
+      $nit_r=$lista_cliente['nit'];
+      $fechanac_r=$lista_cliente['fecha_nac'];
+      $genero_r=$lista_cliente['genero'];
+      $direccion_r=$lista_cliente['direccion'];
+      $correo_r=$lista_cliente['correo'];
+      $telefono_r=$lista_cliente['telefono'];
+      $fotografia_r=$lista_cliente['fotografia'];
+      
+    }
+
+    }else {
+      # code...
+      $stmt= $pdo->prepare("SELECT * FROM cliente_institucion WHERE id_cliente_institucion=:id_cliente");
+    $stmt->bindParam(":id_cliente",$id_cliente,PDO::PARAM_INT);
+    $stmt->execute();
+    $result=$stmt->fetchAll(PDO::FETCH_ASSOC);
+    foreach($result as $lista_cliente){ 
+      $nombrei_r=$lista_cliente['nombre'];
+      $niti_r=$lista_cliente['nit'];
+      $nrci_r=$lista_cliente['nrc'];
+      $direccioni_r=$lista_cliente['direccion'];
+      $correoi_r=$lista_cliente['correo'];
+      $telefonoi_r=$lista_cliente['telefono'];
+      $fotografia_r=$lista_cliente['fotografia'];
+      
+    }
+    }
+    
+ }else{
+   header('location: cliente_list.php');
+ }
 ?>
 <!DOCTYPE html>
 <html>
@@ -75,13 +128,8 @@
     <section class="content-header">
       <h1><i class="fa fa-users"></i>
         Cliente
-        <small>Registro</small>
+        <small>Mantenimiento</small>
       </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Forms</a></li>
-        <li class="active">General Elements</li>
-      </ol>
     </section>
 
     <!-- Main content -->
@@ -89,11 +137,13 @@
       <div class="row">
       <form id="form_cliente" name="form_cliente" action="" method="POST" enctype="multipart/form-data">
         <input type="hidden" name="bandera" id="bandera">
+        <input type="hidden" name="id_cliente" id="id_cliente" value="<?php echo $id_cliente; ?>" >
+        <input type="hidden" name="foto" id="foto" value="<?php echo $fotografia_r; ?>" >
 
         <!-- left column -->
         <div class="col-md-6">
           <!-- general form elements -->
-          <div class="box box-success">
+          <div class="box box-primary">
             <div class="box-header with-border">
               <h3 class="box-title">Datos Generales</h3>
             </div>
@@ -104,7 +154,7 @@
                 <label for="control-label" for="foto">Fotografía:</label>
                 <div name="preview" id="preview" class="thumbnail">
                   <a href="#" id="file-select" class="btn btn-success"><span class="fa fa-camera">&nbsp;&nbsp;&nbsp;</span>Elegir archivo</a>
-                  <img src="../../files/user2.png"/>
+                  <img src="<?php  if($fotografia_r != ""){ echo "../../".$fotografia_r; }else{ echo "../../files/user2.png"; } ?>"/>
                 </div>
 
                 <div id="file-submit" >
@@ -116,11 +166,10 @@
 
               <div class="form-group">
                 <label class="control-label" for="tipo_cliente"><i class="ic"></i> Tipo de Cliente </label>
-                <select class="form-control" id="tipo_cliente" name="tipo_cliente">
-                  <option selected="selected" value="">Seleccione Tipo Cliente...</option>
-                  <option value="Persona" <?php if($tipo_cliente_r=="Persona") echo "selected"; ?> >Persona</option>
-                  <option value="Institucion" <?php if($tipo_cliente_r=="Institucion") echo "selected"; ?> >Institución</option>
-                </select>
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                    <input type="text" id="tipo" name="tipo" class="form-control" placeholder="Ingrese Nombre" value="<?php echo $tipo_r; ?>" readonly>
+                  </div>
                 <span class="help-block"></span>
               </div>
 
@@ -129,7 +178,7 @@
                   <label class="control-label" for="nombre"><i class="ic"></i> Nombre</label>
                   <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                    <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Ingrese Nombre">
+                    <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Ingrese Nombre" value="<?php if($tipo_r=='Persona'){echo $nombre_r;}else{echo '';} ?>">
                   </div>
                   <span class="help-block"></span>
                 </div>
@@ -138,7 +187,7 @@
                   <label class="control-label" for="apellido"><i class="ic"></i> Apellido</label>
                   <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                    <input type="text" id="apellido" name="apellido" class="form-control" placeholder="Ingrese Apellido">
+                    <input type="text" id="apellido" name="apellido" class="form-control" placeholder="Ingrese Apellido" value="<?php if($tipo_r=='Persona'){echo $apellido_r;}else{echo '';} ?>">
                   </div>
                   <span class="help-block"></span>
                 </div>
@@ -148,7 +197,7 @@
                     <label class="control-label" for="dui"><i class="ic"></i> DUI</label>
                     <div class="input-group">
                       <span class="input-group-addon"><i class="fa fa-id-card-o"></i></span>
-                      <input type="text" id="dui" name="dui" class="form-control" placeholder="Ingrese DUI" data-inputmask='"mask": "99999999-9"' data-mask>
+                      <input type="text" id="dui" name="dui" class="form-control" placeholder="Ingrese DUI" data-inputmask='"mask": "99999999-9"' data-mask value="<?php if($tipo_r=='Persona'){echo $dui_r;}else{echo '';} ?>">
                     </div>
                     <span class="help-block"></span>
                   </div>
@@ -157,7 +206,7 @@
                     <label class="control-label" for="nit"><i class="ic"></i> NIT</label>
                     <div class="input-group">
                       <span class="input-group-addon"><i class="fa fa-id-card-o"></i></span>
-                      <input type="text" id="nit" name="nit" class="form-control" placeholder="Ingrese NIT" data-inputmask='"mask": "9999-999999-999-9"' data-mask>
+                      <input type="text" id="nit" name="nit" class="form-control" placeholder="Ingrese NIT" data-inputmask='"mask": "9999-999999-999-9"' data-mask value="<?php if($tipo_r=='Persona'){echo $nit_r;}else{echo '';} ?>">
                     </div>
                     <span class="help-block"></span>
                   </div>
@@ -168,26 +217,26 @@
                     <label class="control-label" for="fecha_nacimiento"><i class="ic"></i> Fecha Nacimiento</label>
                     <div class="input-group">
                       <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                      <input type="text" id="fecha_nacimiento" name="fecha_nacimiento" class="form-control" placeholder="Ingrese Fecha Nacimiento">
+                      <input type="text" id="fecha_nacimiento" name="fecha_nacimiento" class="form-control" placeholder="Ingrese Fecha Nacimiento" value="<?php if($tipo_r=='Persona'){echo $fechanac_r;}else{echo '';} ?>">
                     </div>
                     <span class="help-block"></span>
                   </div>
 
                   <div class="col-xs-6 form-group has-success">
-                    <label class="control-label" for="genero"><i class="fa fa-check"></i> G&eacute;nero</label>
-                    <div class="radio">
-                      <label>
-                        <input type="radio" name="genero" id="masculino" value="Masculino" checked>
-                        <i class="fa fa-male"></i> Masculino
-                      </label>
-                    </div> 
-                    <div class="radio">
-                      <label>
-                        <input type="radio" name="genero" id="femenino" value="Femenino">
-                        <i class="fa fa-female"></i> Femenino
-                      </label>
-                    </div>
+                  <label class="control-label" for="genero"><i class="fa fa-check"></i> G&eacute;nero</label>
+                  <div class="radio">
+                    <label>
+                      <input type="radio" name="genero" id="masculino" value="Masculino" <?php if($genero_r=="Masculino") echo "checked"; ?> >
+                      <i class="fa fa-male"></i> Masculino
+                    </label>
                   </div>
+                  <div class="radio">
+                    <label>
+                      <input type="radio" name="genero" id="femenino" value="Femenino" <?php if($genero_r=="Femenino") echo "checked"; ?> >
+                      <i class="fa fa-female"></i> Femenino
+                    </label>
+                  </div>
+                </div>
                 </div>
               </div>
 
@@ -196,7 +245,7 @@
                   <label class="control-label" for="nombre_institucion"><i class="ic"></i> Nombre</label>
                   <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-institution"></i></span>
-                    <input type="text" id="nombre_institucion" name="nombre_institucion" class="form-control" placeholder="Ingrese Nombre">
+                    <input type="text" id="nombre_institucion" name="nombre_institucion" class="form-control" placeholder="Ingrese Nombre" value="<?php if($tipo_r=='Institucion'){echo $nombrei_r;}else{echo '';} ?>">
                   </div>
                   <span class="help-block"></span>
                 </div>
@@ -206,7 +255,7 @@
                     <label class="control-label" for="nit"><i class="ic"></i> NIT</label>
                     <div class="input-group">
                       <span class="input-group-addon"><i class="fa fa-id-card-o"></i></span>
-                      <input type="text" id="nit" name="nit" class="form-control" placeholder="Ingrese NIT" data-inputmask='"mask": "9999-999999-999-9"' data-mask>
+                      <input type="text" id="niti" name="niti" class="form-control" placeholder="Ingrese NIT" data-inputmask='"mask": "9999-999999-999-9"' data-mask value="<?php if($tipo_r=='Institucion'){echo $niti_r;}else{echo '';} ?>">
                     </div>
                     <span class="help-block"></span>
                   </div>
@@ -215,7 +264,7 @@
                     <label class="control-label" for="nrc"><i class="ic"></i> NRC</label>
                     <div class="input-group">
                       <span class="input-group-addon"><i class="fa fa-id-card-o"></i></span>
-                      <input type="text" id="nrc" name="nrc" class="form-control" placeholder="Ingrese NRC" data-inputmask='"mask": "999999-9"' data-mask>
+                      <input type="text" id="nrc" name="nrc" class="form-control" placeholder="Ingrese NRC" data-inputmask='"mask": "999999-9"' data-mask value="<?php if($tipo_r=='Institucion'){echo $nrci_r;}else{echo '';} ?>">
                     </div>
                     <span class="help-block"></span>
                   </div>  
@@ -233,7 +282,7 @@
         <div class="col-md-6">
 
           <!-- general form elements disabled -->
-          <div class="box box-success">
+          <div class="box box-primary">
             <div class="box-header with-border">
               <h3 class="box-title">Datos de Contacto</h3>
             </div>
@@ -244,7 +293,7 @@
                 <label class="control-label" for="direccion"><i class="ic"></i> Dirección</label>
                 <div class="input-group">
                   <span class="input-group-addon"><i class="fa fa-truck"></i></span>
-                  <input type="text" id="direccion" name="direccion" class="form-control" placeholder="Ingrese Dirección">
+                  <input type="text" id="direccion" name="direccion" class="form-control" placeholder="Ingrese Dirección" value="<?php if($tipo_r=='Persona'){echo $direccion_r;}else{echo $direccioni_r;} ?>">
                 </div>
                 <span class="help-block"></span>
               </div>
@@ -253,7 +302,7 @@
                 <label class="control-label" for="correo"><i class="ic"></i> Correo Electrónico</label>
                 <div class="input-group">
                   <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                  <input type="text" id="correo" name="correo" class="form-control" placeholder="Ingrese Correo Electrónico">
+                  <input type="text" id="correo" name="correo" class="form-control" placeholder="Ingrese Correo Electrónico" value="<?php if($tipo_r=='Persona'){echo $correo_r;}else{echo $correoi_r;} ?>">
                 </div>
                 <span class="help-block"></span>
               </div>
@@ -262,7 +311,7 @@
                 <label class="control-label" for="telefono"><i class="ic"></i> Teléfono</label>
                 <div class="input-group col-xs-6">
                   <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                  <input type="text" id="telefono" name="telefono" class="form-control" placeholder="Ingrese Teléfono" data-inputmask='"mask": "9999-9999"' data-mask>
+                  <input type="text" id="telefono" name="telefono" class="form-control" placeholder="Ingrese Teléfono" data-inputmask='"mask": "9999-9999"' data-mask value="<?php if($tipo_r=='Persona'){echo $telefono_r;}else{echo $telefonoi_r;} ?>">
                 </div>
                 <span class="help-block"></span>
               </div>
@@ -270,11 +319,11 @@
             </div>
             <!-- /.box-body -->
             <div class="box-footer" align="right">
-              <button type="button" id="btnguardar" name="btnguardar" class="btn btn-round btn-success">
-                <span class="fa fa-floppy-o">&nbsp;&nbsp;&nbsp;</span>Guardar Cliente
+              <button type="button" id="btneditar" name="btneditar" class="btn btn-round btn-primary">
+                <span class="fa fa-refresh">&nbsp;&nbsp;&nbsp;</span>Actualizar Cliente
               </button>
                         
-              <button type="button" class="btn btn-round btn-default" onclick="location.href='../../pages/cliente/cliente_add.php'">
+              <button type="button" class="btn btn-round btn-default" onclick="location.href='../../pages/cliente/cliente_list.php'">
                 <span class="fa fa-ban">&nbsp;&nbsp;&nbsp;</span>Cancelar Proceso
               </button>
             </div>
@@ -506,7 +555,7 @@
 <script src="../../plugins/PNotify/dist/iife/PNotifyMobile.js"></script>
 <!-- Validate -->
 <script src="../../plugins/validar/jquery.validate.js"></script>
-<script src="../../build/validaciones/cliente/cliente_add.js"></script>
+<script src="../../build/validaciones/cliente/cliente_edit.js"></script>
 <!-- AdminLTE App -->
 <script src="../../dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->

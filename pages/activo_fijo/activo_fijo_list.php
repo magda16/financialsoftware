@@ -12,8 +12,8 @@
   <link rel="stylesheet" href="../../bower_components/font-awesome/css/font-awesome.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="../../bower_components/Ionicons/css/ionicons.min.css">
-  <!-- bootstrap-datepicker -->
-  <link href="../../plugins/bootstrap-datepicker/css/bootstrap-datepicker.css" rel="stylesheet">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="../../bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
   <!-- PNotify -->
   <link href="../../plugins/PNotify/dist/PNotifyBrightTheme.css" rel="stylesheet" type="text/css" />
   <!-- Theme style -->
@@ -45,182 +45,77 @@
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1>
+      <h1><i class="fa fa-ravelry"></i>
         Activo Fijo
-        <small>Registro</small>
+        <small>Mantenimiento</small>
       </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Forms</a></li>
-        <li class="active">General Elements</li>
-      </ol>
     </section>
 
     <!-- Main content -->
     <section class="content">
       <div class="row">
-      <form id="form_activo" name="form_activo" action="" method="POST" enctype="multipart/form-data">
-      <input type="hidden" name="bandera" id="bandera">
-        <!-- left column -->
-        <div class="col-md-6">
-          <!-- general form elements -->
-          <div class="box box-primary">
-            <div class="box-header with-border">
-              <h3 class="box-title">Datos del Activo</h3>
+      
+        <div class="col-xs-12">
+          <div class="box box-info">
+            <div class="box-header">
+              <h3 class="box-title">Lista de Activos Fijos</h3>
             </div>
             <!-- /.box-header -->
-            <!-- form start -->
-           
-              <div class="box-body">
+            <div class="box-body">
 
-               
-
-                <div class="form-group">
-                  <label class="control-label" for="nombre"><i class="ic"></i> Nombre del activo</label>
-                  <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                    <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Ingrese Nombre">
+              <form id="form_activo_fijo" name="form_activo_fijo" action="" method="POST">
+                <div class="row">
+                  <div class="col-xs-3 form-group">
+                    <label class="control-label" for="categoria"><i class="ic"></i> Categoría</label>
+                    <select class="form-control" id="categoria" name="categoria">
+                    </select>
+                    <span class="help-block"></span>
                   </div>
-                  <span class="help-block"></span>
-                </div>
 
-                <div class="form-group">
-                  <label class="control-label" for="marca"><i class="ic"></i> Marca</label>
-                  <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                    <input type="text" id="marca" name="marca" class="form-control" placeholder="Ingrese Marca">
+                  <div class="col-xs-3 form-group">
+                    <label class="control-label" for="tipo_bien"><i class="ic"></i> Tipo de Bien</label>
+                    <select class="form-control" id="tipo_bien" name="tipo_bien">
+                    </select>
+                    <span class="help-block"></span>
                   </div>
-                  <span class="help-block"></span>
-                </div>
 
-                <div class="form-group">
-                  <label class="control-label" for="precio"><i class="ic"></i> Precio</label>
-                  <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-id-card-o"></i></span>
-                    <input type="text" id="precio" name="precio" class="form-control" placeholder="Ingrese Precio" data-inputmask='"mask": "00.00"' data-mask>
+                  </br>
+                  <div class="col-xs-3">
+                    <button type="button" id="btngenerar" name="btngenerar" class="btn bg-olive"><span class="fa fa-repeat">&nbsp;&nbsp;</span> Generar</button>
                   </div>
-                  <span class="help-block"></span>
-                </div>
 
-                <div class="form-group">
-                  <label class="control-label" for="factura"><i class="ic"></i> Numero de actura</label>
-                  <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-id-card-o"></i></span>
-                    <input type="text" id="factura" name="factura" class="form-control" placeholder="Ingrese Numero actura" data-inputmask='"mask": "9999-999999-999-9"' data-mask>
-                  </div>
-                  <span class="help-block"></span>
                 </div>
-
-                <div class="form-group">
-                <label>Tipo de Activo</label>
-                <select class="form-control" id="tipo" name="tipo">
-                  <option selected="selected" value="">Seleccione tipo de activo...</option>
-                  <option value="Administrador">Equipo</option>
-                  <option value="Vendedor">Maquinaria</option>
-                </select>
-                <span class="help-block"></span>
+              </form>
+   
+              <div class="margin">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-info">Acciones</button>
+                  <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a onclick="mostrar_activo()">Activo</a></li>
+                    <li><a onclick="mostrar_inactivo()">Inactivo</a></li>
+                  </ul>
+                </div>
               </div>
 
-                
-
-                
-
+              <!-- /.inicio tabla -->
+              <div id="div_activo_fijo_table">
               </div>
-              <!-- /.box-body -->     
+
+              <form id="from_activo_fijo_edit" name="from_activo_fijo_edit" action="activo_fijo_edit.php" method="POST">
+                <input type="hidden" id="id" name="id">
+              </form>
+              
+            </div>
+            <!-- /.box-body -->
           </div>
-          <!-- /.box -->
-
-          <!-- Form Element sizes -->
-          
-          <!-- /.box -->
-
-          <!-- Input addon -->
-          
           <!-- /.box -->
 
         </div>
-        <!--/.col (left) -->
-        <!-- right column -->
-        <div class="col-md-6">
-          <!-- general form elements -->
-          <div class="box box-primary">
-            <div class="box-header with-border">
-              <h3 class="box-title">Datos del Activo</h3>
-            </div>
-            <!-- /.box-header -->
-            <!-- form start -->
-           
-              <div class="box-body">
-
-                <div class="form-group">
-                <label>Estado del Activo</label>
-                <select class="form-control" id="estado" name="estado">
-                  <option selected="selected" value="">Seleccione estado del activo...</option>
-                  <option value="Administrador">Nuevo</option>
-                  <option value="Vendedor">Usado</option>
-                  <option value="Vendedor">Donado</option>
-                </select>
-                <span class="help-block"></span>
-              </div>
-
-                <div class="form-group">
-                  <label class="control-label" for="colot"><i class="ic"></i> Color</label>
-                  <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                    <input type="text" id="color" name="color" class="form-control" placeholder="Ingrese Color">
-                  </div>
-                  <span class="help-block"></span>
-                </div>
-
-                <div class="form-group">
-                  <label class="control-label" for="modelo"><i class="ic"></i> Modelo</label>
-                  <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                    <input type="text" id="modelo" name="modelo" class="form-control" placeholder="Ingrese el Modelo">
-                  </div>
-                  <span class="help-block"></span>
-                </div>
-
-                <label class="control-label" for="modelo"><i class="ic"></i> foto</label>
-                 <input type="file" id="foto" name="foto" accept="image/*"/>
-
-                 <div class="form-group">
-                <label>Departamento</label>
-                <select class="form-control" id="estado" name="departamento">
-                  <option selected="selected" value="">Seleccione el departamento...</option>
-                  <option value="Administrador">Administracion</option>
-                  <option value="Vendedor">Ventas</option>
-                  <option value="Vendedor">inanciero</option>
-                </select>
-                <span class="help-block"></span>
-              </div>
-
-              </div>
-              <!-- /.box-body -->  
-              <div class="box-footer" align="right">
-                <button type="button" id="btnguardar" name="btnguardar" class="btn btn-round btn-success" >
-                   <span class="fa fa-floppy-o">&nbsp;&nbsp;&nbsp;</span>Guardar Activo
-                </button>
-                        
-                <button type="submit" class="btn btn-round btn-default" onclick="cancelar()">
-                  <span class="fa fa-ban">&nbsp;&nbsp;&nbsp;</span>Cancelar Proceso
-                </button>
-              </div>   
-          </div>
-          <!-- /.box -->
-
-          <!-- Form Element sizes -->
-          
-          <!-- /.box -->
-
-          <!-- Input addon -->
         
-          <!-- /.box -->
-
-        </div>
-       
-        <!--/.col (right) -->
-        </form>
       </div>
       <!-- /.row -->
     </section>
@@ -228,11 +123,7 @@
   </div>
   <!-- /.content-wrapper -->
   <footer class="main-footer">
-    <div class="pull-right hidden-xs">
-      <b>Version</b> 2.4.0
-    </div>
-    <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
-    reserved.
+    <?php include("../footer.php"); ?>
   </footer>
 
   <!-- Control Sidebar -->
@@ -439,8 +330,9 @@
 <script src="../../bower_components/fastclick/lib/fastclick.js"></script>
 <!-- InputMask -->
 <script src="../../plugins/input-mask/jquery.inputmask.js"></script>
-<!-- bootstrap-datepicker -->
-<script src="../../plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+<!-- DataTables -->
+<script src="../../bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="../../bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 <!-- PNotify -->
 <script src="../../plugins/PNotify/dist/iife/PNotify.js"></script>
 <script src="../../plugins/PNotify/dist/iife/PNotifyButtons.js"></script>
@@ -448,7 +340,7 @@
 <script src="../../plugins/PNotify/dist/iife/PNotifyMobile.js"></script>
 <!-- Validate -->
 <script src="../../plugins/validar/jquery.validate.js"></script>
-<script src="../../build/validaciones/empleado/empleado_add.js"></script>
+<script src="../../build/validaciones/activo_fijo/activo_fijo_list.js"></script>
 <!-- AdminLTE App -->
 <script src="../../dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->

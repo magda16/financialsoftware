@@ -45,43 +45,66 @@
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1>
-        Proveedor
+      <h1><i class="fa fa-cart-plus"></i>
+        Compra
         <small>Mantenimiento</small>
       </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Forms</a></li>
-        <li class="active">General Elements</li>
-      </ol>
     </section>
 
     <!-- Main content -->
     <section class="content">
       <div class="row">
-      <form id="form_proveedor" name="form_proveedor" action="" method="POST">
-        <input type="hidden" name="bandera" id="bandera">
-
+    
         <div class="col-xs-12">
-          <div class="box">
+          <div class="box box-info">
             <div class="box-header">
-              <h3 class="box-title">Lista de Proveedores</h3>
+              <h3 class="box-title">Lista de Compras Realizadas</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
               
-              <div class="form-group">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox" id="estado_list" name="estado_list" checked>
-                    Activos
-                  </label>
-                </div>
-              </div>
+            </br>
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Fecha</th>
+                      <th>Tipo de Pago</th>
+                      <th>Monto</th>
+                      <th>Estado</th>
+                      <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php
+                    include ("../../build/controladores/conexion.php");
+                    $contador=1;
+                                
+                    $stmt1= $pdo->prepare("SELECT id_compra, tipo_pago, monto, DATE_FORMAT(fecha, '%d/%m/%Y') AS fecha, estado FROM compra ORDER BY fecha");
+                    $stmt1->bindParam(":estado",$estado_list,PDO::PARAM_STR);
+                    $stmt1->execute();
+                    $result=$stmt1->fetchAll(PDO::FETCH_ASSOC);
+                    foreach($result as $lista_compra){
+                        echo "<tr>";
+                            echo "<td>" .$contador. "</td>";
+                            echo "<td>" . $lista_compra['fecha'] . "</td>";
+                            echo "<td>" . $lista_compra['tipo_pago'] . "</td>";
+                            echo "<td> $ " . $lista_compra[ 'monto'] ."</td>";
+                            echo "<td>" . $lista_compra[ 'estado'] ."</td>";
+                            echo "<td>";
+                            echo "<a class='btn bg-purple' onclick='detalle_compra(".$lista_compra['id_compra'].")' data-toggle='tooltip' data-placement='top' title='Detalle de Compra'><i class='fa fa-calendar-plus-o'></i>&nbsp;&nbsp;Detalle</a>";
+                            echo "</td>";
+                        echo "</tr>";
+                        $contador++;
+                    }
+                ?>
+         
+                </tfoot>
+              </table>
 
-              <!-- /.inicio tabla -->
-              <div id="div_proveedor_table">
-              </div>
+              <form id="from_detalle_compra" name="from_detalle_compra" action="detalle_compra_list.php" method="POST">
+                <input type="hidden" id="id" name="id">
+              </form>
               
             </div>
             <!-- /.box-body -->
@@ -89,7 +112,6 @@
           <!-- /.box -->
 
         </div>
-        </form>
       </div>
       <!-- /.row -->
     </section>
@@ -314,7 +336,7 @@
 <script src="../../plugins/PNotify/dist/iife/PNotifyMobile.js"></script>
 <!-- Validate -->
 <script src="../../plugins/validar/jquery.validate.js"></script>
-<script src="../../build/validaciones/proveedor/proveedor_list.js"></script>
+<script src="../../build/validaciones/compra/compra_list.js"></script>
 <!-- AdminLTE App -->
 <script src="../../dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->

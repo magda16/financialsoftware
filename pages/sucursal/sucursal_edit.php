@@ -102,11 +102,6 @@ $nivel_usu=$_SESSION['nivel'];*/
         Sucursal
         <small>Mantenimiento</small>
       </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Forms</a></li>
-        <li class="active">General Elements</li>
-      </ol>
     </section>
 
     <!-- Main content -->
@@ -255,7 +250,7 @@ $nivel_usu=$_SESSION['nivel'];*/
                 <span class="fa fa-refresh">&nbsp;&nbsp;&nbsp;</span>Actualizar Sucursal
               </button>
                         
-              <button type="submit" class="btn btn-round btn-default" onclick="cancelar()">
+              <button type="button" class="btn btn-round btn-default" onclick="location.href='../../pages/sucursal/sucursal_edit.php'">
                 <span class="fa fa-ban">&nbsp;&nbsp;&nbsp;</span>Cancelar Proceso
               </button>
             </div>

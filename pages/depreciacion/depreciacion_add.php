@@ -12,8 +12,8 @@
   <link rel="stylesheet" href="../../bower_components/font-awesome/css/font-awesome.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="../../bower_components/Ionicons/css/ionicons.min.css">
-  <!-- DataTables -->
-  <link rel="stylesheet" href="../../bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+  <!-- bootstrap-datepicker -->
+  <link href="../../plugins/bootstrap-datepicker/css/bootstrap-datepicker.css" rel="stylesheet">
   <!-- PNotify -->
   <link href="../../plugins/PNotify/dist/PNotifyBrightTheme.css" rel="stylesheet" type="text/css" />
   <!-- Theme style -->
@@ -45,57 +45,74 @@
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1><i class="fa fa-building-o"></i>
-        Proveedor
+      <h1><i class="fa fa-calculator"></i>
+        Calcular Depreciación
         <small>Mantenimiento</small>
       </h1>
     </section>
 
-    <!-- Main content -->
     <section class="content">
       <div class="row">
-      
-        <div class="col-xs-12">
+      <form id="form_activo_fijo" name="form_activo_fijo" action="depreciacion_list.php" method="POST">
+      <input type="hidden" id="id" name="id">
+        <!-- left column -->
+        <div class="col-md-6">
+          <!-- general form elements -->
           <div class="box box-info">
-            <div class="box-header">
-              <h3 class="box-title">Lista de Proveedores</h3>
+            <div class="box-header with-border">
+              <h3 class="box-title">Datos del Activo Fijo</h3>
             </div>
-            <!-- /.box-header -->
             <div class="box-body">
 
-              <input type="hidden" id="id_usuario" name="id_usuario"  value="<?php // echo $_SESSION['id_usuario_admin']; ?>">
-              <input type="hidden" name="user" id="user" value="<?php //echo $_SESSION['nivel']; ?>">
-              <input type="hidden" name="estado" id="estado" value="<?php echo "Activo"; ?>">
-              
-              <div class="margin">
-                <div class="btn-group">
-                  <button type="button" class="btn btn-info">Acciones</button>
-                  <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-                    <span class="caret"></span>
-                    <span class="sr-only">Toggle Dropdown</span>
-                  </button>
-                  <ul class="dropdown-menu" role="menu">
-                    <li><a onclick="mostrar_activo()">Activo</a></li>
-                    <li><a onclick="mostrar_inactivo()">Inactivo</a></li>
-                  </ul>
+              <div class="form-group">
+                <label class="control-label" for="categoria"><i class="ic"></i> Categoría</label>
+                <select class="form-control" id="categoria" name="categoria">
+                </select>
+                <span class="help-block"></span>
+              </div>
+
+              <div class="form-group">
+                <label class="control-label" for="tipo_bien"><i class="ic"></i> Tipo de Bien</label>
+                <select class="form-control" id="tipo_bien" name="tipo_bien">
+                </select>
+                <span class="help-block"></span>
+              </div>
+
+              <div class="form-group">
+                <label class="control-label" for="activo_fijo"><i class="ic"></i> Activo Fijo</label>
+                <select class="form-control" id="activo_fijo" name="activo_fijo">
+                </select>
+                <span class="help-block"></span>
+              </div>
+              <div class="row">
+                <div class="col-xs-6 form-group">
+                  <label class="control-label" for="fecha"><i class="ic"></i> Fecha de Cálculo</label>
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    <input type="text" id="fecha" name="fecha" class="form-control" placeholder="Ingrese Fecha: día/mes/año" data-date-end-date = "0d">
+                  </div>
+                  <span class="help-block"></span>
                 </div>
               </div>
 
-              <!-- /.inicio tabla -->
-              <div id="div_proveedor_table">
-              </div>
-
-              <form id="from_proveedor_edit" name="from_proveedor_edit" action="proveedor_edit.php" method="POST">
-                <input type="hidden" id="id" name="id">
-              </form>
-              
             </div>
             <!-- /.box-body -->
+            <div class="box-footer" align="right">
+              <button type="button" id="btncalcular" name="btncalcular" class="btn bg-blue">
+                <span class="fa fa-calculator">&nbsp;&nbsp;&nbsp;</span>Calcular Depreciación
+              </button>
+                        
+              <button type="button" class="btn btn-round btn-default" onclick="location.href='../../pages/depreciacion/depreciacion_add.php'">
+                <span class="fa fa-ban">&nbsp;&nbsp;&nbsp;</span>Cancelar Proceso
+              </button>
+            </div>   
           </div>
           <!-- /.box -->
 
         </div>
-      
+        <!--/.col (left) -->
+        </form>
+
       </div>
       <!-- /.row -->
     </section>
@@ -310,9 +327,8 @@
 <script src="../../bower_components/fastclick/lib/fastclick.js"></script>
 <!-- InputMask -->
 <script src="../../plugins/input-mask/jquery.inputmask.js"></script>
-<!-- DataTables -->
-<script src="../../bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="../../bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<!-- bootstrap-datepicker -->
+<script src="../../plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 <!-- PNotify -->
 <script src="../../plugins/PNotify/dist/iife/PNotify.js"></script>
 <script src="../../plugins/PNotify/dist/iife/PNotifyButtons.js"></script>
@@ -320,7 +336,7 @@
 <script src="../../plugins/PNotify/dist/iife/PNotifyMobile.js"></script>
 <!-- Validate -->
 <script src="../../plugins/validar/jquery.validate.js"></script>
-<script src="../../build/validaciones/proveedor/proveedor_list.js"></script>
+<script src="../../build/validaciones/depreciacion/depreciacion_add.js"></script>
 <!-- AdminLTE App -->
 <script src="../../dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->

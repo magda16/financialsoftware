@@ -8,7 +8,7 @@
     }
 
 ?>
-    </br></br>
+    </br>
     <table id="example1" class="table table-bordered table-striped">
         <thead>
             <tr>
@@ -40,7 +40,7 @@
                     echo "<td>" . $lista_empleado['puesto'] . "</td>";
                     echo "<td>";
                               
-                            echo "<a class='btn btn-success' onclick='mostrar_empleado(".$lista_empleado['id_empleado'].")' data-toggle='tooltip' data-placement='top' title='Mostrar Empleado'><i class='fa fa-eye'></i></a>";
+                            //echo "<a class='btn btn-success' onclick='mostrar_empleado(".$lista_empleado['id_empleado'].")' data-toggle='tooltip' data-placement='top' title='Mostrar Empleado'><i class='fa fa-eye'></i></a>";
                                 
                             if($estado_list=="Activo"){
                                 echo "<a class='btn btn-primary' onclick='editar_empleado(".$lista_empleado['id_empleado'].")' data-toggle='tooltip' data-placement='top' title='Actualizar Empleado'><i class='fa fa-refresh'></i></a>";

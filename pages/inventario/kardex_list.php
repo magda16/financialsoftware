@@ -49,11 +49,6 @@
         Kardex
         <small>Mantenimiento</small>
       </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Forms</a></li>
-        <li class="active">General Elements</li>
-      </ol>
     </section>
 
     <!-- Main content -->
@@ -63,7 +58,7 @@
         <input type="hidden" name="bandera" id="bandera">
 
         <div class="col-xs-12">
-          <div class="box box-solid">
+          <div class="box box-info">
             <div class="box-header">
               <h3 class="box-title">Método Costo Promedio Ponderado</h3>
             </div>

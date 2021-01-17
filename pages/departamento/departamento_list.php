@@ -49,11 +49,6 @@
         Departamento
         <small>Mantenimiento</small>
       </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Forms</a></li>
-        <li class="active">General Elements</li>
-      </ol>
     </section>
 
     <!-- Main content -->
@@ -61,7 +56,7 @@
       <div class="row">
       
         <div class="col-xs-12">
-          <div class="box">
+          <div class="box box-info">
             <div class="box-header">
               <h3 class="box-title">Lista de Departamentos</h3>
             </div>
@@ -84,6 +79,7 @@
                     <li><a onclick="mostrar_inactivo()">Inactivo</a></li>
                   </ul>
                 </div>
+              </div>
 
               <!-- /.inicio tabla -->
               <div id="div_departamento_table">

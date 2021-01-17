@@ -49,11 +49,6 @@
         Activo Fijo
         <small>Registro</small>
       </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Forms</a></li>
-        <li class="active">General Elements</li>
-      </ol>
     </section>
 
     <!-- Main content -->
@@ -221,8 +216,6 @@
         <!-- right column -->
         <div class="col-md-6">
 
-          
-
           <!-- general form elements disabled -->
           <div class="box box-success">
             <div class="box-header with-border">
@@ -320,8 +313,6 @@
                 <span class="help-block"></span>
               </div>
 
-            
-
             </div>
             <!-- /.box-body -->
             <div class="box-footer" align="right">
@@ -329,7 +320,7 @@
                 <span class="fa fa-floppy-o">&nbsp;&nbsp;&nbsp;</span>Guardar Activo Fijo
               </button>
                         
-              <button type="submit" class="btn btn-round btn-default" onclick="cancelar()">
+              <button type="button" class="btn btn-round btn-default" onclick="location.href='../../pages/activo_fijo/activo_fijo_add.php'">
                 <span class="fa fa-ban">&nbsp;&nbsp;&nbsp;</span>Cancelar Proceso
               </button>
             </div>

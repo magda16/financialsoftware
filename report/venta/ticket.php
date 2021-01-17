@@ -3,7 +3,7 @@
     $codigo=$_POST["correlativo"];
     $cliente=$_POST["cliente"];
     $tipo_comprobante=$_POST["tipo_comprobante"];
-    $productos=$_POST["productos"];
+    $productos=$_POST["productos"];// cantidad de articulos
     $total=$_POST["total"];
     $efectivo=$_POST["efectivo"];
     $cambio=$_POST["cambio"];

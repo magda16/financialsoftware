@@ -227,72 +227,126 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
       $msj="Error";
     
       function obtenerResultado(){
-        include ("../conexion.php");
-        $id_cooperante=$_POST["actualizar"];
-
-        $nombre_cooperante=$_POST["nombre_cooperante"];
-          $monto=$_POST["monto"];
-          
-          
-          $tipo_ayuda=$_POST["tipo_ayuda"];
-          if($_POST["otro_tipo_ayuda"]!=""){
-            $tipo_ayuda=$_POST["otro_tipo_ayuda"];
-          }
-
-          $fecha_ingres=$_POST["fecha_ingreso"];
-          
-          $id_emprendedor=$_POST["emp"];
-          if($_POST["emprendedor"]!=""){
-            $id_emprendedor=$_POST["emprendedor"];
-          }
-
-          if($tipo_ayuda==""){ $tipo_ayuda=$_POST["tipo_a"]; } 
-          
-          date_default_timezone_set('America/El_Salvador');
-        
-          $fecha_ingreso=$fecha_ingres;
-          list($dia, $mes, $year)=explode("/", $fecha_ingres);
-          $fecha_ingreso=$year."-".$mes."-".$dia;
-          
-          $stmt=$pdo->prepare("UPDATE cooperante SET nombre_cooperante=:nombre_cooperante, monto=:monto, tipo_ayuda=:tipo_ayuda, fecha_ingreso=:fecha_ingreso, id_emprendedor=:id_emprendedor WHERE id_cooperante=:id_cooperante");
-          $stmt->bindParam(":nombre_cooperante",$nombre_cooperante,PDO::PARAM_STR);
-          $stmt->bindParam(":monto",$monto,PDO::PARAM_STR);
-          $stmt->bindParam(":tipo_ayuda",$tipo_ayuda,PDO::PARAM_STR);
-          $stmt->bindParam(":fecha_ingreso",$fecha_ingreso,PDO::PARAM_STR);
-          $stmt->bindParam(":id_emprendedor",$id_emprendedor,PDO::PARAM_INT);
-          $stmt->bindParam(":id_cooperante",$id_cooperante,PDO::PARAM_INT);
-
-          if($stmt->execute()){
-            return "Exito";
-          }else{
-            return "Error";
-          }
-          $stmt->close();
+        include ("conexion.php");
       
-        return $msj;
-      }
-  }else if($bandera=="delete"){
-      $msj="Error";
+          $id_activo_fijo=$_POST["id_activo_fijo"];
+          $descripcion=$_POST["descripcion"];
+          $observacion=$_POST["observacion"];
+          $calidad=$_POST["calidad"];
+          $marca=$_POST["marca"];
+          $modelo=$_POST["modelo"];
+          $fecha_adq=$_POST["fecha_adquisicion"];
+          $financiamiento=$_POST["financiamiento"];
+          $valor_adquisicion=$_POST["valor_adquisicion"];
+          $valor_estimado=$_POST["valor_estimado"];
+          $valor_residual=$_POST["valor_residual"];
+          $vida_util=$_POST["vida_util"];
+          $id_proveedor=$_POST["proveedor"];
+          
+          $directorio="";
+          
+          $dato = "";
+          $num_serie="";
+          $carpeta="";
+          if($_POST["nserie"]!=""){
+            $num_serie=$_POST["nserie"];
+            $carpeta=$id_activo_fijo;
+          }else{
+            $carpeta=$_POST["lote"];
+          }
+          if(($_FILES['doc_adquisicion']['tmp_name'])!=""){
+            
+            $ruta = "../../fixed_asset/".$carpeta;
+            function llenarArchivos($ruta2){
+
+              $doc_aq="";
+
+              function validarTipoDoc($doc){
+                $tipo=null;
+                if($doc=="application/pdf"){
+                  $tipo=".pdf";
+                }else if ($doc=="image/jpg") {
+                  $tipo=".jpg";
+                }else if ($doc=="image/jpeg") {
+                  $tipo=".jpeg";
+                }else if ($doc=="image/png") {
+                  $tipo=".png";
+                }
+                return $tipo;
+              }
     
-      function obtenerResultado(){
-          include ("../conexion.php");
-          $id_cooperante=$_POST["id"];
-      
-          $stmt=$pdo->prepare("DELETE FROM cooperante WHERE id_cooperante=:id_cooperante");
-          $stmt->bindParam(":id_cooperante",$id_cooperante,PDO::PARAM_INT);
+              $cmtype = $_FILES['doc_adquisicion']['type'];
+              $cmtipo=validarTipoDoc($cmtype);
+              
+              $directorio=$ruta2."/documento_adquisicion".$cmtipo;
+              if(move_uploaded_file($_FILES['doc_adquisicion']['tmp_name'], $directorio)){
+                $doc_aq = $directorio;
+              }
+              return $doc_aq;                
+            }
 
-          if($stmt->execute()){
+            if(!file_exists($ruta)){
+              mkdir($ruta, 0777,true);
+              if(file_exists($ruta)){
+                $dato = llenarArchivos($ruta);
+              }
+            }else{
+              $dato = llenarArchivos($ruta);
+            }
+         
+          }
+
+          if($dato != ""){
+            $doc_adquisicion = substr($dato, 6);
+          }else {
+            $doc_adquisicion = $_POST["doc_adquisicion_r"];;
+          }
+
+          date_default_timezone_set('America/El_Salvador');
+
+          $fecha_adquisicion=$fecha_adq;
+          list($dia, $mes, $year)=explode("/", $fecha_adq);
+          $fecha_adquisicion=$year."-".$mes."-".$dia;
+
+          $pdo->beginTransaction();
+            
+          $stmt1=$pdo->prepare("UPDATE activo_fijo SET descripcion=:descripcion, observacion=:observacion, calidad=:calidad, marca=:marca, modelo=:modelo, num_serie=:num_serie, fecha_adquisicion=:fecha_adquisicion, financiamiento=:financiamiento, valor_adquisicion=:valor_adquisicion, valor_estimado=:valor_estimado, valor_residual=:valor_residual, vida_util=:vida_util, doc_adquisicion=:doc_adquisicion, id_proveedor=:id_proveedor WHERE id_activo_fijo=:id_activo_fijo");
+          $stmt1->bindParam(":id_activo_fijo",$id_activo_fijo,PDO::PARAM_INT);
+          $stmt1->bindParam(":descripcion",$descripcion,PDO::PARAM_STR);
+          $stmt1->bindParam(":observacion",$observacion,PDO::PARAM_STR);
+          $stmt1->bindParam(":calidad",$calidad,PDO::PARAM_STR);
+          $stmt1->bindParam(":marca",$marca,PDO::PARAM_STR);
+          $stmt1->bindParam(":modelo",$modelo,PDO::PARAM_STR);
+          $stmt1->bindParam(":num_serie",$num_serie,PDO::PARAM_STR);
+          $stmt1->bindParam(":fecha_adquisicion",$fecha_adquisicion,PDO::PARAM_STR);
+          $stmt1->bindParam(":financiamiento",$financiamiento,PDO::PARAM_STR);
+          $stmt1->bindParam(":valor_adquisicion",$valor_adquisicion,PDO::PARAM_STR);
+          $stmt1->bindParam(":valor_estimado",$valor_estimado,PDO::PARAM_STR);
+          $stmt1->bindParam(":valor_residual",$valor_residual,PDO::PARAM_STR);
+          $stmt1->bindParam(":vida_util",$vida_util,PDO::PARAM_INT);
+          $stmt1->bindParam(":doc_adquisicion",$doc_adquisicion,PDO::PARAM_STR);
+          $stmt1->bindParam(":id_proveedor",$id_proveedor,PDO::PARAM_INT);
+          if($stmt1->execute()){
+            $pdo->commit();
             return "Exito";
           }else{
+            $url="../../".$doc_adquisicion;
+            if(file_exists($url)){
+              if (unlink($url)) {
+                $dir="../../fixed_asset/".$carpeta;
+                rmdir($dir);
+              }
+            }
+
+            $pdo->rollBack();
             return "Error";
           }
-          $stmt->close();
-      
-        return $msj;
-      }
-    }
-
+          $stmt1->close();
+        
+          return $msj;
+        }
   }
+}
 
 }else{
   throw new Exception("Error Processing Request", 1);   

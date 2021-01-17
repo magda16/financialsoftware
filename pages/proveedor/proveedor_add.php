@@ -49,11 +49,6 @@
         Proveedor
         <small>Registro</small>
       </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Forms</a></li>
-        <li class="active">General Elements</li>
-      </ol>
     </section>
 
     <!-- Main content -->
@@ -168,7 +163,7 @@
                 <span class="fa fa-floppy-o">&nbsp;&nbsp;&nbsp;</span>Guardar Proveedor
               </button>
                         
-              <button type="submit" class="btn btn-round btn-default" onclick="cancelar()">
+              <button type="button" class="btn btn-round btn-default" onclick="location.href='../../pages/proveedor/proveedor_add.php'">
                 <span class="fa fa-ban">&nbsp;&nbsp;&nbsp;</span>Cancelar Proceso
               </button>
             </div>
