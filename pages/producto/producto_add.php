@@ -31,6 +31,31 @@
 
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+  <style>
+    #preview {
+      width: 45%;
+      margin: 0 auto;
+      margin-bottom: 10px;
+      position: relative;
+    }
+         
+    #preview a {
+      position: absolute;
+      bottom: 5px;
+      left: 5px;
+      right: 5px;
+      display: none;
+    }
+
+    input[type=file] {
+      position: absolute;
+      visibility: hidden;
+      width: 0;
+      z-index: -9999;
+    }      
+  </style>
+  
 </head>
 <body class="hold-transition skin-blue-light sidebar-mini">
 <div class="wrapper">
@@ -71,7 +96,20 @@
             </div>
             <div class="box-body">
 
-              <input type="file" id="foto" name="foto" accept="image/*"/>
+              <!--inicia el div para capturar la imagen -->
+              <div class="form-group" align="center" >
+                <label for="control-label" for="foto">Fotografía:</label>
+                <div name="preview" id="preview" class="thumbnail">
+                  <a href="#" id="file-select" class="btn btn-success"><span class="fa fa-camera">&nbsp;&nbsp;&nbsp;</span>Elegir archivo</a>
+                  <img src="../../files/producto.png"/>
+                </div>
+
+                <div id="file-submit" >
+                  <input id="file" name="file" type="file" accept="image/*" />
+                  <span class="help-block" id="error"></span>
+                </div> 
+              </div>
+              <!--finaliza el div para capturar la imagen -->
 
               <div class="form-group">
                 <label class="control-label" for="nombre"><i class="ic"></i> Producto</label>

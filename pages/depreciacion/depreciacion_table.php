@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -45,8 +46,8 @@
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1><i class="fa fa-user-md"></i>
-        Proveedor
+      <h1><i class="fa fa-calculator"></i>
+        Calcular Depreciación
         <small>Mantenimiento</small>
       </h1>
       <ol class="breadcrumb">
@@ -60,46 +61,294 @@
     <section class="content">
       <div class="row">
       
+
         <div class="col-xs-12">
-          <div class="box">
+          <div class="box box-info">
             <div class="box-header">
-              <h3 class="box-title">Lista de Proveedores</h3>
+              <h3 class="box-title">Datos del Activo Fijo a Depreciar</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
+            <?php
 
-              <input type="hidden" id="id_usuario" name="id_usuario"  value="<?php // echo $_SESSION['id_usuario_admin']; ?>">
-              <input type="hidden" name="user" id="user" value="<?php //echo $_SESSION['nivel']; ?>">
-              <input type="hidden" name="estado" id="estado" value="<?php echo "Activo"; ?>">
-              
-              <div class="margin">
-                <div class="btn-group">
-                  <button type="button" class="btn btn-info">Acciones</button>
-                  <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-                    <span class="caret"></span>
-                    <span class="sr-only">Toggle Dropdown</span>
-                  </button>
-                  <ul class="dropdown-menu" role="menu">
-                    <li><a onclick="mostrar_activo()">Activo</a></li>
-                    <li><a onclick="mostrar_inactivo()">Inactivo</a></li>
-                  </ul>
-                </div>
+//if(isset($_POST['activo_fijo'])){
+ // $id_activo_fijo = $_POST['activo_fijo']; 
 
-              <!-- /.inicio tabla -->
-              <div id="div_proveedor_table">
-              </div>
+  include ("../../build/controladores/conexion.php");
+  //$stmt= $pdo->prepare("SELECT * FROM activo_fijo WHERE id_activo_fijo=:id_activo_fijo");
+  //$stmt->bindParam(":id_activo_fijo",$id_activo_fijo,PDO::PARAM_INT);
+  $stmt= $pdo->prepare("SELECT af.codigo, DATE_FORMAT(af.fecha_adquisicion, '%d/%m/%Y') AS fecha_adquisicion, af.financiamiento, af.valor_adquisicion, af.valor_residual, af.vida_util, ac.categoria, asub.subcategoria FROM activo_fijo AS af INNER JOIN activo_categoria AS ac ON (af.id_categoria=ac.id_activo_categoria) INNER JOIN activo_subcategoria AS asub ON (af.id_subcategoria=asub.id_activo_subcategoria) WHERE af.id_activo_fijo=1");
+  $stmt->execute();
+  $result=$stmt->fetchAll(PDO::FETCH_ASSOC);
+  $contador=1;
+  foreach($result as $lista_activo_fijo){
+    $costo=$lista_activo_fijo['valor_adquisicion'];
+    $valor_residual=$lista_activo_fijo['valor_residual'];
+    $vida_util=$lista_activo_fijo['vida_util'];
+    $financiamiento=$lista_activo_fijo['financiamiento'];
+    date_default_timezone_set('America/El_Salvador');
+    
+    $fecha_adquisicion=$lista_activo_fijo['fecha_adquisicion'];
+    
+    $fecha_actual=date("d/m/Y");
 
-              <form id="from_proveedor_edit" name="from_proveedor_edit" action="proveedor_edit.php" method="POST">
-                <input type="hidden" id="id" name="id">
-              </form>
+       /* $fecha_nac=$fecha_nacimiento;
+        list($dia, $mes, $year)=explode("/", $fecha_nacimiento);
+        $fecha_nac=$year."-".$mes."-".$dia;*/
+
+    echo "<table id='datatable-responsive1' class='table table-striped table-bordered dt-responsive nowrap' cellspacing='0' width='100%'>";
+    echo "<thead>";
+    echo "<tr></tr>";
+    echo "<tr></tr>";
+    echo "<tr></tr>";
+    echo "</thead>";
+    echo "<tbody>";
+
+    echo "<tr>";
+    echo "<th>Categoría</th>";
+    echo "<td>".$lista_activo_fijo['categoria']."</td>";
+    echo "<th>Fecha de Adquisición</th>";
+    echo "</tr>";
+
+    echo "<tr>";
+    echo "<th>Tipo de Bien</th>";
+    echo "<td>".$lista_activo_fijo['subcategoria']."</td>";
+    echo "<td>".$fecha_adquisicion."</td>";
+    echo "</tr>";
+
+    echo "<tr>";
+    echo "<th>Código</th>";
+    echo "<td>".$lista_activo_fijo['codigo']."</td>";
+    echo "<th>Fecha a Depreciar</th>";
+    echo "</tr>";
+
+    echo "<tr>";
+    echo "<th>Costo</th>";
+    echo "<td>".$costo."</td>";
+    echo "<td>".$fecha_actual."</td>";
+    echo "</tr>";
+
+    echo "<tr>";
+    echo "<th>Valor Residual</th>";
+    echo "<td>".$valor_residual."</td>";
+    echo "<td></td>";
+    echo "</tr>";
+
+    echo "<tr>";
+    echo "<th>Vida Útil</th>";
+    echo "<td>".$vida_util."</td>";
+    echo "<td></td>";
+    echo "</tr>";
+
+    echo "<tr>";
+    echo "<th>Financiamiento</th>";
+    echo "<td>".$financiamiento."</td>";
+    echo "<td></td>";
+    echo "</tr>";
+
+    echo "</tbody>";
+    echo "</table>";
+    echo "</br>";
+  }
+//}
+
+?>
+
+            
+
+
+            <form id="from_producto_edit" name="from_producto_edit" action="producto_edit.php" method="POST">
+              <input type="hidden" id="id" name="id">
+            </form>
               
             </div>
             <!-- /.box-body -->
           </div>
           <!-- /.box -->
 
+          <div class="box box-info">
+            <div class="box-header">
+              <h3 class="box-title">Depreciación Anual
+                <small>Método Líneal</small>
+              </h3>
+              <!-- tools box -->
+              <div class="pull-right box-tools">
+                <button type="button" class="btn btn-info btn-sm" data-widget="collapse" data-toggle="tooltip"
+                        title="Mostrar">
+                  <i class="fa fa-minus"></i></button>
+              </div>
+              <!-- /. tools -->
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body pad">
+
+            <?php
+
+              echo "<table id='datatable-responsive1' class='table table-striped table-bordered dt-responsive nowrap' cellspacing='0' width='100%'>";
+              echo "<thead>";
+              echo "<th>PERIODO</th>";
+              echo "<th>DEPRECIACIÓN ANUAL</th>";
+              echo "<th>DEPRECIACIÓN ACUMULADA</th>";
+              echo "<th>VALOR EN LIBROS</th>";
+              echo "</thead>";
+              echo "<tbody>";
+                echo "<tr>";
+                echo "<td>0</td>";
+                echo "<td></td>";
+                echo "<td></td>";
+                echo "<td>".$costo."</td>";
+                echo "</tr>";
+              $contador_anio=1;
+              
+              $depreciacion_anual=(($costo - $valor_residual) / $vida_util);
+              $depreciacion_acumulada_anual=$depreciacion_anual;
+              $valor_libros_anual=$costo-$depreciacion_anual;
+              for($i=0 ; $i <$vida_util; $i++){
+                echo "<tr>";
+                echo "<td>".$contador_anio."</td>";
+                echo "<td>".$depreciacion_anual."</td>";
+                echo "<td>".$depreciacion_acumulada_anual."</td>";
+                echo "<td>".$valor_libros_anual."</td>";
+                echo "</tr>";
+                $contador_anio++;
+                $depreciacion_acumulada_anual=$depreciacion_acumulada_anual + $depreciacion_anual;
+                $valor_libros_anual=$valor_libros_anual - $depreciacion_anual;
+              }
+
+
+              echo "</tbody>";
+              echo "</table>";
+
+            ?>
+
+            </div>
+          </div>
+          <!-- /.box -->
+
+          <div class="box box-info">
+            <div class="box-header">
+              <h3 class="box-title">Depreciación Mensual
+                <small>Método Líneal</small>
+              </h3>
+              <!-- tools box -->
+              <div class="pull-right box-tools">
+                <button type="button" class="btn btn-info btn-sm" data-widget="collapse" data-toggle="tooltip"
+                        title="Mostrar">
+                  <i class="fa fa-minus"></i></button>
+              </div>
+              <!-- /. tools -->
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body pad">
+
+            <?php
+
+              echo "<table id='datatable-responsive1' class='table table-striped table-bordered dt-responsive nowrap' cellspacing='0' width='100%'>";
+              echo "<thead>";
+              echo "<th>PERIODO</th>";
+              echo "<th>DEPRECIACIÓN MENSUAL</th>";
+              echo "<th>DEPRECIACIÓN ACUMULADA</th>";
+              echo "<th>VALOR EN LIBROS</th>";
+              echo "</thead>";
+              echo "<tbody>";
+                echo "<tr>";
+                echo "<td>0</td>";
+                echo "<td></td>";
+                echo "<td></td>";
+                echo "<td>".$costo."</td>";
+                echo "</tr>";
+              $contador_mes=1;
+              $vida_util_mes=$vida_util * 12;
+              
+              $depreciacion_mensual=(($costo - $valor_residual) / $vida_util_mes);
+              $depreciacion_acumulada_mensual=$depreciacion_mensual;
+              $valor_libros_mensual=$costo-$depreciacion_mensual;
+              for($i=0 ; $i <$vida_util_mes; $i++){
+                echo "<tr>";
+                echo "<td>".$contador_mes."</td>";
+                echo "<td>".$depreciacion_mensual."</td>";
+                echo "<td>".$depreciacion_acumulada_mensual."</td>";
+                echo "<td>".$valor_libros_mensual."</td>";
+                echo "</tr>";
+                $contador_mes++;
+                $depreciacion_acumulada_mensual=$depreciacion_acumulada_mensual + $depreciacion_mensual;
+                $valor_libros_mensual=$valor_libros_mensual- $depreciacion_mensual;
+              }
+
+
+              echo "</tbody>";
+              echo "</table>";
+
+            ?>
+
+              
+            </div>
+          </div>
+          <!-- /.box -->
+
+
+          <div class="box box-info">
+            <div class="box-header">
+              <h3 class="box-title">Depreciación Diaria
+                <small>Método Líneal</small>
+              </h3>
+              <!-- tools box -->
+              <div class="pull-right box-tools">
+                <button type="button" class="btn btn-info btn-sm" data-widget="collapse" data-toggle="tooltip"
+                        title="Mostrar">
+                  <i class="fa fa-minus"></i></button>
+              </div>
+              <!-- /. tools -->
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body pad">
+
+            <?php
+
+              echo "<table id='datatable-responsive1' class='table table-striped table-bordered dt-responsive nowrap' cellspacing='0' width='100%'>";
+              echo "<thead>";
+              echo "<th>PERIODO</th>";
+              echo "<th>DEPRECIACIÓN DIARIA</th>";
+              echo "<th>DEPRECIACIÓN ACUMULADA</th>";
+              echo "<th>VALOR EN LIBROS</th>";
+              echo "</thead>";
+              echo "<tbody>";
+                echo "<tr>";
+                echo "<td>0</td>";
+                echo "<td></td>";
+                echo "<td></td>";
+                echo "<td>".$costo."</td>";
+                echo "</tr>";
+              $contador_dia=1;
+              $vida_util_dia=$vida_util * 360;
+              
+              $depreciacion_diaria=(($costo - $valor_residual) / $vida_util_dia);
+              $depreciacion_acumulada_diaria=$depreciacion_diaria;
+              $valor_libros_diaria=$costo-$depreciacion_diaria;
+              for($i=0 ; $i <$vida_util_dia; $i++){
+                echo "<tr>";
+                echo "<td>".$contador_dia."</td>";
+                echo "<td>".$depreciacion_diaria."</td>";
+                echo "<td>".$depreciacion_acumulada_diaria."</td>";
+                echo "<td>".$valor_libros_diaria."</td>";
+                echo "</tr>";
+                $contador_dia++;
+                $depreciacion_acumulada_diaria=$depreciacion_acumulada_diaria + $depreciacion_diaria;
+                $valor_libros_diaria=$valor_libros_diaria- $depreciacion_diaria;
+              }
+
+
+              echo "</tbody>";
+              echo "</table>";
+
+            ?>
+              
+            </div>
+          </div>
+          <!-- /.box -->
+
         </div>
-      
+        
       </div>
       <!-- /.row -->
     </section>
@@ -322,9 +571,9 @@
 <script src="../../plugins/PNotify/dist/iife/PNotifyButtons.js"></script>
 <script src="../../plugins/PNotify/dist/iife/PNotifyConfirm.js"></script>
 <script src="../../plugins/PNotify/dist/iife/PNotifyMobile.js"></script>
-<!-- Validate -->
+<!-- Validate 
 <script src="../../plugins/validar/jquery.validate.js"></script>
-<script src="../../build/validaciones/proveedor/proveedor_list.js"></script>
+<script src="../../build/validaciones/depreciacion/depreciacion_list.js"></script> -->
 <!-- AdminLTE App -->
 <script src="../../dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->

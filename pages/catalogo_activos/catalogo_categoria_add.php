@@ -95,6 +95,7 @@
                   <option selected="selected" value="">Seleccione Tipo Según Ley...</option>
                   <option value="Edificaciones">Edificaciones</option>
                   <option value="Maquinaria">Maquinaria</option>
+                  <option value="Vehiculos">Vehículos</option>
                   <option value="Otros Bienes Muebles">Otros Bienes Muebles</option>
                 </select>
                 <span class="help-block"></span>

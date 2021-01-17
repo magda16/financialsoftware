@@ -45,8 +45,8 @@
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1><i class="fa fa-user-md"></i>
-        Proveedor
+      <h1><i class="fa fa-calculator"></i>
+        Calcular Depreciación
         <small>Mantenimiento</small>
       </h1>
       <ol class="breadcrumb">
@@ -60,46 +60,70 @@
     <section class="content">
       <div class="row">
       
+
         <div class="col-xs-12">
-          <div class="box">
+          <div class="box box-info">
             <div class="box-header">
-              <h3 class="box-title">Lista de Proveedores</h3>
+              <h3 class="box-title">Lista de Activos Fijos</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
 
-              <input type="hidden" id="id_usuario" name="id_usuario"  value="<?php // echo $_SESSION['id_usuario_admin']; ?>">
-              <input type="hidden" name="user" id="user" value="<?php //echo $_SESSION['nivel']; ?>">
-              <input type="hidden" name="estado" id="estado" value="<?php echo "Activo"; ?>">
-              
-              <div class="margin">
-                <div class="btn-group">
-                  <button type="button" class="btn btn-info">Acciones</button>
-                  <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-                    <span class="caret"></span>
-                    <span class="sr-only">Toggle Dropdown</span>
-                  </button>
-                  <ul class="dropdown-menu" role="menu">
-                    <li><a onclick="mostrar_activo()">Activo</a></li>
-                    <li><a onclick="mostrar_inactivo()">Inactivo</a></li>
-                  </ul>
+            <form id="form_producto" name="form_producto" action="" method="POST">
+              <div class="row">
+                <div class="col-xs-3 form-group">
+                  <label class="control-label" for="categoria"><i class="ic"></i> Categoría</label>
+                  <select class="form-control" id="categoria" name="categoria">
+                  </select>
+                  <span class="help-block"></span>
                 </div>
 
-              <!-- /.inicio tabla -->
-              <div id="div_proveedor_table">
-              </div>
+                <div class="col-xs-3 form-group">
+                  <label class="control-label" for="tipo_bien"><i class="ic"></i> Tipo de Bien</label>
+                  <select class="form-control" id="tipo_bien" name="tipo_bien">
+                  </select>
+                  <span class="help-block"></span>
+                </div>
 
-              <form id="from_proveedor_edit" name="from_proveedor_edit" action="proveedor_edit.php" method="POST">
-                <input type="hidden" id="id" name="id">
-              </form>
+                <div class="col-xs-3 form-group">
+                  <label class="control-label" for="activo_fijo"><i class="ic"></i> Activo Fijo</label>
+                  <select class="form-control" id="activo_fijo" name="activo_fijo">
+                  </select>
+                  <span class="help-block"></span>
+                </div>
+
+                <div class="col-xs-3 form-group">
+                  <label class="control-label" for="fecha"><i class="ic"></i> Fecha de Cálculo</label>
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    <input type="text" id="fecha" name="fecha" class="form-control" placeholder="Ingrese Fecha: día/mes/año" data-date-end-date = "0d">
+                  </div>
+                  <span class="help-block"></span>
+                </div>
+                </br>
+                <div class="col-xs-3">
+                  <button type="button" id="btngenerar" name="btngenerar" class="btn bg-olive"><span class="fa fa-repeat">&nbsp;&nbsp;</span> Generar</button>
+                </div>
+
+              </div>
+            </form>
+
+          
+            <form id="from_calculo_depreciacion" name="from_calculo_depreciacion" action="depreciacion_table" method="POST">
+              <input type="hidden" id="id" name="id">
+            </form>
               
             </div>
             <!-- /.box-body -->
           </div>
           <!-- /.box -->
 
+
+  
+
+
         </div>
-      
+        
       </div>
       <!-- /.row -->
     </section>
@@ -324,7 +348,7 @@
 <script src="../../plugins/PNotify/dist/iife/PNotifyMobile.js"></script>
 <!-- Validate -->
 <script src="../../plugins/validar/jquery.validate.js"></script>
-<script src="../../build/validaciones/proveedor/proveedor_list.js"></script>
+<script src="../../build/validaciones/depreciacion/depreciacion_list.js"></script>
 <!-- AdminLTE App -->
 <script src="../../dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->

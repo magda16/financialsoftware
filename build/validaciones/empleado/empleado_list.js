@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-    var estado = $('#estado_list').val();
+    var estado = "Activo";
     var user = $('#user').val();
     var id_user = $('#id_usuario').val();
     
@@ -18,52 +18,50 @@ $(document).ready(function(){
       .fail(function(){
         alert('Error al cargar la Pagina')
       })
-
-      $('input[id=estado_list]').on('change', function() {
-        if ($(this).is(':checked') ) {
-          var estado = "Activo";
-         // var user = $('#user').val();
-         // var id_user = $('#id_usuario').val();
-          var table = $('#example1').DataTable();
-          $.ajax({
-            type: 'POST',
-            url: '../../pages/empleado/empleado_table.php',
-            data: {'estado': estado}
-            //data: {'estado': estado, 'user': user, 'id_user': id_user}
-          })
-          .done(function(obtenerDatos){
-            table.destroy();
-            $('#div_empleado_table').html(obtenerDatos);
-            table=$('#example1').DataTable();
-                           
-          })
-          .fail(function(){
-            alert('Error al cargar la Pagina')
-          })
-        } else {
-          var estado = "Inactivo";
-         // var user = $('#user').val();
-        //  var id_user = $('#id_usuario').val();
-          var table = $('#example1').DataTable();
-          $.ajax({
-            type: 'POST',
-            url: '../../pages/empleado/empleado_table.php',
-            data: {'estado': estado}
-            //data: {'estado': estado, 'user': user, 'id_user': id_user}
-          })
-          .done(function(obtenerDatos){
-            table.destroy();
-            $('#div_empleado_table').html(obtenerDatos);
-            table=$('#example1').DataTable();
-                           
-          })
-          .fail(function(){
-            alert('Error al cargar la Pagina')
-          })
-        }
-      
-      });
 });
+
+function mostrar_activo(){
+  var estado = "Activo";
+  // var user = $('#user').val();
+  // var id_user = $('#id_usuario').val();
+  var table = $('#example1').DataTable();
+ $.ajax({
+    type: 'POST',
+    url: '../../pages/empleado/empleado_table.php',
+    data: {'estado': estado}
+    //data: {'estado': estado, 'user': user, 'id_user': id_user}
+  })
+  .done(function(obtenerDatos){
+    table.destroy();
+    $('#div_empleado_table').html(obtenerDatos);
+    table=$('#example1').DataTable();
+  })
+  .fail(function(){
+    alert('Error al cargar la Pagina')
+  })
+}
+
+function mostrar_inactivo(){
+
+  var estado = "Inactivo";
+  // var user = $('#user').val();
+  //  var id_user = $('#id_usuario').val();
+  var table = $('#example1').DataTable();
+  $.ajax({
+    type: 'POST',
+    url: '../../pages/empleado/empleado_table.php',
+    data: {'estado': estado}
+    //data: {'estado': estado, 'user': user, 'id_user': id_user}
+  })
+  .done(function(obtenerDatos){
+    table.destroy();
+    $('#div_empleado_table').html(obtenerDatos);
+    table=$('#example1').DataTable();
+  })
+  .fail(function(){
+    alert('Error al cargar la Pagina')
+  })
+}
 
 function editar_empleado(id){
   var notice = PNotify.notice({

@@ -1,3 +1,29 @@
+<?php
+/*session_start();
+$logueo=$_SESSION['acceso'];
+if($logueo=='si'){
+include ("../build/conexion.php");
+$nivel_usu=$_SESSION['nivel'];*/
+
+  include ("../../build/controladores/conexion.php");
+
+  if(isset($_POST['id'])){
+    $id_departamento=$_POST['id'];
+
+    $stmt= $pdo->prepare("SELECT codigo, nombre, descripcion FROM departamento WHERE id_departamento=:id_departamento");
+    $stmt->bindParam(":id_departamento",$id_departamento,PDO::PARAM_INT);
+    $stmt->execute();
+    $result=$stmt->fetchAll(PDO::FETCH_ASSOC);
+    foreach($result as $lista_departamento){ 
+      $codigo_r=$lista_departamento['codigo'];
+      $nombre_r=$lista_departamento['nombre'];
+      $descripcion_r=$lista_departamento['descripcion'];
+    }
+  }else{
+    header('location: departamento_list.php');
+  }
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,8 +38,8 @@
   <link rel="stylesheet" href="../../bower_components/font-awesome/css/font-awesome.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="../../bower_components/Ionicons/css/ionicons.min.css">
-  <!-- DataTables -->
-  <link rel="stylesheet" href="../../bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+  <!-- bootstrap-datepicker -->
+  <link href="../../plugins/bootstrap-datepicker/css/bootstrap-datepicker.css" rel="stylesheet">
   <!-- PNotify -->
   <link href="../../plugins/PNotify/dist/PNotifyBrightTheme.css" rel="stylesheet" type="text/css" />
   <!-- Theme style -->
@@ -45,9 +71,9 @@
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1><i class="fa fa-user-md"></i>
-        Proveedor
-        <small>Mantenimiento</small>
+      <h1><i class="fa fa-linode"></i>
+        Departamento
+        <small>Mantenimiento</small> 
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -59,47 +85,63 @@
     <!-- Main content -->
     <section class="content">
       <div class="row">
-      
-        <div class="col-xs-12">
-          <div class="box">
-            <div class="box-header">
-              <h3 class="box-title">Lista de Proveedores</h3>
+      <form id="form_departamento" name="form_departamento" action="" method="POST">
+        <input type="hidden" name="bandera" id="bandera">
+        <input type="hidden" name="id_departamento" id="id_departamento" value="<?php echo $id_departamento; ?>" >
+
+        <!-- left column -->
+        <div class="col-md-6">
+          <!-- general form elements -->
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Datos Departamento</h3>
             </div>
-            <!-- /.box-header -->
             <div class="box-body">
 
-              <input type="hidden" id="id_usuario" name="id_usuario"  value="<?php // echo $_SESSION['id_usuario_admin']; ?>">
-              <input type="hidden" name="user" id="user" value="<?php //echo $_SESSION['nivel']; ?>">
-              <input type="hidden" name="estado" id="estado" value="<?php echo "Activo"; ?>">
-              
-              <div class="margin">
-                <div class="btn-group">
-                  <button type="button" class="btn btn-info">Acciones</button>
-                  <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-                    <span class="caret"></span>
-                    <span class="sr-only">Toggle Dropdown</span>
-                  </button>
-                  <ul class="dropdown-menu" role="menu">
-                    <li><a onclick="mostrar_activo()">Activo</a></li>
-                    <li><a onclick="mostrar_inactivo()">Inactivo</a></li>
-                  </ul>
+              <div class="form-group">
+                <label class="control-label" for="codigo"><i class="ic"></i> Código</label>
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
+                  <input type="text" id="codigo" name="codigo" class="form-control" placeholder="Ingrese Código" value="<?php echo $codigo_r; ?>">
                 </div>
-
-              <!-- /.inicio tabla -->
-              <div id="div_proveedor_table">
+                <span class="help-block"></span>
               </div>
 
-              <form id="from_proveedor_edit" name="from_proveedor_edit" action="proveedor_edit.php" method="POST">
-                <input type="hidden" id="id" name="id">
-              </form>
-              
+              <div class="form-group">
+                <label class="control-label" for="nombre"><i class="ic"></i> Nombre</label>
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-linode"></i></span>
+                  <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Ingrese Nombre" value="<?php echo $nombre_r; ?>">
+                </div>
+                <span class="help-block"></span>
+              </div>
+
+              <div class="form-group">
+                <label class="control-label" for="descripcion"><i class="ic"></i> Descripción</label>
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-pencil-square-o"></i></span>
+                  <textarea id="descripcion" name="descripcion" class="form-control" rows="2" placeholder="Ingrese Descripción"><?php echo $descripcion_r; ?></textarea>
+                </div>
+                <span class="help-block"></span>
+              </div>
+
             </div>
             <!-- /.box-body -->
+            <div class="box-footer" align="right">
+              <button type="button" id="btneditar" name="btneditar" class="btn btn-round btn-primary">
+                <span class="fa fa-refresh">&nbsp;&nbsp;&nbsp;</span>Actualizar Departamento
+              </button>
+                        
+              <button type="button" class="btn btn-round btn-default" onclick="location.href='../../pages/departamento/departamento_list.php'">
+                <span class="fa fa-ban">&nbsp;&nbsp;&nbsp;</span>Cancelar Proceso
+              </button>
+            </div>   
           </div>
           <!-- /.box -->
 
         </div>
-      
+        <!--/.col (left) -->
+        </form>
       </div>
       <!-- /.row -->
     </section>
@@ -314,9 +356,8 @@
 <script src="../../bower_components/fastclick/lib/fastclick.js"></script>
 <!-- InputMask -->
 <script src="../../plugins/input-mask/jquery.inputmask.js"></script>
-<!-- DataTables -->
-<script src="../../bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="../../bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<!-- bootstrap-datepicker -->
+<script src="../../plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 <!-- PNotify -->
 <script src="../../plugins/PNotify/dist/iife/PNotify.js"></script>
 <script src="../../plugins/PNotify/dist/iife/PNotifyButtons.js"></script>
@@ -324,7 +365,7 @@
 <script src="../../plugins/PNotify/dist/iife/PNotifyMobile.js"></script>
 <!-- Validate -->
 <script src="../../plugins/validar/jquery.validate.js"></script>
-<script src="../../build/validaciones/proveedor/proveedor_list.js"></script>
+<script src="../../build/validaciones/departamento/departamento_edit.js"></script>
 <!-- AdminLTE App -->
 <script src="../../dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->

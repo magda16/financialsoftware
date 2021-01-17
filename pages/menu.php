@@ -48,10 +48,10 @@
         </li>
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-files-o"></i>
+            <i class="fa fa-user-md"></i>
             <span>Empleado</span>
             <span class="pull-right-container">
-              <span class="label label-primary pull-right">4</span>
+              <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
@@ -109,6 +109,18 @@
             <li><a href="../../pages/proveedor/proveedor_list.php"><i class="fa fa-wrench"></i> Mantenimiento</a></li>
           </ul>
         </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-bookmark"></i>
+            <span>Depreciación</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="../../pages/depreciacion/depreciacion_list.php"><i class="fa fa-calculator"></i> Calcular Depreciación</a></li>
+          </ul>
+        </li>
         <li>
           <a href="../widgets.html">
             <i class="fa fa-th"></i> <span>Widgets</span>
@@ -119,7 +131,7 @@
         </li>
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-files-o"></i>
+            <i class="fa fa-users"></i>
             <span>Cliente</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>

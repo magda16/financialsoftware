@@ -32,6 +32,8 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
           $financiamiento=$_POST["financiamiento"];
           $valor_adquisicion=$_POST["valor_adquisicion"];
           $valor_estimado=$_POST["valor_estimado"];
+          $valor_residual=$_POST["valor_residual"];
+          $vida_util=$_POST["vida_util"];
           $id_proveedor=$_POST["proveedor"];
           $lote="";
           $acum=0;
@@ -57,8 +59,6 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
           }else{
             $cantidad=$_POST["cantidad"];
             $carpeta="lote-".$id_activo_fijo."-".($id_activo_fijo + ($cantidad-1));
-           
-            
           }
           if(($_FILES['doc_adquisicion']['tmp_name'])!=""){
             
@@ -125,7 +125,7 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
             
             $codigo=$codigo_inv."-".$correlativo;
 
-            $stmt1=$pdo->prepare("INSERT INTO activo_fijo (id_activo_fijo, codigo, descripcion, observacion, calidad, marca, modelo, num_serie, lote, fecha_adquisicion, financiamiento, valor_adquisicion, valor_estimado, doc_adquisicion, id_categoria, id_subcategoria, id_proveedor, fecha_ingreso, estado, id_usuario) VALUES (:id_activo_fijo, :codigo, :descripcion, :observacion, :calidad, :marca, :modelo, :num_serie, :lote, :fecha_adquisicion, :financiamiento, :valor_adquisicion, :valor_estimado, :doc_adquisicion, :id_categoria, :id_subcategoria, :id_proveedor, :fecha_ingreso, :estado, :id_usuario)");
+            $stmt1=$pdo->prepare("INSERT INTO activo_fijo (id_activo_fijo, codigo, descripcion, observacion, calidad, marca, modelo, num_serie, lote, fecha_adquisicion, financiamiento, valor_adquisicion, valor_estimado, valor_residual, vida_util, doc_adquisicion, id_categoria, id_subcategoria, id_proveedor, fecha_ingreso, estado, id_usuario) VALUES (:id_activo_fijo, :codigo, :descripcion, :observacion, :calidad, :marca, :modelo, :num_serie, :lote, :fecha_adquisicion, :financiamiento, :valor_adquisicion, :valor_estimado, :valor_residual, :vida_util, :doc_adquisicion, :id_categoria, :id_subcategoria, :id_proveedor, :fecha_ingreso, :estado, :id_usuario)");
             $stmt1->bindParam(":id_activo_fijo",$id_activo_fijo,PDO::PARAM_INT);
             $stmt1->bindParam(":codigo",$codigo,PDO::PARAM_STR);
             $stmt1->bindParam(":descripcion",$descripcion,PDO::PARAM_STR);
@@ -139,6 +139,8 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
             $stmt1->bindParam(":financiamiento",$financiamiento,PDO::PARAM_STR);
             $stmt1->bindParam(":valor_adquisicion",$valor_adquisicion,PDO::PARAM_STR);
             $stmt1->bindParam(":valor_estimado",$valor_estimado,PDO::PARAM_STR);
+            $stmt1->bindParam(":valor_residual",$valor_residual,PDO::PARAM_STR);
+            $stmt1->bindParam(":vida_util",$vida_util,PDO::PARAM_INT);
             $stmt1->bindParam(":doc_adquisicion",$doc_adquisicion,PDO::PARAM_STR);
             $stmt1->bindParam(":id_categoria",$id_categoria,PDO::PARAM_INT);
             $stmt1->bindParam(":id_subcategoria",$id_subcategoria,PDO::PARAM_INT);
@@ -170,7 +172,7 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
               $result="stmt".$i;
               $numeroConCeros = str_pad($cod, 6, "0", STR_PAD_LEFT);
               $codigo=$codigo_inv."-".$numeroConCeros;
-              $result=$pdo->prepare("INSERT INTO activo_fijo (codigo, descripcion, observacion, calidad, marca, modelo, num_serie, lote, fecha_adquisicion, financiamiento, valor_adquisicion, valor_estimado, doc_adquisicion, id_categoria, id_subcategoria, id_proveedor, fecha_ingreso, estado, id_usuario) VALUES (:codigo, :descripcion, :observacion, :calidad, :marca, :modelo, :num_serie, :lote, :fecha_adquisicion, :financiamiento, :valor_adquisicion, :valor_estimado, :doc_adquisicion, :id_categoria, :id_subcategoria, :id_proveedor, :fecha_ingreso, :estado, :id_usuario)");
+              $result=$pdo->prepare("INSERT INTO activo_fijo (codigo, descripcion, observacion, calidad, marca, modelo, num_serie, lote, fecha_adquisicion, financiamiento, valor_adquisicion, valor_estimado, valor_residual, vida_util, doc_adquisicion, id_categoria, id_subcategoria, id_proveedor, fecha_ingreso, estado, id_usuario) VALUES (:codigo, :descripcion, :observacion, :calidad, :marca, :modelo, :num_serie, :lote, :fecha_adquisicion, :financiamiento, :valor_adquisicion, :valor_estimado, :valor_residual, :vida_util, :doc_adquisicion, :id_categoria, :id_subcategoria, :id_proveedor, :fecha_ingreso, :estado, :id_usuario)");
               $result->bindParam(":codigo",$codigo,PDO::PARAM_STR);
               $result->bindParam(":descripcion",$descripcion,PDO::PARAM_STR);
               $result->bindParam(":observacion",$observacion,PDO::PARAM_STR);
@@ -183,6 +185,8 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
               $result->bindParam(":financiamiento",$financiamiento,PDO::PARAM_STR);
               $result->bindParam(":valor_adquisicion",$valor_adquisicion,PDO::PARAM_STR);
               $result->bindParam(":valor_estimado",$valor_estimado,PDO::PARAM_STR);
+              $result->bindParam(":valor_residual",$valor_residual,PDO::PARAM_STR);
+              $result->bindParam(":vida_util",$vida_util,PDO::PARAM_INT);
               $result->bindParam(":doc_adquisicion",$doc_adquisicion,PDO::PARAM_STR);
               $result->bindParam(":id_categoria",$id_categoria,PDO::PARAM_INT);
               $result->bindParam(":id_subcategoria",$id_subcategoria,PDO::PARAM_INT);

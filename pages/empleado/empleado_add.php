@@ -70,7 +70,7 @@
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1>
+      <h1><i class="fa fa-user-md"></i>
         Empleado
         <small>Registro</small>
       </h1>

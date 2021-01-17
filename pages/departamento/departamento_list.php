@@ -45,8 +45,8 @@
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1><i class="fa fa-user-md"></i>
-        Proveedor
+      <h1><i class="fa fa-linode"></i>
+        Departamento
         <small>Mantenimiento</small>
       </h1>
       <ol class="breadcrumb">
@@ -63,7 +63,7 @@
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Lista de Proveedores</h3>
+              <h3 class="box-title">Lista de Departamentos</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -86,10 +86,10 @@
                 </div>
 
               <!-- /.inicio tabla -->
-              <div id="div_proveedor_table">
+              <div id="div_departamento_table">
               </div>
 
-              <form id="from_proveedor_edit" name="from_proveedor_edit" action="proveedor_edit.php" method="POST">
+              <form id="from_departamento_edit" name="from_departamento_edit" action="departamento_edit.php" method="POST">
                 <input type="hidden" id="id" name="id">
               </form>
               
@@ -324,7 +324,7 @@
 <script src="../../plugins/PNotify/dist/iife/PNotifyMobile.js"></script>
 <!-- Validate -->
 <script src="../../plugins/validar/jquery.validate.js"></script>
-<script src="../../build/validaciones/proveedor/proveedor_list.js"></script>
+<script src="../../build/validaciones/departamento/departamento_list.js"></script>
 <!-- AdminLTE App -->
 <script src="../../dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->

@@ -67,14 +67,20 @@
       $msj="Error";
     
       function obtenerResultado(){
-        include ("../conexion.php");
-        $id_cooperante=$_POST["actualizar"];
+        include ("conexion.php");
+        $id_proveedor=$_POST["id_proveedor"];
 
-        $nombre_cooperante=$_POST["nombre_cooperante"];
-          $monto=$_POST["monto"];
+        $nombre=$_POST["nombre"];
+        $nombre_responsable=$_POST["nombre_responsable"];
+        $apellido_responsable=$_POST["apellido_responsable"];
+        $nit=$_POST["nit"];
+        $observaciones=$_POST["observaciones"];
+        $direccion=$_POST["direccion"];
+        $correo=$_POST["correo"];
+        $telefono=$_POST["telefono"];
           
           
-          $tipo_ayuda=$_POST["tipo_ayuda"];
+          /*$tipo_ayuda=$_POST["tipo_ayuda"];
           if($_POST["otro_tipo_ayuda"]!=""){
             $tipo_ayuda=$_POST["otro_tipo_ayuda"];
           }
@@ -92,15 +98,18 @@
         
           $fecha_ingreso=$fecha_ingres;
           list($dia, $mes, $year)=explode("/", $fecha_ingres);
-          $fecha_ingreso=$year."-".$mes."-".$dia;
+          $fecha_ingreso=$year."-".$mes."-".$dia;*/
           
-          $stmt=$pdo->prepare("UPDATE cooperante SET nombre_cooperante=:nombre_cooperante, monto=:monto, tipo_ayuda=:tipo_ayuda, fecha_ingreso=:fecha_ingreso, id_emprendedor=:id_emprendedor WHERE id_cooperante=:id_cooperante");
-          $stmt->bindParam(":nombre_cooperante",$nombre_cooperante,PDO::PARAM_STR);
-          $stmt->bindParam(":monto",$monto,PDO::PARAM_STR);
-          $stmt->bindParam(":tipo_ayuda",$tipo_ayuda,PDO::PARAM_STR);
-          $stmt->bindParam(":fecha_ingreso",$fecha_ingreso,PDO::PARAM_STR);
-          $stmt->bindParam(":id_emprendedor",$id_emprendedor,PDO::PARAM_INT);
-          $stmt->bindParam(":id_cooperante",$id_cooperante,PDO::PARAM_INT);
+          $stmt=$pdo->prepare("UPDATE proveedor SET nombre=:nombre, nit=:nit, nombre_responsable=:nombre_responsable, apellido_responsable=:apellido_responsable, direccion=:direccion, correo=:correo, telefono=:telefono, observaciones=:observaciones WHERE id_proveedor=:id_proveedor");
+          $stmt->bindParam(":nombre",$nombre,PDO::PARAM_STR);
+          $stmt->bindParam(":nombre_responsable",$nombre_responsable,PDO::PARAM_STR);
+          $stmt->bindParam(":apellido_responsable",$apellido_responsable,PDO::PARAM_STR);
+          $stmt->bindParam(":nit",$nit,PDO::PARAM_STR);
+          $stmt->bindParam(":direccion",$direccion,PDO::PARAM_STR);
+          $stmt->bindParam(":correo",$correo,PDO::PARAM_STR);
+          $stmt->bindParam(":telefono",$telefono,PDO::PARAM_STR);
+          $stmt->bindParam(":observaciones",$observaciones,PDO::PARAM_STR);
+          $stmt->bindParam(":id_proveedor",$id_proveedor,PDO::PARAM_INT);
 
           if($stmt->execute()){
             return "Exito";
@@ -111,26 +120,49 @@
       
         return $msj;
       }
-  }else if($bandera=="delete"){
-      $msj="Error";
+  }else if($bandera=="dar_baja"){
+    $msj="Error";
+  
+    function obtenerResultado(){
+        include ("conexion.php");
+        $id_proveedor=$_POST["id"];
+        $estado="Inactivo";
     
-      function obtenerResultado(){
-          include ("../conexion.php");
-          $id_cooperante=$_POST["id"];
-      
-          $stmt=$pdo->prepare("DELETE FROM cooperante WHERE id_cooperante=:id_cooperante");
-          $stmt->bindParam(":id_cooperante",$id_cooperante,PDO::PARAM_INT);
+        $stmt=$pdo->prepare("UPDATE proveedor SET estado=:estado WHERE id_proveedor=:id_proveedor");
+        $stmt->bindParam(":estado",$estado,PDO::PARAM_STR);
+        $stmt->bindParam(":id_proveedor",$id_proveedor,PDO::PARAM_INT);
 
-          if($stmt->execute()){
-            return "Exito";
-          }else{
-            return "Error";
-          }
-          $stmt->close();
-      
-        return $msj;
-      }
+        if($stmt->execute()){
+          return "Exito";
+        }else{
+          return "Error";
+        }
+        $stmt->close();
+    
+      return $msj;
     }
+  }else if($bandera=="dar_alta"){
+    $msj="Error";
+  
+    function obtenerResultado(){
+        include ("conexion.php");
+        $id_proveedor=$_POST["id"];
+        $estado="Activo";
+    
+        $stmt=$pdo->prepare("UPDATE proveedor SET estado=:estado WHERE id_proveedor=:id_proveedor");
+        $stmt->bindParam(":estado",$estado,PDO::PARAM_STR);
+        $stmt->bindParam(":id_proveedor",$id_proveedor,PDO::PARAM_INT);
+
+        if($stmt->execute()){
+          return "Exito";
+        }else{
+          return "Error";
+        }
+        $stmt->close();
+    
+      return $msj;
+    }
+  }
 
   }
 

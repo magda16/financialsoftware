@@ -1,37 +1,6 @@
 <?php
-/*session_start();
-$logueo=$_SESSION['acceso'];
-if($logueo=='si'){
-include ("../build/conexion.php");
-$nivel_usu=$_SESSION['nivel'];*/
-
-  include ("../../build/controladores/conexion.php");
-
-  if(isset($_POST['id'])){
-    $id_empleado=$_POST['id'];
-
-    $stmt= $pdo->prepare("SELECT  nombre, apellido, dui, nit, DATE_FORMAT(fecha_nac, '%d/%m/%Y') AS fecha_nac, genero, puesto, direccion, correo, telefono, fotografia FROM empleado WHERE id_empleado=:id_empleado");
-    $stmt->bindParam(":id_empleado",$id_empleado,PDO::PARAM_INT);
-    $stmt->execute();
-    $result=$stmt->fetchAll(PDO::FETCH_ASSOC);
-    foreach($result as $lista_empleado){ 
-      $nombre_r=$lista_empleado['nombre'];
-      $apellido_r=$lista_empleado['apellido'];
-      $dui_r=$lista_empleado['dui'];
-      $nit_r=$lista_empleado['nit'];
-      $fecha_nac_r=$lista_empleado['fecha_nac'];
-      $genero_r=$lista_empleado['genero'];
-      $puesto_r=$lista_empleado['puesto'];
-      $direccion_r=$lista_empleado['direccion'];
-      $correo_r=$lista_empleado['correo'];
-      $telefono_r=$lista_empleado['telefono'];
-      $fotografia_r=$lista_empleado['fotografia'];
-    }
-  }else{
-    header('location: empleado_list.php');
-  }
+  $tipo_cliente_r="Persona";
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -65,7 +34,7 @@ $nivel_usu=$_SESSION['nivel'];*/
 
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-  
+
   <style>
     #preview {
       width: 45%;
@@ -104,9 +73,9 @@ $nivel_usu=$_SESSION['nivel'];*/
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1><i class="fa fa-user-md"></i>
-        Empleado
-        <small>Mantenimiento</small>
+      <h1><i class="fa fa-users"></i>
+        Cliente
+        <small>Registro</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -118,17 +87,15 @@ $nivel_usu=$_SESSION['nivel'];*/
     <!-- Main content -->
     <section class="content">
       <div class="row">
-      <form id="form_empleado" name="form_empleado" action="" method="POST" enctype="multipart/form-data">
+      <form id="form_cliente" name="form_cliente" action="" method="POST" enctype="multipart/form-data">
         <input type="hidden" name="bandera" id="bandera">
-        <input type="hidden" name="id_empleado" id="id_empleado" value="<?php echo $id_empleado; ?>" >
-        <input type="hidden" name="foto" id="foto" value="<?php echo $fotografia_r; ?>" >
 
         <!-- left column -->
         <div class="col-md-6">
           <!-- general form elements -->
-          <div class="box box-primary">
+          <div class="box box-success">
             <div class="box-header with-border">
-              <h3 class="box-title">Datos Personales</h3>
+              <h3 class="box-title">Datos Generales</h3>
             </div>
             <div class="box-body">
 
@@ -136,8 +103,8 @@ $nivel_usu=$_SESSION['nivel'];*/
               <div class="form-group" align="center" >
                 <label for="control-label" for="foto">Fotografía:</label>
                 <div name="preview" id="preview" class="thumbnail">
-                  <a href="#" id="file-select" class="btn btn-primary"><span class="fa fa-camera">&nbsp;&nbsp;&nbsp;</span>Elegir archivo</a>
-                  <img src="<?php  if($fotografia_r != ""){ echo "../../".$fotografia_r; }else{ echo "../../files/user5.png"; } ?>"/>
+                  <a href="#" id="file-select" class="btn btn-success"><span class="fa fa-camera">&nbsp;&nbsp;&nbsp;</span>Elegir archivo</a>
+                  <img src="../../files/user2.png"/>
                 </div>
 
                 <div id="file-submit" >
@@ -148,67 +115,111 @@ $nivel_usu=$_SESSION['nivel'];*/
               <!--finaliza el div para capturar la imagen -->
 
               <div class="form-group">
-                <label class="control-label" for="nombre"><i class="ic"></i> Nombre</label>
-                <div class="input-group">
-                  <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                  <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Ingrese Nombre" value="<?php echo $nombre_r; ?>">
-                </div>
+                <label class="control-label" for="tipo_cliente"><i class="ic"></i> Tipo de Cliente </label>
+                <select class="form-control" id="tipo_cliente" name="tipo_cliente">
+                  <option selected="selected" value="">Seleccione Tipo Cliente...</option>
+                  <option value="Persona" <?php if($tipo_cliente_r=="Persona") echo "selected"; ?> >Persona</option>
+                  <option value="Institucion" <?php if($tipo_cliente_r=="Institucion") echo "selected"; ?> >Institución</option>
+                </select>
                 <span class="help-block"></span>
               </div>
 
-              <div class="form-group">
-                <label class="control-label" for="apellido"><i class="ic"></i> Apellido</label>
-                <div class="input-group">
-                  <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                  <input type="text" id="apellido" name="apellido" class="form-control" placeholder="Ingrese Apellido" value="<?php echo $apellido_r; ?>">
+              <div id="div_cliente_natural">
+                <div class="form-group">
+                  <label class="control-label" for="nombre"><i class="ic"></i> Nombre</label>
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                    <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Ingrese Nombre">
+                  </div>
+                  <span class="help-block"></span>
                 </div>
-                <span class="help-block"></span>
+
+                <div class="form-group">
+                  <label class="control-label" for="apellido"><i class="ic"></i> Apellido</label>
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                    <input type="text" id="apellido" name="apellido" class="form-control" placeholder="Ingrese Apellido">
+                  </div>
+                  <span class="help-block"></span>
+                </div>
+
+                <div class="row">
+                  <div class="col-xs-6 form-group">
+                    <label class="control-label" for="dui"><i class="ic"></i> DUI</label>
+                    <div class="input-group">
+                      <span class="input-group-addon"><i class="fa fa-id-card-o"></i></span>
+                      <input type="text" id="dui" name="dui" class="form-control" placeholder="Ingrese DUI" data-inputmask='"mask": "99999999-9"' data-mask>
+                    </div>
+                    <span class="help-block"></span>
+                  </div>
+
+                  <div class="col-xs-6 form-group">
+                    <label class="control-label" for="nit"><i class="ic"></i> NIT</label>
+                    <div class="input-group">
+                      <span class="input-group-addon"><i class="fa fa-id-card-o"></i></span>
+                      <input type="text" id="nit" name="nit" class="form-control" placeholder="Ingrese NIT" data-inputmask='"mask": "9999-999999-999-9"' data-mask>
+                    </div>
+                    <span class="help-block"></span>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-xs-6 form-group">
+                    <label class="control-label" for="fecha_nacimiento"><i class="ic"></i> Fecha Nacimiento</label>
+                    <div class="input-group">
+                      <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                      <input type="text" id="fecha_nacimiento" name="fecha_nacimiento" class="form-control" placeholder="Ingrese Fecha Nacimiento">
+                    </div>
+                    <span class="help-block"></span>
+                  </div>
+
+                  <div class="col-xs-6 form-group has-success">
+                    <label class="control-label" for="genero"><i class="fa fa-check"></i> G&eacute;nero</label>
+                    <div class="radio">
+                      <label>
+                        <input type="radio" name="genero" id="masculino" value="Masculino" checked>
+                        <i class="fa fa-male"></i> Masculino
+                      </label>
+                    </div> 
+                    <div class="radio">
+                      <label>
+                        <input type="radio" name="genero" id="femenino" value="Femenino">
+                        <i class="fa fa-female"></i> Femenino
+                      </label>
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              <div class="row">
-                <div class="col-xs-6 form-group">
-                  <label class="control-label" for="dui"><i class="ic"></i> DUI</label>
+              <div id="div_cliente_juridico">
+                <div class="form-group">
+                  <label class="control-label" for="nombre_institucion"><i class="ic"></i> Nombre</label>
                   <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-id-card-o"></i></span>
-                    <input type="text" id="dui" name="dui" class="form-control" placeholder="Ingrese DUI" data-inputmask='"mask": "99999999-9"' data-mask value="<?php echo $dui_r; ?>">
+                    <span class="input-group-addon"><i class="fa fa-institution"></i></span>
+                    <input type="text" id="nombre_institucion" name="nombre_institucion" class="form-control" placeholder="Ingrese Nombre">
                   </div>
                   <span class="help-block"></span>
                 </div>
 
-                <div class="col-xs-6 form-group">
-                  <label class="control-label" for="nit"><i class="ic"></i> NIT</label>
-                  <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-id-card-o"></i></span>
-                    <input type="text" id="nit" name="nit" class="form-control" placeholder="Ingrese NIT" data-inputmask='"mask": "9999-999999-999-9"' data-mask value="<?php echo $nit_r; ?>">
+                <div class="row">
+                  <div class="col-xs-6 form-group">
+                    <label class="control-label" for="nit"><i class="ic"></i> NIT</label>
+                    <div class="input-group">
+                      <span class="input-group-addon"><i class="fa fa-id-card-o"></i></span>
+                      <input type="text" id="nit" name="nit" class="form-control" placeholder="Ingrese NIT" data-inputmask='"mask": "9999-999999-999-9"' data-mask>
+                    </div>
+                    <span class="help-block"></span>
                   </div>
-                  <span class="help-block"></span>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-xs-6 form-group">
-                  <label class="control-label" for="fecha_nacimiento"><i class="ic"></i> Fecha de Nacimiento</label>
-                  <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                    <input type="text" id="fecha_nacimiento" name="fecha_nacimiento" class="form-control" placeholder="Ingrese Fecha: día/mes/año" value="<?php echo $fecha_nac_r; ?>">
-                  </div>
-                  <span class="help-block"></span>
-                </div>
 
-                <div class="col-xs-6 form-group has-success">
-                  <label class="control-label" for="genero"><i class="fa fa-check"></i> G&eacute;nero</label>
-                  <div class="radio">
-                    <label>
-                      <input type="radio" name="genero" id="masculino" value="Masculino" <?php if($genero_r=="Masculino") echo "checked"; ?> >
-                      <i class="fa fa-male"></i> Masculino
-                    </label>
-                  </div>
-                  <div class="radio">
-                    <label>
-                      <input type="radio" name="genero" id="femenino" value="Femenino" <?php if($genero_r=="Femenino") echo "checked"; ?> >
-                      <i class="fa fa-female"></i> Femenino
-                    </label>
-                  </div>
-                </div>
+                  <div class="col-xs-6 form-group">
+                    <label class="control-label" for="nrc"><i class="ic"></i> NRC</label>
+                    <div class="input-group">
+                      <span class="input-group-addon"><i class="fa fa-id-card-o"></i></span>
+                      <input type="text" id="nrc" name="nrc" class="form-control" placeholder="Ingrese NRC" data-inputmask='"mask": "999999-9"' data-mask>
+                    </div>
+                    <span class="help-block"></span>
+                  </div>  
+                </div>      
               </div>
 
             </div>
@@ -221,29 +232,8 @@ $nivel_usu=$_SESSION['nivel'];*/
         <!-- right column -->
         <div class="col-md-6">
 
-          <div class="box box-primary">
-            <div class="box-header with-border">
-              <h3 class="box-title">Datos Laborales</h3>
-            </div>
-            <div class="box-body">
-
-              <div class="form-group">
-                <label class="control-label" for="puesto"><i class="ic"></i> Puesto</label>
-                <select class="form-control" id="puesto" name="puesto">
-                  <option selected="selected" value="">Seleccione Puesto...</option>
-                  <option value="Administrador" <?php if($puesto_r=="Administrador") echo "selected"; ?> >Administrador</option>
-                  <option value="Vendedor" <?php if($puesto_r=="Vendedor") echo "selected"; ?> >Vendedor</option>
-                </select>
-                <span class="help-block"></span>
-              </div>
-
-            </div>
-            <!-- /.box-body -->
-          </div>
-          <!-- /.box -->
-
           <!-- general form elements disabled -->
-          <div class="box box-primary">
+          <div class="box box-success">
             <div class="box-header with-border">
               <h3 class="box-title">Datos de Contacto</h3>
             </div>
@@ -254,7 +244,7 @@ $nivel_usu=$_SESSION['nivel'];*/
                 <label class="control-label" for="direccion"><i class="ic"></i> Dirección</label>
                 <div class="input-group">
                   <span class="input-group-addon"><i class="fa fa-truck"></i></span>
-                  <input type="text" id="direccion" name="direccion" class="form-control" placeholder="Ingrese Dirección" value="<?php echo $direccion_r; ?>">
+                  <input type="text" id="direccion" name="direccion" class="form-control" placeholder="Ingrese Dirección">
                 </div>
                 <span class="help-block"></span>
               </div>
@@ -263,7 +253,7 @@ $nivel_usu=$_SESSION['nivel'];*/
                 <label class="control-label" for="correo"><i class="ic"></i> Correo Electrónico</label>
                 <div class="input-group">
                   <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                  <input type="text" id="correo" name="correo" class="form-control" placeholder="Ingrese Correo Electrónico" value="<?php echo $correo_r; ?>">
+                  <input type="text" id="correo" name="correo" class="form-control" placeholder="Ingrese Correo Electrónico">
                 </div>
                 <span class="help-block"></span>
               </div>
@@ -272,7 +262,7 @@ $nivel_usu=$_SESSION['nivel'];*/
                 <label class="control-label" for="telefono"><i class="ic"></i> Teléfono</label>
                 <div class="input-group col-xs-6">
                   <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                  <input type="text" id="telefono" name="telefono" class="form-control" placeholder="Ingrese Teléfono" data-inputmask='"mask": "9999-9999"' data-mask value="<?php echo $telefono_r; ?>">
+                  <input type="text" id="telefono" name="telefono" class="form-control" placeholder="Ingrese Teléfono" data-inputmask='"mask": "9999-9999"' data-mask>
                 </div>
                 <span class="help-block"></span>
               </div>
@@ -280,11 +270,11 @@ $nivel_usu=$_SESSION['nivel'];*/
             </div>
             <!-- /.box-body -->
             <div class="box-footer" align="right">
-              <button type="button" id="btneditar" name="btneditar" class="btn btn-round btn-primary">
-                <span class="fa fa-refresh">&nbsp;&nbsp;&nbsp;</span>Actualizar Empleado
+              <button type="button" id="btnguardar" name="btnguardar" class="btn btn-round btn-success">
+                <span class="fa fa-floppy-o">&nbsp;&nbsp;&nbsp;</span>Guardar Cliente
               </button>
                         
-              <button type="submit" class="btn btn-round btn-default" onclick="location.href='../../pages/empleado/empleado_list.php'">
+              <button type="button" class="btn btn-round btn-default" onclick="location.href='../../pages/cliente/cliente_add.php'">
                 <span class="fa fa-ban">&nbsp;&nbsp;&nbsp;</span>Cancelar Proceso
               </button>
             </div>
@@ -516,7 +506,7 @@ $nivel_usu=$_SESSION['nivel'];*/
 <script src="../../plugins/PNotify/dist/iife/PNotifyMobile.js"></script>
 <!-- Validate -->
 <script src="../../plugins/validar/jquery.validate.js"></script>
-<script src="../../build/validaciones/empleado/empleado_edit.js"></script>
+<script src="../../build/validaciones/cliente/cliente_add.js"></script>
 <!-- AdminLTE App -->
 <script src="../../dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->

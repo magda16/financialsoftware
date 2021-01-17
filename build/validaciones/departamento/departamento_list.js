@@ -6,12 +6,12 @@ $(document).ready(function(){
     
       $.ajax({
         type: 'POST',
-        url: '../../pages/proveedor/proveedor_table.php',
+        url: '../../pages/departamento/departamento_table.php',
         data: {'estado': estado}
         //data: {'estado': estado, 'user': user, 'id_user': id_user}
       })
       .done(function(obtenerDatos){
-        $('#div_proveedor_table').html(obtenerDatos);
+        $('#div_departamento_table').html(obtenerDatos);
         table=$('#example1').DataTable();
                        
       })
@@ -27,13 +27,13 @@ function mostrar_activo(){
   var table = $('#example1').DataTable();
  $.ajax({
     type: 'POST',
-    url: '../../pages/proveedor/proveedor_table.php',
+    url: '../../pages/departamento/departamento_table.php',
     data: {'estado': estado}
     //data: {'estado': estado, 'user': user, 'id_user': id_user}
   })
   .done(function(obtenerDatos){
     table.destroy();
-    $('#div_proveedor_table').html(obtenerDatos);
+    $('#div_departamento_table').html(obtenerDatos);
     table=$('#example1').DataTable();
   })
   .fail(function(){
@@ -49,13 +49,13 @@ function mostrar_inactivo(){
   var table = $('#example1').DataTable();
   $.ajax({
     type: 'POST',
-    url: '../../pages/proveedor/proveedor_table.php',
+    url: '../../pages/departamento/departamento_table.php',
     data: {'estado': estado}
     //data: {'estado': estado, 'user': user, 'id_user': id_user}
   })
   .done(function(obtenerDatos){
     table.destroy();
-    $('#div_proveedor_table').html(obtenerDatos);
+    $('#div_departamento_table').html(obtenerDatos);
     table=$('#example1').DataTable();
   })
   .fail(function(){
@@ -63,7 +63,7 @@ function mostrar_inactivo(){
   })
 }
 
-function editar_proveedor(id){
+function editar_departamento(id){
   var notice = PNotify.notice({
     title: 'Advertencia',
     text: '¿Esta seguro que desea modificar el registro?',
@@ -91,7 +91,7 @@ function editar_proveedor(id){
   });
   notice.on('pnotify.confirm', function() {
     $("#id").val(id);
-    $("#from_proveedor_edit").submit();
+    $("#from_departamento_edit").submit();
   });
   notice.on('pnotify.cancel', function() {
     PNotify.success({
@@ -104,7 +104,7 @@ function editar_proveedor(id){
   
  }
 
- function dar_baja_proveedor(id){
+ function dar_baja_departamento(id){
    
   var notice = PNotify.notice({
     title: 'Advertencia',
@@ -136,7 +136,7 @@ function editar_proveedor(id){
       var bandera = "dar_baja";
       $.ajax({
        type: 'POST',
-       url: '../../build/controladores/crud_proveedor.php',
+       url: '../../build/controladores/crud_departamento.php',
        data: {'bandera' : bandera, 'id' : id}
       })
       .done(function(resultado_ajax){
@@ -157,7 +157,7 @@ function editar_proveedor(id){
                   primary: true,
                   click: function(notice) {
                     notice.close();
-                    location.href='../../pages/proveedor/proveedor_list.php';
+                    location.href='../../pages/departamento/departamento_list.php';
                   }
                 }]
               },
@@ -198,7 +198,7 @@ function editar_proveedor(id){
  }
 
 
- function dar_alta_proveedor(id){
+ function dar_alta_departamento(id){
  
   var notice = PNotify.notice({
     title: 'Advertencia',
@@ -230,7 +230,7 @@ function editar_proveedor(id){
       var bandera = "dar_alta";
       $.ajax({
        type: 'POST',
-       url: '../../build/controladores/crud_proveedor.php',
+       url: '../../build/controladores/crud_departamento.php',
        data: {'bandera' : bandera, 'id' : id}
       })
       .done(function(resultado_ajax){
@@ -251,7 +251,7 @@ function editar_proveedor(id){
                   primary: true,
                   click: function(notice) {
                     notice.close();
-                    location.href='../../pages/proveedor/proveedor_list.php';
+                    location.href='../../pages/departamento/departamento_list.php';
                   }
                 }]
               },
@@ -290,3 +290,4 @@ function editar_proveedor(id){
   });
   
  }
+ 

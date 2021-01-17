@@ -59,8 +59,7 @@
     <!-- Main content -->
     <section class="content">
       <div class="row">
-      <form id="form_proveedor" name="form_proveedor" action="" method="POST">
-        <input type="hidden" name="bandera" id="bandera">
+      
 
         <div class="col-xs-12">
           <div class="box box-info">
@@ -69,56 +68,30 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              
-              <?php
 
-                echo "<table id='datatable-responsive1' class='table table-striped table-bordered dt-responsive nowrap' cellspacing='0' width='100%'>";
+            <form id="form_producto" name="form_producto" action="" method="POST">
+              <div class="row">
+                <div class="col-xs-3 form-group">
+                  <label class="control-label" for="categoria"><i class="ic"></i> Categoría</label>
+                  <select class="form-control" id="categoria" name="categoria">
+                  </select>
+                  <span class="help-block"></span>
+                </div>
+                </br>
+                <div class="col-xs-3">
+                  <button type="button" id="btngenerar" name="btngenerar" class="btn bg-olive"><span class="fa fa-repeat">&nbsp;&nbsp;</span> Generar</button>
+                </div>
 
-                  include ("../../build/controladores/conexion.php");
-                  $stmt= $pdo->prepare("SELECT * FROM activo_categoria ORDER BY categoria");
-                  $stmt->execute();
-                  $result=$stmt->fetchAll(PDO::FETCH_ASSOC);
-                  foreach($result as $lista_activo_categoria){
-                    $id_activo_categoria=$lista_activo_categoria['id_activo_categoria'];
+              </div>
+            </form>
 
-                    echo "<input type='hidden' name='bandera' id='bandera'>";
-                    echo "<input type='hidden' name='baccion' id='baccion'>";
+            <!-- /.inicio tabla -->
+            <div id="div_producto_table">
+            </div>
 
-                    echo "<thead>";
-                    echo "<tr>";
-                    echo "<th colspan='2'> <h4 style='color: #00c0ef;'>".$lista_activo_categoria['categoria'].".</h4></th>";                    
-                    echo "<th ><div align='center'><a id='paso4' href='../../pages/catalogo_activos/catalogo_subcategoria_add.php' class='btn btn-info' type='button' onclick='imprecepciondocumentos(".$id_activo_categoria.")' data-toggle='tooltip' data-placement='top' title='Agregar Tipo de Bien'><i class='fa fa-plus'></i></a>";
-                    echo "</tr>";
-
-                    echo "<tr>";
-                    echo "<th color: RGB(0, 0, 128);'>No.</th>";
-                    echo "<th color: RGB(0, 0, 128);'>C&oacute;digo</th>";
-                    echo "<th color: RGB(0, 0, 128);'>Tipo de Bien</th>";
-                    echo "</tr>";
-                    echo "</thead>";
-                    echo "<tbody>";
-
-                    $contador=1;
-                    $stmt1= $pdo->prepare("SELECT id_activo_subcategoria, codigo, subcategoria FROM activo_subcategoria WHERE id_activo_categoria=:id_activo_categoria ORDER BY subcategoria");
-                    $stmt1->bindParam(":id_activo_categoria",$id_activo_categoria,PDO::PARAM_INT);
-                    $stmt1->execute();
-                    $result1=$stmt1->fetchAll(PDO::FETCH_ASSOC);
-                    foreach($result1 as $lista_activo_subcategoria){
-                            
-                      echo "<tr>";
-                      echo "<td>" .$contador. "</td>";
-                      echo "<td>" . $lista_activo_subcategoria['codigo'] . "</td>";
-                      echo "<td>" . $lista_activo_subcategoria['subcategoria'] . "</td>";
-                      echo "</tr>";
-                
-                      $contador++;
-                    }
-        
-                  }
-
-                  echo "</tbody>";
-                  echo "</table>";
-                ?>
+            <form id="from_producto_edit" name="from_producto_edit" action="producto_edit.php" method="POST">
+              <input type="hidden" id="id" name="id">
+            </form>
               
             </div>
             <!-- /.box-body -->
@@ -126,7 +99,7 @@
           <!-- /.box -->
 
         </div>
-        </form>
+        
       </div>
       <!-- /.row -->
     </section>
@@ -351,7 +324,7 @@
 <script src="../../plugins/PNotify/dist/iife/PNotifyMobile.js"></script>
 <!-- Validate -->
 <script src="../../plugins/validar/jquery.validate.js"></script>
-<script src="../../build/validaciones/proveedor/proveedor_list.js"></script>
+<script src="../../build/validaciones/producto/producto_list.js"></script>
 <!-- AdminLTE App -->
 <script src="../../dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->

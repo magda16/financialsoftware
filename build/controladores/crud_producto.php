@@ -22,47 +22,8 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
           $proveedor=$_POST["proveedor"];
           $cantidad=0;
           $precio=0;
-         
-          
-          /*$dato = "";
 
-          if(($_FILES['foto']['tmp_name'])!=""){
-            $ruta = "../../Archivos";
-            $ruta2 = "../../Archivos/".$id_emprendedor;
-          
-            function llenarArchivos($ruta3){
-              $cv = null;
-    
-              $cv = $_FILES['foto']['tmp_name'];
-            
-              if(move_uploaded_file($cv, $ruta3."/".$_FILES['foto']['name'])){
-                $dbfoto = $ruta3."/".$_FILES['foto']['name'];
-              }
-  
-              return $dbfoto;    
-            }
-         
-            if(!file_exists($ruta)){
-              mkdir($ruta, 0777,true);
-              if(!file_exists($ruta2)){
-                mkdir($ruta2, 0777,true);
-                if(file_exists($ruta2)){
-                  $dato = llenarArchivos($ruta2);
-                }
-              }else{
-                $dato = llenarArchivos($ruta2);
-              }
-            }else{
-              if(!file_exists($ruta2)){
-                mkdir($ruta2, 0777,true);
-                if(file_exists($ruta2)){
-                  $dato = llenarArchivos($ruta2);
-                }
-              }else{
-                $dato = llenarArchivos($ruta2);
-              }
-            }
-          }*/
+          $dato = "";
 
           $stmt = $pdo->prepare("SELECT MAX(id_producto)+1 AS 'id' FROM producto");
           $stmt->execute();
@@ -74,6 +35,52 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
           }
           if($id_producto==null){
             $id_producto=1;
+          }
+
+          if(($_FILES['file']['tmp_name'])!=""){
+            
+            $ruta = "../../product/".$id_producto;
+            function llenarArchivos($ruta2){
+
+              $foto="";
+
+              function validarTipoDoc($doc){
+                $tipo=null;
+                if ($doc=="image/jpg") {
+                  $tipo=".jpg";
+                }else if ($doc=="image/jpeg") {
+                  $tipo=".jpeg";
+                }else if ($doc=="image/png") {
+                  $tipo=".png";
+                }
+                return $tipo;
+              }
+    
+              $cmtype = $_FILES['file']['type'];
+              $cmtipo=validarTipoDoc($cmtype);
+              
+              $directorio=$ruta2."/producto".$cmtipo;
+              if(move_uploaded_file($_FILES['file']['tmp_name'], $directorio)){
+                $foto = $directorio;
+              }
+              return $foto;                
+            }
+
+            if(!file_exists($ruta)){
+              mkdir($ruta, 0777,true);
+              if(file_exists($ruta)){
+                $dato = llenarArchivos($ruta);
+              }
+            }else{
+              $dato = llenarArchivos($ruta);
+            }
+         
+          }
+
+          if($dato != ""){
+            $fotografia = substr($dato, 6);
+          }else {
+            $fotografia ="";
           }
 
           $num_correlativo = str_pad($id_producto, 4, "0", STR_PAD_LEFT);
@@ -90,7 +97,7 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
           //$id_usuario=$_POST["id_usuario"];
           $id_usuario=1;
 
-          $stmt=$pdo->prepare("INSERT INTO producto (id_producto, codigo, nombre, marca, modelo, margen_ganancia, stock_minimo, cantidad, precio, descripcion, categoria, proveedor, fecha_ingreso, estado, id_usuario) VALUES (:id_producto, :codigo, :nombre, :marca, :modelo, :margen_ganancia, :stock_minimo, :cantidad, :precio, :descripcion, :categoria, :proveedor, :fecha_ingreso, :estado, :id_usuario)");
+          $stmt=$pdo->prepare("INSERT INTO producto (id_producto, codigo, nombre, marca, modelo, margen_ganancia, stock_minimo, cantidad, precio, descripcion, fotografia, categoria, proveedor, fecha_ingreso, estado, id_usuario) VALUES (:id_producto, :codigo, :nombre, :marca, :modelo, :margen_ganancia, :stock_minimo, :cantidad, :precio, :descripcion, :fotografia, :categoria, :proveedor, :fecha_ingreso, :estado, :id_usuario)");
           $stmt->bindParam(":id_producto",$id_producto,PDO::PARAM_INT);
           $stmt->bindParam(":codigo",$codigo,PDO::PARAM_STR);
           $stmt->bindParam(":nombre",$nombre,PDO::PARAM_STR);
@@ -101,6 +108,7 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
           $stmt->bindParam(":cantidad",$cantidad,PDO::PARAM_INT);
           $stmt->bindParam(":precio",$precio,PDO::PARAM_STR);
           $stmt->bindParam(":descripcion",$descripcion,PDO::PARAM_STR);
+          $stmt->bindParam(":fotografia",$fotografia,PDO::PARAM_STR);
           $stmt->bindParam(":categoria",$categoria,PDO::PARAM_STR);
           $stmt->bindParam(":proveedor",$proveedor,PDO::PARAM_INT);
           $stmt->bindParam(":fecha_ingreso",$fecha_ingreso,PDO::PARAM_STR);
@@ -110,6 +118,13 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
           if($stmt->execute()){
             return "Exito";
           }else{
+            $url="../../".$fotografia;
+            if(file_exists($url)){
+              if (unlink($url)) {
+                $dir="../../product/".$id_producto;
+                rmdir($dir);
+              }
+            }
             return "Error";
           }
           $stmt->close();
@@ -120,70 +135,144 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
       $msj="Error";
     
       function obtenerResultado(){
-        include ("../conexion.php");
-        $id_cooperante=$_POST["actualizar"];
+        include ("conexion.php");
+          
+          $id_producto=$_POST["id_producto"];
+          $nombre=$_POST["nombre"];
+          $marca=$_POST["marca"];
+          $modelo=$_POST["modelo"];
+          $margen_ganancia=$_POST["margen_ganancia"];
+          $stock_minimo=$_POST["stock_minimo"];
+          $descripcion=$_POST["descripcion"];
+          $categoria=$_POST["categoria"];
+          $proveedor=$_POST["proveedor"];
 
-        $nombre_cooperante=$_POST["nombre_cooperante"];
-          $monto=$_POST["monto"];
-          
-          
-          $tipo_ayuda=$_POST["tipo_ayuda"];
-          if($_POST["otro_tipo_ayuda"]!=""){
-            $tipo_ayuda=$_POST["otro_tipo_ayuda"];
-          }
+          $num_correlativo = str_pad($id_producto, 4, "0", STR_PAD_LEFT);
 
-          $fecha_ingres=$_POST["fecha_ingreso"];
-          
-          $id_emprendedor=$_POST["emp"];
-          if($_POST["emprendedor"]!=""){
-            $id_emprendedor=$_POST["emprendedor"];
-          }
+          $nom = substr($nombre, 0, 2);
+          $codigo=$nom."".$num_correlativo;
 
-          if($tipo_ayuda==""){ $tipo_ayuda=$_POST["tipo_a"]; } 
-          
-          date_default_timezone_set('America/El_Salvador');
-        
-          $fecha_ingreso=$fecha_ingres;
-          list($dia, $mes, $year)=explode("/", $fecha_ingres);
-          $fecha_ingreso=$year."-".$mes."-".$dia;
-          
-          $stmt=$pdo->prepare("UPDATE cooperante SET nombre_cooperante=:nombre_cooperante, monto=:monto, tipo_ayuda=:tipo_ayuda, fecha_ingreso=:fecha_ingreso, id_emprendedor=:id_emprendedor WHERE id_cooperante=:id_cooperante");
-          $stmt->bindParam(":nombre_cooperante",$nombre_cooperante,PDO::PARAM_STR);
-          $stmt->bindParam(":monto",$monto,PDO::PARAM_STR);
-          $stmt->bindParam(":tipo_ayuda",$tipo_ayuda,PDO::PARAM_STR);
-          $stmt->bindParam(":fecha_ingreso",$fecha_ingreso,PDO::PARAM_STR);
-          $stmt->bindParam(":id_emprendedor",$id_emprendedor,PDO::PARAM_INT);
-          $stmt->bindParam(":id_cooperante",$id_cooperante,PDO::PARAM_INT);
+          $dato = "";
 
-          if($stmt->execute()){
-            return "Exito";
-          }else{
-            return "Error";
-          }
-          $stmt->close();
-      
-        return $msj;
-      }
-  }else if($bandera=="delete"){
-      $msj="Error";
+          if(($_FILES['file']['tmp_name'])!=""){
+            
+            $ruta = "../../product/".$id_producto;
+            function llenarArchivos($ruta2){
+
+              $foto="";
+
+              function validarTipoDoc($doc){
+                $tipo=null;
+                if ($doc=="image/jpg") {
+                  $tipo=".jpg";
+                }else if ($doc=="image/jpeg") {
+                  $tipo=".jpeg";
+                }else if ($doc=="image/png") {
+                  $tipo=".png";
+                }
+                return $tipo;
+              }
     
-      function obtenerResultado(){
-          include ("../conexion.php");
-          $id_cooperante=$_POST["id"];
-      
-          $stmt=$pdo->prepare("DELETE FROM cooperante WHERE id_cooperante=:id_cooperante");
-          $stmt->bindParam(":id_cooperante",$id_cooperante,PDO::PARAM_INT);
+              $cmtype = $_FILES['file']['type'];
+              $cmtipo=validarTipoDoc($cmtype);
+              
+              $directorio=$ruta2."/producto".$cmtipo;
+              if(move_uploaded_file($_FILES['file']['tmp_name'], $directorio)){
+                $foto = $directorio;
+              }
+              return $foto;                
+            }
 
+            if(!file_exists($ruta)){
+              mkdir($ruta, 0777,true);
+              if(file_exists($ruta)){
+                $dato = llenarArchivos($ruta);
+              }
+            }else{
+              $dato = llenarArchivos($ruta);
+            }
+         
+          }
+
+          if($dato != ""){
+            $fotografia = substr($dato, 6);
+          }else {
+            $fotografia =$_POST["foto"];
+          }
+
+          $stmt=$pdo->prepare("UPDATE producto SET codigo=:codigo, nombre=:nombre, marca=:marca, modelo=:modelo, margen_ganancia=:margen_ganancia, stock_minimo=:stock_minimo, descripcion=:descripcion, fotografia=:fotografia, categoria=:categoria, proveedor=:proveedor WHERE id_producto=:id_producto");
+          $stmt->bindParam(":id_producto",$id_producto,PDO::PARAM_INT);
+          $stmt->bindParam(":codigo",$codigo,PDO::PARAM_STR);
+          $stmt->bindParam(":nombre",$nombre,PDO::PARAM_STR);
+          $stmt->bindParam(":marca",$marca,PDO::PARAM_STR);
+          $stmt->bindParam(":modelo",$modelo,PDO::PARAM_STR);
+          $stmt->bindParam(":margen_ganancia",$margen_ganancia,PDO::PARAM_INT);
+          $stmt->bindParam(":stock_minimo",$stock_minimo,PDO::PARAM_STR);
+          $stmt->bindParam(":descripcion",$descripcion,PDO::PARAM_STR);
+          $stmt->bindParam(":fotografia",$fotografia,PDO::PARAM_STR);
+          $stmt->bindParam(":categoria",$categoria,PDO::PARAM_STR);
+          $stmt->bindParam(":proveedor",$proveedor,PDO::PARAM_INT);
+          
           if($stmt->execute()){
             return "Exito";
           }else{
+            $url="../../".$fotografia;
+            if(file_exists($url)){
+              if (unlink($url)) {
+                $dir="../../product/".$id_producto;
+                rmdir($dir);
+              }
+            }
             return "Error";
           }
           $stmt->close();
-      
-        return $msj;
-      }
+        
+          return $msj;
+        }
+
+  }else if($bandera=="dar_baja"){
+    $msj="Error";
+  
+    function obtenerResultado(){
+        include ("conexion.php");
+        $id_producto=$_POST["id"];
+        $estado="Inactivo";
+    
+        $stmt=$pdo->prepare("UPDATE producto SET estado=:estado WHERE id_producto=:id_producto");
+        $stmt->bindParam(":estado",$estado,PDO::PARAM_STR);
+        $stmt->bindParam(":id_producto",$id_producto,PDO::PARAM_INT);
+
+        if($stmt->execute()){
+          return "Exito";
+        }else{
+          return "Error";
+        }
+        $stmt->close();
+    
+      return $msj;
     }
+  }else if($bandera=="dar_alta"){
+    $msj="Error";
+  
+    function obtenerResultado(){
+        include ("conexion.php");
+        $id_producto=$_POST["id"];
+        $estado="Activo";
+    
+        $stmt=$pdo->prepare("UPDATE producto SET estado=:estado WHERE id_producto=:id_producto");
+        $stmt->bindParam(":estado",$estado,PDO::PARAM_STR);
+        $stmt->bindParam(":id_producto",$id_producto,PDO::PARAM_INT);
+
+        if($stmt->execute()){
+          return "Exito";
+        }else{
+          return "Error";
+        }
+        $stmt->close();
+    
+      return $msj;
+    }
+  }
 
   }
 

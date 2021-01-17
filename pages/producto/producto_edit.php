@@ -1,3 +1,36 @@
+<?php
+/*session_start();
+$logueo=$_SESSION['acceso'];
+if($logueo=='si'){
+include ("../build/conexion.php");
+$nivel_usu=$_SESSION['nivel'];*/
+
+  include ("../../build/controladores/conexion.php");
+
+  if(isset($_POST['id'])){
+    $id_producto=$_POST['id'];
+
+    $stmt= $pdo->prepare("SELECT nombre, marca, modelo, margen_ganancia, stock_minimo, cantidad, precio, descripcion, fotografia, categoria, proveedor FROM producto WHERE id_producto=:id_producto");
+    $stmt->bindParam(":id_producto",$id_producto,PDO::PARAM_INT);
+    $stmt->execute();
+    $result=$stmt->fetchAll(PDO::FETCH_ASSOC);
+    foreach($result as $lista_producto){ 
+      $nombre_r=$lista_producto['nombre'];
+      $marca_r=$lista_producto['marca'];
+      $modelo_r=$lista_producto['modelo'];
+      $margen_ganancia_r=$lista_producto['margen_ganancia'];
+      $stock_minimo_r=$lista_producto['stock_minimo'];
+      $cantidad_r=$lista_producto['cantidad'];
+      $precio_r=$lista_producto['precio'];
+      $descripcion_r=$lista_producto['descripcion'];
+      $fotografia_r=$lista_producto['fotografia'];
+      $categoria_r=$lista_producto['categoria'];
+      $proveedor_r=$lista_producto['proveedor'];
+    }
+  }else{
+    header('location: producto_list.php');
+  }
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,8 +45,8 @@
   <link rel="stylesheet" href="../../bower_components/font-awesome/css/font-awesome.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="../../bower_components/Ionicons/css/ionicons.min.css">
-  <!-- DataTables -->
-  <link rel="stylesheet" href="../../bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+  <!-- bootstrap-datepicker -->
+  <link href="../../plugins/bootstrap-datepicker/css/bootstrap-datepicker.css" rel="stylesheet">
   <!-- PNotify -->
   <link href="../../plugins/PNotify/dist/PNotifyBrightTheme.css" rel="stylesheet" type="text/css" />
   <!-- Theme style -->
@@ -31,6 +64,31 @@
 
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+  <style>
+    #preview {
+      width: 45%;
+      margin: 0 auto;
+      margin-bottom: 10px;
+      position: relative;
+    }
+         
+    #preview a {
+      position: absolute;
+      bottom: 5px;
+      left: 5px;
+      right: 5px;
+      display: none;
+    }
+
+    input[type=file] {
+      position: absolute;
+      visibility: hidden;
+      width: 0;
+      z-index: -9999;
+    }      
+  </style>
+  
 </head>
 <body class="hold-transition skin-blue-light sidebar-mini">
 <div class="wrapper">
@@ -45,8 +103,8 @@
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1><i class="fa fa-user-md"></i>
-        Proveedor
+      <h1><i class="fa fa-cubes"></i>
+        Producto
         <small>Mantenimiento</small>
       </h1>
       <ol class="breadcrumb">
@@ -59,47 +117,149 @@
     <!-- Main content -->
     <section class="content">
       <div class="row">
-      
-        <div class="col-xs-12">
-          <div class="box">
-            <div class="box-header">
-              <h3 class="box-title">Lista de Proveedores</h3>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
+      <form id="form_producto" name="form_producto" action="" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="bandera" id="bandera">
 
-              <input type="hidden" id="id_usuario" name="id_usuario"  value="<?php // echo $_SESSION['id_usuario_admin']; ?>">
-              <input type="hidden" name="user" id="user" value="<?php //echo $_SESSION['nivel']; ?>">
-              <input type="hidden" name="estado" id="estado" value="<?php echo "Activo"; ?>">
-              
-              <div class="margin">
-                <div class="btn-group">
-                  <button type="button" class="btn btn-info">Acciones</button>
-                  <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-                    <span class="caret"></span>
-                    <span class="sr-only">Toggle Dropdown</span>
-                  </button>
-                  <ul class="dropdown-menu" role="menu">
-                    <li><a onclick="mostrar_activo()">Activo</a></li>
-                    <li><a onclick="mostrar_inactivo()">Inactivo</a></li>
-                  </ul>
+        <!-- left column -->
+        <div class="col-md-6">
+          <!-- general form elements -->
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Datos Producto</h3>
+            </div>
+            <div class="box-body">
+            <input type="hidden" name="id_producto" id="id_producto" value="<?php echo $id_producto; ?>" >
+            <input type="hidden" name="id_proveedor" id="id_proveedor" value="<?php echo $proveedor_r; ?>" >
+            <input type="hidden" name="foto" id="foto" value="<?php echo $fotografia_r; ?>" >
+
+
+              <!--inicia el div para capturar la imagen -->
+              <div class="form-group" align="center" >
+                <label for="control-label" for="foto">Fotografía:</label>
+                <div name="preview" id="preview" class="thumbnail">
+                  <a href="#" id="file-select" class="btn btn-primary"><span class="fa fa-camera">&nbsp;&nbsp;&nbsp;</span>Elegir archivo</a>
+                  <img src="<?php  if($fotografia_r != ""){ echo "../../".$fotografia_r; }else{ echo "../../files/producto.png"; } ?>"/>
                 </div>
 
-              <!-- /.inicio tabla -->
-              <div id="div_proveedor_table">
+                <div id="file-submit" >
+                  <input id="file" name="file" type="file" accept="image/*" />
+                  <span class="help-block" id="error"></span>
+                </div> 
+              </div>
+              <!--finaliza el div para capturar la imagen -->
+
+              <div class="form-group">
+                <label class="control-label" for="nombre"><i class="ic"></i> Producto</label>
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-cubes"></i></span>
+                  <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Ingrese Producto" value="<?php echo $nombre_r; ?>">
+                </div>
+                <span class="help-block"></span>
               </div>
 
-              <form id="from_proveedor_edit" name="from_proveedor_edit" action="proveedor_edit.php" method="POST">
-                <input type="hidden" id="id" name="id">
-              </form>
+              <div class="form-group">
+                <label class="control-label" for="categoria"><i class="ic"></i> Categoría</label>
+                <select class="form-control" id="categoria" name="categoria">
+                  <option selected="selected" value="">Seleccione Categoría...</option>
+                  <option value="Hogar" <?php if($categoria_r=="Hogar") echo "selected"; ?> >Hogar</option>
+                  <option value="Muebles" <?php if($categoria_r=="Muebles") echo "selected"; ?> >Muebles</option>
+                  <option value="Cocinas" <?php if($categoria_r=="Cocinas") echo "selected"; ?> >Cocinas</option>
+                  <option value="Lavadoras" <?php if($categoria_r=="Lavadoras") echo "selected"; ?> >Lavadoras</option>
+                  <option value="Computo" <?php if($categoria_r=="Computo") echo "selected"; ?> >Computo</option>
+                </select>
+                <span class="help-block"></span>
+              </div>
+
+              <div class="form-group">
+                <label class="control-label" for="marca"><i class="ic"></i> Marca</label>
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-tag"></i></span>
+                  <input type="text" id="marca" name="marca" class="form-control" placeholder="Ingrese Marca" value="<?php echo $marca_r; ?>">
+                </div>
+                <span class="help-block"></span>
+              </div>
+
+              <div class="form-group">
+                <label class="control-label" for="modelo"><i class="ic"></i> Modelo</label>
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-tasks"></i></span>
+                  <input type="text" id="modelo" name="modelo" class="form-control" placeholder="Ingrese Modelo" value="<?php echo $modelo_r; ?>">
+                </div>
+                <span class="help-block"></span>
+              </div>
+
+            </div>
+            <!-- /.box-body -->     
+          </div>
+          <!-- /.box -->
+
+        </div>
+        <!--/.col (left) -->
+        <!-- right column -->
+        <div class="col-md-6">
+
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Datos Generales</h3>
+            </div>
+            <div class="box-body">
+
+              <div class="form-group">
+                <label class="control-label" for="proveedor"><i class="ic"></i> Proveedor</label>
+                <select class="form-control" id="proveedor" name="proveedor">
+                </select>
+                <span class="help-block"></span>
+              </div>
+
+              <div class="row">
+
+                <div class="col-xs-6 form-group">
+                  <label class="control-label" for="margen_ganancia"><i class="ic"></i> Margen de Ganancia</label>
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-percent"></i></span>
+                    <input type="text" id="margen_ganancia" name="margen_ganancia" class="form-control" placeholder="Ingrese Margen Ganancia" value="<?php echo $margen_ganancia_r; ?>">
+                  </div>
+                  <span class="help-block"></span>
+                </div>
+
+                <div class="col-xs-6 form-group">
+                  <label class="control-label" for="stock_minimo"><i class="ic"></i> Stock Mínimo</label>
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-stop"></i></span>
+                    <input type="text" id="stock_minimo" name="stock_minimo" class="form-control" placeholder="Ingrese Stock Mínimo" value="<?php echo $stock_minimo_r; ?>">
+                  </div>
+                  <span class="help-block"></span>
+                </div>
+
+              </div>
               
+              <div class="form-group">
+                <label class="control-label" for="descripcion"><i class="ic"></i> Descripción</label>
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-pencil-square-o"></i></span>
+                  <textarea id="descripcion" name="descripcion" class="form-control" rows="2" placeholder="Ingrese Descripción"><?php echo $descripcion_r; ?></textarea>
+                </div>
+                <span class="help-block"></span>
+              </div>
+            
+              <!-- /.box-body -->
+              <div class="box-footer" align="right">
+                <button type="button" id="btneditar" name="btneditar" class="btn btn-round btn-primary">
+                  <span class="fa fa-refresh">&nbsp;&nbsp;&nbsp;</span>Actualizar Producto
+                </button>
+                          
+                <button type="button" class="btn btn-round btn-default" onclick="location.href='../../pages/producto/producto_list.php'">
+                  <span class="fa fa-ban">&nbsp;&nbsp;&nbsp;</span>Cancelar Proceso
+                </button>
+              </div>
             </div>
             <!-- /.box-body -->
           </div>
           <!-- /.box -->
 
         </div>
-      
+        <!--/.col (right) -->
+        </form>
       </div>
       <!-- /.row -->
     </section>
@@ -314,9 +474,8 @@
 <script src="../../bower_components/fastclick/lib/fastclick.js"></script>
 <!-- InputMask -->
 <script src="../../plugins/input-mask/jquery.inputmask.js"></script>
-<!-- DataTables -->
-<script src="../../bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="../../bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<!-- bootstrap-datepicker -->
+<script src="../../plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 <!-- PNotify -->
 <script src="../../plugins/PNotify/dist/iife/PNotify.js"></script>
 <script src="../../plugins/PNotify/dist/iife/PNotifyButtons.js"></script>
@@ -324,7 +483,7 @@
 <script src="../../plugins/PNotify/dist/iife/PNotifyMobile.js"></script>
 <!-- Validate -->
 <script src="../../plugins/validar/jquery.validate.js"></script>
-<script src="../../build/validaciones/proveedor/proveedor_list.js"></script>
+<script src="../../build/validaciones/producto/producto_edit.js"></script>
 <!-- AdminLTE App -->
 <script src="../../dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->

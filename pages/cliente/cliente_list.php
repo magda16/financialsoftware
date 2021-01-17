@@ -45,8 +45,8 @@
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1><i class="fa fa-user-md"></i>
-        Proveedor
+      <h1>
+        Cliente
         <small>Mantenimiento</small>
       </h1>
       <ol class="breadcrumb">
@@ -59,47 +59,36 @@
     <!-- Main content -->
     <section class="content">
       <div class="row">
-      
+     
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Lista de Proveedores</h3>
+              <h3 class="box-title">Lista de Clientes</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-
-              <input type="hidden" id="id_usuario" name="id_usuario"  value="<?php // echo $_SESSION['id_usuario_admin']; ?>">
-              <input type="hidden" name="user" id="user" value="<?php //echo $_SESSION['nivel']; ?>">
-              <input type="hidden" name="estado" id="estado" value="<?php echo "Activo"; ?>">
               
-              <div class="margin">
-                <div class="btn-group">
-                  <button type="button" class="btn btn-info">Acciones</button>
-                  <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-                    <span class="caret"></span>
-                    <span class="sr-only">Toggle Dropdown</span>
-                  </button>
-                  <ul class="dropdown-menu" role="menu">
-                    <li><a onclick="mostrar_activo()">Activo</a></li>
-                    <li><a onclick="mostrar_inactivo()">Inactivo</a></li>
-                  </ul>
+              <div class="form-group">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" id="estado_list" name="estado_list" checked>
+                    Activos
+                  </label>
                 </div>
-
-              <!-- /.inicio tabla -->
-              <div id="div_proveedor_table">
               </div>
 
-              <form id="from_proveedor_edit" name="from_proveedor_edit" action="proveedor_edit.php" method="POST">
-                <input type="hidden" id="id" name="id">
+              <!-- /.inicio tabla -->
+              <div id="div_cliente_table">
+              </div>
+               <form id="form_cliente_edit" name="form_cliente_edit" action="cliente_edit.php" method="POST">
+                <input type="hidden" name="id" id="id">
               </form>
-              
             </div>
             <!-- /.box-body -->
           </div>
           <!-- /.box -->
 
         </div>
-      
       </div>
       <!-- /.row -->
     </section>
@@ -324,7 +313,7 @@
 <script src="../../plugins/PNotify/dist/iife/PNotifyMobile.js"></script>
 <!-- Validate -->
 <script src="../../plugins/validar/jquery.validate.js"></script>
-<script src="../../build/validaciones/proveedor/proveedor_list.js"></script>
+<script src="../../build/validaciones/cliente/cliente_list.js"></script>
 <!-- AdminLTE App -->
 <script src="../../dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->

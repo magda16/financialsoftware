@@ -42,21 +42,6 @@ $(document).ready(function(){
         var datos = eval(obtenerDatos);
         $('#codigo_inv').val(datos[3]+"-"+datos[0]+"-"+datos[1]);
         $('#correlativo').val(datos[2]);
-       /* var num = numero(datos[1]);
-    
-        function numero(num){
-          numtmp='"'+num+'"';
-          largo=numtmp.length-2;
-          numtmp=numtmp.split('"').join('');
-          if(largo==5)return numtmp;
-          ceros='';
-          pendientes=5-largo;
-          for(i=0;i<pendientes;i++)ceros+='0';
-          return ceros+numtmp;
-        
-        }*/
-        //$('#correlativo_inv').val(num);
-        //$('#codigo_af').val(datos[0]);
       })
       .fail(function(){
         alert('Hubo un error al cargar el Tipo de Bien')
@@ -148,6 +133,14 @@ $(document).ready(function(){
           required: true,
           minlength: 1
         },
+        valor_residual: {
+          required: true,
+          minlength: 1
+        },
+        vida_util: {
+          required: true,
+          minlength: 1
+        },
         doc_adquisicion: {
           required: false
         },
@@ -194,6 +187,14 @@ $(document).ready(function(){
         },
         valor_adquisicion: {
           required: "Por favor, ingrese valor de adquisición.",
+          minlength: "Debe ingresar m&iacute;nimo 1 dígitos."
+        },
+        valor_residual: {
+          required: "Por favor, ingrese valor residual.",
+          minlength: "Debe ingresar m&iacute;nimo 1 dígitos."
+        },
+        vida_util: {
+          required: "Por favor, ingrese vida útil.",
           minlength: "Debe ingresar m&iacute;nimo 1 dígitos."
         },
         doc_adquisicion: {

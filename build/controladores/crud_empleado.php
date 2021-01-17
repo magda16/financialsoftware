@@ -191,7 +191,7 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
         if($dato != ""){
           $fotografia = substr($dato, 6);
         }else {
-          $fotografia =$_POST["foto"];;
+          $fotografia =$_POST["foto"];
         }
 
         date_default_timezone_set('America/El_Salvador');

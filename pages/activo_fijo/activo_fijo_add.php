@@ -106,24 +106,25 @@
                 </div>
 
               </div>
-              <div class="form-group">
-                <label class="control-label" for="descripcion"><i class="ic"></i> Descripción</label>
-                <div class="input-group">
-                  <span class="input-group-addon"><i class="fa fa-pencil-square-o"></i></span>
-                  <textarea id="descripcion" name="descripcion" class="form-control" rows="2" placeholder="Ingrese Descripción"></textarea>
+              <div class="row">
+                <div class="col-xs-6 form-group">
+                  <label class="control-label" for="descripcion"><i class="ic"></i> Descripción</label>
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-pencil-square-o"></i></span>
+                    <textarea id="descripcion" name="descripcion" class="form-control" rows="2" placeholder="Ingrese Descripción"></textarea>
+                  </div>
+                  <span class="help-block"></span>
                 </div>
-                <span class="help-block"></span>
-              </div>
 
-              <div class="form-group">
-                <label class="control-label" for="observacion"><i class="ic"></i> Observación</label>
-                <div class="input-group">
-                  <span class="input-group-addon"><i class="fa fa-pencil-square-o"></i></span>
-                  <textarea id="observacion" name="observacion" class="form-control" rows="2" placeholder="Ingrese Observación"></textarea>
+                <div class="col-xs-6 form-group">
+                  <label class="control-label" for="observacion"><i class="ic"></i> Observación</label>
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-pencil-square-o"></i></span>
+                    <textarea id="observacion" name="observacion" class="form-control" rows="2" placeholder="Ingrese Observación"></textarea>
+                  </div>
+                  <span class="help-block"></span>
                 </div>
-                <span class="help-block"></span>
               </div>
-
               <div class="form-group has-success">
                 <label class="control-label" for="calidad"><i class="fa fa-check"></i> Calidad</label>
                 <div class="radio">
@@ -150,11 +151,6 @@
             <!-- /.box-body -->     
           </div>
           <!-- /.box -->
-
-        </div>
-        <!--/.col (left) -->
-        <!-- right column -->
-        <div class="col-md-6">
 
           <div class="box box-success">
             <div class="box-header with-border">
@@ -220,6 +216,13 @@
           </div>
           <!-- /.box -->
 
+        </div>
+        <!--/.col (left) -->
+        <!-- right column -->
+        <div class="col-md-6">
+
+          
+
           <!-- general form elements disabled -->
           <div class="box box-success">
             <div class="box-header with-border">
@@ -227,6 +230,13 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
+
+              <div class="form-group">
+                <label class="control-label" for="proveedor"><i class="ic"></i> Proveedor</label>
+                <select class="form-control" id="proveedor" name="proveedor">
+                </select>
+                <span class="help-block"></span>
+              </div>
 
               <div class="row">
 
@@ -281,18 +291,36 @@
 
               </div>
 
+              <div class="row">
+
+                <div class="col-xs-6 form-group">
+                  <label class="control-label" for="valor_residual"><i class="ic"></i> Valor Residual</label>
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-usd"></i></span>
+                    <input type="text" id="valor_residual" name="valor_residual" class="form-control" placeholder="Ingrese Valor Residual">
+                  </div>
+                  <span class="help-block"></span>
+                </div>  
+
+                <div class="col-xs-6 form-group">
+                  <label class="control-label" for="vida_util"><i class="ic"></i> Vida Útil</label>
+                  <div class="input-group">
+                    
+                    <input type="text" id="vida_util" name="vida_util" class="form-control" placeholder="Ingrese Vida Útil">
+                    <span class="input-group-addon"> años</span>
+                  </div>
+                  <span class="help-block"></span>
+                </div> 
+
+              </div>
+
               <div class="form-group">
                 <label class="control-label" for="doc_adquisicion"><i class="ic"></i> Documento de Adquisición</label>
                 <input type="file" id="doc_adquisicion" name="doc_adquisicion" accept=".pdf,.jpg,.png"/>
                 <span class="help-block"></span>
               </div>
 
-              <div class="form-group">
-                <label class="control-label" for="proveedor"><i class="ic"></i> Proveedor</label>
-                <select class="form-control" id="proveedor" name="proveedor">
-                </select>
-                <span class="help-block"></span>
-              </div>
+            
 
             </div>
             <!-- /.box-body -->

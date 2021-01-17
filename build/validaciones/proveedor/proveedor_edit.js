@@ -1,39 +1,6 @@
 $(document).ready(function(){
-
-  $('#preview').hover(
-    function() {
-        $(this).find('a').fadeIn();
-    }, function() {
-        $(this).find('a').fadeOut();
-  });
-
-  $('#file-select').on('click', function(e) {
-    e.preventDefault();
-        
-    $('#file').click();
-  });
-
-  $('input[type=file]').change(function() {
-    var file = (this.files[0].name).toString();
-    var reader = new FileReader();
-        
-    reader.onload = function (e) {
-      $('#preview img').attr('src', e.target.result);
-    }
-         
-    reader.readAsDataURL(this.files[0]);
-  });
-    
-  $.ajax({
-    type: 'POST',
-    url: '../../build/controladores/lista_proveedores.php'
-  })
-  .done(function(lista_proveedores){
-    $('#proveedor').html(lista_proveedores)
-  })
-  .fail(function(){
-    alert('Error al cargar la Pagina Lista Proveedor')
-  })
+    //Money Euro
+    $('[data-mask]').inputmask()
 
     $.validator.addMethod("letrasOespacio", function(value, element) {
         return /^[ a-záéíóúüñ]*$/i.test(value);
@@ -44,14 +11,14 @@ $(document).ready(function(){
     }, "Ingrese sólo letras, números o espacios.");
 
     $.validator.addMethod("numero", function(value, element) {
-        return /^[ 0-9]*$/i.test(value);
-    }, "Ingrese sólo números enteros");
+        return /^[ 0-9-()]*$/i.test(value);
+    }, "Ingrese sólo números");
 
     $.validator.addMethod("correo", function(value, element) {
         return /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/i.test(value);
     }, "Ingrese un correo v&aacute;lido.");
 
-    $("#form_producto").validate({
+    $("#form_proveedor").validate({
       errorPlacement: function (error, element) {
             $(element).closest('.form-group').find('.help-block').html(error.html());
         },
@@ -70,97 +37,105 @@ $(document).ready(function(){
           required: true,
           minlength: 3
         },
-        categoria: {
-          required: true
-        },
-        marca: {
-          required: true,
-          minlength: 3
-        },
-        modelo: {
-          required: true,
-          minlength: 3
-        },
-        proveedor: {
-          required: true
-        },
-        stock_minimo: {
-          required: true,
-          minlength: 1
-        },
-        margen_ganancia: {
+        nit: {
           numero: true,
           required: true,
-          minlength: 1,
-          range: [0, 100]
+          minlength: 17
         },
-        descripcion: {
+        nombre_responsable: {
+          letrasOespacio: true,
           required: true,
           minlength: 3
+        },
+        apellido_responsable: {
+          letrasOespacio: true,
+          required: true,
+          minlength: 3
+        },
+        observaciones: {
+          alfanumOespacio: true,
+          required: false,
+          minlength: 3
+        }/*,
+        telefono1:{
+          numero: true,
+          required: true,
+          minlength: 9
+        },
+        telefono2:{
+          numero: true,
+          required: false,
+          minlength: 9
+        }*/,
+        direccion: {
+          alfanumOespacio: true,
+          required: true,
+          minlength: 6
+        },
+        correo: {
+          correo: true,
+          required:true,
+          minlength: 8,
+          maxlength: 150
         }
-        /*,
-        file:"required"*/
       },
       messages: {
         nombre: {
-          required: "Por favor, ingrese producto.",
+          required: "Por favor, ingrese nombre.",
           minlength: "Debe ingresar m&iacute;nimo 3 dígitos."
         },
-        categoria: {
-          required: "Por favor, seleccione categoría."
+        nit: {
+          required: "Por favor, ingrese NIT.",
+          minlength: "Debe ingresar m&iacute;nimo 17 dígitos."
         },
-        marca: {
-          required: "Por favor, ingrese marca.",
+        nombre_responsable: {
+          required: "Por favor, ingrese nombre responsable.",
           minlength: "Debe ingresar m&iacute;nimo 3 dígitos."
         },
-        modelo: {
-          required: "Por favor, ingrese modelo.",
+        apellido_responsable: {
+          required: "Por favor, ingrese apellido responsable.",
           minlength: "Debe ingresar m&iacute;nimo 3 dígitos."
         },
-        proveedor: {
-          required: "Por favor, seleccione proveedor."
-        },
-        stock_minimo: {
-          required: "Por favor, ingrese stock mínimo.",
-          minlength: "Debe ingresar m&iacute;nimo 1 dígito."
-        },
-        margen_ganancia: {
-          required: "Por favor, ingrese margen de ganancia.",
-          minlength: "Debe ingresar m&iacute;nimo 1 carácter.",
-          range: "Debe ingresar un valor entre 0 y 100."
-        },
-        descripcion: {
-          required: "Por favor, ingrese descripción.",
+        observaciones: {
+          required: "Por favor, ingrese observaciones.",
           minlength: "Debe ingresar m&iacute;nimo 3 dígitos."
+        }/*,
+        telefono1: {
+          required: "Por favor, ingrese n&uacute;mero tel&eacute;fonico",
+          minlength: "Debe ingresar m&iacute;nimo 9 dígitos."
+        },
+        telefono2: {
+          required: "Por favor, ingrese n&uacute;mero tel&eacute;fonico",
+          minlength: "Debe ingresar m&iacute;nimo 9 dígitos."
+        }*/,
+        direccion: {
+          required: "Por favor, ingrese direcci&oacute;n.",
+          minlength: "Debe ingresar m&iacute;nimo 6 dígitos."
+        },
+        correo: {
+          required: "Por favor, ingrese un correo v&aacute;lido",
+          maxlength: "Debe ingresar m&aacute;ximo 150 dígitos.",
+          minlength: "Debe ingresar m&iacute;nimo 8 dígitos."
         }
-        /*,
-        file: "Por favor, seleccione una foto."*/
       }
     });
 });
 
-$("#btnguardar").click(function(){
-    if($("#form_producto").valid()){
-        $("#bandera").val("add");
-       
-        var formData = new FormData($("#form_producto")[0]);
+
+$("#btneditar").click(function(){
+    if($("#form_proveedor").valid()){
+        $("#bandera").val("edit");
         $.ajax({
           type: 'POST',
-          url: '../../build/controladores/crud_producto.php',
-          //datos del formulario
-          data: formData,
-          //necesario para subir archivos via ajax
-          cache: false,
-          contentType: false,
-          processData: false,
+          url: '../../build/controladores/crud_proveedor.php',
+          data: $("#form_proveedor").serialize()
         })
         .done(function(resultado_ajax){
-            alert(resultado_ajax);
           if(resultado_ajax === "Exito"){
-            $("#btnguardar").attr("disabled",true);
+            $("#btneditar").attr("disabled",true);
             PNotify.success({
               title: 'Éxito',
-              text: 'Registro almacenado.',
+              text: 'Registro actualizado.',
               styling: 'bootstrap3',
               icons: 'bootstrap3',
               hide: false,
@@ -172,7 +147,7 @@ $("#btnguardar").click(function(){
                     primary: true,
                     click: function(notice) {
                       notice.close();
-                      location.href='../../pages/producto/producto_add.php';
+                      location.href='../../pages/proveedor/proveedor_list.php';
                     }
                   }]
                 },
@@ -201,7 +176,7 @@ $("#btnguardar").click(function(){
                     primary: true,
                     click: function(notice) {
                       notice.close();
-                      location.href='../../pages/producto/producto_add.php';
+                      location.href='../../pages/proveedor/proveedor_list.php';
                     }
                   }]
                 },
@@ -218,7 +193,7 @@ $("#btnguardar").click(function(){
           }             
         })
         .fail(function(){
-          alert('Error al cargar la Pagina Producto')
+          alert('Error al cargar la Pagina Proveedor')
         })
     }else{
       PNotify.info({

@@ -45,7 +45,7 @@
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1>
+      <h1><i class="fa fa-user-md"></i>
         Empleado
         <small>Mantenimiento</small>
       </h1>
@@ -72,13 +72,18 @@
               <input type="hidden" name="user" id="user" value="<?php //echo $_SESSION['nivel']; ?>">
               <input type="hidden" name="estado" id="estado" value="<?php echo "Activo"; ?>">
               
-              <div class="form-group">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox" id="estado_list" name="estado_list" checked>
-                  </label>
+              <div class="margin">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-info">Acciones</button>
+                  <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a onclick="mostrar_activo()">Activo</a></li>
+                    <li><a onclick="mostrar_inactivo()">Inactivo</a></li>
+                  </ul>
                 </div>
-              </div>
 
               <!-- /.inicio tabla -->
               <div id="div_empleado_table">

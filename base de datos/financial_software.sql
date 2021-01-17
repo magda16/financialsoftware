@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 12-01-2021 a las 01:50:27
+-- Tiempo de generación: 17-01-2021 a las 02:08:21
 -- Versión del servidor: 5.7.21
 -- Versión de PHP: 5.6.35
 
@@ -34,11 +34,11 @@ CREATE TABLE IF NOT EXISTS `activo_categoria` (
   `codigo` text NOT NULL,
   `categoria` text NOT NULL,
   `tipo` varchar(20) NOT NULL,
-  `fecha_ingreso` timestamp NOT NULL,
+  `fecha_ingreso` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `estado` varchar(8) NOT NULL,
   `id_usuario` int(11) NOT NULL,
   PRIMARY KEY (`id_activo_categoria`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `activo_categoria`
@@ -46,7 +46,12 @@ CREATE TABLE IF NOT EXISTS `activo_categoria` (
 
 INSERT INTO `activo_categoria` (`id_activo_categoria`, `codigo`, `categoria`, `tipo`, `fecha_ingreso`, `estado`, `id_usuario`) VALUES
 (1, 'AcT', 'Baterias', 'Otros Bienes Muebles', '2020-11-28 03:37:59', 'Activo', 1),
-(2, 'uj78', 'laptop', 'Otros Bienes Muebles', '2020-12-23 18:46:59', 'Activo', 1);
+(2, 'uj78', 'laptop', 'Otros Bienes Muebles', '2020-12-23 18:46:59', 'Activo', 1),
+(3, 'vh0001', 'vehiculo', 'Maquinaria', '2021-01-14 13:16:46', 'Activo', 1),
+(4, 'mq0001', 'desktop', 'Maquinaria', '2021-01-14 13:17:47', 'Activo', 1),
+(5, 'lp0001', 'laptop', 'Maquinaria', '2021-01-14 13:18:18', 'Activo', 1),
+(6, 'vh0002', 'pc escritorio', 'Maquinaria', '2021-01-15 02:21:30', 'Activo', 1),
+(7, 'mb0001', 'muebles', 'Otros Bienes Muebles', '2021-01-15 03:48:32', 'Activo', 1);
 
 -- --------------------------------------------------------
 
@@ -69,15 +74,82 @@ CREATE TABLE IF NOT EXISTS `activo_fijo` (
   `financiamiento` varchar(200) NOT NULL,
   `valor_adquisicion` decimal(10,2) NOT NULL,
   `valor_estimado` varchar(2) NOT NULL,
+  `valor_residual` decimal(10,2) NOT NULL,
+  `vida_util` int(11) NOT NULL,
   `doc_adquisicion` text NOT NULL,
   `id_categoria` int(11) NOT NULL,
   `id_subcategoria` int(11) NOT NULL,
   `id_proveedor` int(11) NOT NULL,
-  `fecha_ingreso` timestamp NOT NULL,
+  `fecha_ingreso` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `estado` varchar(8) NOT NULL,
   `id_usuario` int(11) NOT NULL,
   PRIMARY KEY (`id_activo_fijo`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `activo_fijo`
+--
+
+INSERT INTO `activo_fijo` (`id_activo_fijo`, `codigo`, `descripcion`, `observacion`, `calidad`, `marca`, `modelo`, `num_serie`, `lote`, `fecha_adquisicion`, `financiamiento`, `valor_adquisicion`, `valor_estimado`, `valor_residual`, `vida_util`, `doc_adquisicion`, `id_categoria`, `id_subcategoria`, `id_proveedor`, `fecha_ingreso`, `estado`, `id_usuario`) VALUES
+(1, 'su0001-vh0001-vh0001-000001', 'camioneta color rojo, cuatro puertas,  placa p123-123', 'no hay', 'Bueno', 'Kia', 'sportage', 'ms01231', '', '2020-12-27', 'Nuevo', '27000.00', 'Si', '2700.00', 5, 'fixed_asset/1/documento_adquisicion.pdf', 3, 7, 2, '2021-01-16 20:48:19', 'Activo', 1),
+(2, 'su0001-lp0001-hp0001-000001', 'pantalla 14 pulgadas,  8 gb ram drr3, 128gb ssd, procesador i5 4ta generacion', '', 'Bueno', 'Hewlett Packard', 'probook', 'e5440', '', '2020-12-27', 'Nuevo', '800.00', 'Si', '0.00', 0, '', 5, 8, 2, '2021-01-15 03:05:14', 'Activo', 1),
+(3, 'su0001-lp0001-de0001-000001', 'pantalla 14 pulgadas, 8gb ram, 500gb hdd', 'no hay', 'Regular', 'dell', 'Refurbished', '', 'lote-3-12', '2020-12-27', 'Usado', '645.00', 'Si', '0.00', 0, '', 5, 4, 2, '2021-01-15 03:11:08', 'Activo', 1),
+(4, 'su0001-lp0001-de0001-000002', 'pantalla 14 pulgadas, 8gb ram, 500gb hdd', 'no hay', 'Regular', 'dell', 'Refurbished', '', 'lote-3-12', '2020-12-27', 'Usado', '645.00', 'Si', '0.00', 0, '', 5, 4, 2, '2021-01-15 03:11:08', 'Activo', 1),
+(5, 'su0001-lp0001-de0001-000003', 'pantalla 14 pulgadas, 8gb ram, 500gb hdd', 'no hay', 'Regular', 'dell', 'Refurbished', '', 'lote-3-12', '2020-12-27', 'Usado', '645.00', 'Si', '0.00', 0, '', 5, 4, 2, '2021-01-15 03:11:08', 'Activo', 1),
+(6, 'su0001-lp0001-de0001-000004', 'pantalla 14 pulgadas, 8gb ram, 500gb hdd', 'no hay', 'Regular', 'dell', 'Refurbished', '', 'lote-3-12', '2020-12-27', 'Usado', '645.00', 'Si', '0.00', 0, '', 5, 4, 2, '2021-01-15 03:11:08', 'Activo', 1),
+(7, 'su0001-lp0001-de0001-000005', 'pantalla 14 pulgadas, 8gb ram, 500gb hdd', 'no hay', 'Regular', 'dell', 'Refurbished', '', 'lote-3-12', '2020-12-27', 'Usado', '645.00', 'Si', '0.00', 0, '', 5, 4, 2, '2021-01-15 03:11:08', 'Activo', 1),
+(8, 'su0001-lp0001-de0001-000006', 'pantalla 14 pulgadas, 8gb ram, 500gb hdd', 'no hay', 'Regular', 'dell', 'Refurbished', '', 'lote-3-12', '2020-12-27', 'Usado', '645.00', 'Si', '0.00', 0, '', 5, 4, 2, '2021-01-15 03:11:08', 'Activo', 1),
+(9, 'su0001-lp0001-de0001-000007', 'pantalla 14 pulgadas, 8gb ram, 500gb hdd', 'no hay', 'Regular', 'dell', 'Refurbished', '', 'lote-3-12', '2020-12-27', 'Usado', '645.00', 'Si', '0.00', 0, '', 5, 4, 2, '2021-01-15 03:11:08', 'Activo', 1),
+(10, 'su0001-lp0001-de0001-000008', 'pantalla 14 pulgadas, 8gb ram, 500gb hdd', 'no hay', 'Regular', 'dell', 'Refurbished', '', 'lote-3-12', '2020-12-27', 'Usado', '645.00', 'Si', '0.00', 0, '', 5, 4, 2, '2021-01-15 03:11:08', 'Activo', 1),
+(11, 'su0001-lp0001-de0001-000009', 'pantalla 14 pulgadas, 8gb ram, 500gb hdd', 'no hay', 'Regular', 'dell', 'Refurbished', '', 'lote-3-12', '2020-12-27', 'Usado', '645.00', 'Si', '0.00', 0, '', 5, 4, 2, '2021-01-15 03:11:08', 'Activo', 1),
+(12, 'su0001-lp0001-de0001-000010', 'pantalla 14 pulgadas, 8gb ram, 500gb hdd', 'no hay', 'Regular', 'dell', 'Refurbished', '', 'lote-3-12', '2020-12-27', 'Usado', '645.00', 'Si', '0.00', 0, '', 5, 4, 2, '2021-01-15 03:11:08', 'Activo', 1),
+(13, 'su0001-vh0002-cv0001-000001', 'monitor 19 pulgadas, 8 gb ram drr3, 250gb hdd', 'ninguno', 'Bueno', 'dell', 'oficina', '', 'lote-13-27', '2020-12-27', 'Usado', '800.00', 'Si', '0.00', 0, '', 6, 3, 1, '2021-01-15 03:15:38', 'Activo', 1),
+(14, 'su0001-vh0002-cv0001-000002', 'monitor 19 pulgadas, 8 gb ram drr3, 250gb hdd', 'ninguno', 'Bueno', 'dell', 'oficina', '', 'lote-13-27', '2020-12-27', 'Usado', '800.00', 'Si', '0.00', 0, '', 6, 3, 1, '2021-01-15 03:15:38', 'Activo', 1),
+(15, 'su0001-vh0002-cv0001-000003', 'monitor 19 pulgadas, 8 gb ram drr3, 250gb hdd', 'ninguno', 'Bueno', 'dell', 'oficina', '', 'lote-13-27', '2020-12-27', 'Usado', '800.00', 'Si', '0.00', 0, '', 6, 3, 1, '2021-01-15 03:15:38', 'Activo', 1),
+(16, 'su0001-vh0002-cv0001-000004', 'monitor 19 pulgadas, 8 gb ram drr3, 250gb hdd', 'ninguno', 'Bueno', 'dell', 'oficina', '', 'lote-13-27', '2020-12-27', 'Usado', '800.00', 'Si', '0.00', 0, '', 6, 3, 1, '2021-01-15 03:15:38', 'Activo', 1),
+(17, 'su0001-vh0002-cv0001-000005', 'monitor 19 pulgadas, 8 gb ram drr3, 250gb hdd', 'ninguno', 'Bueno', 'dell', 'oficina', '', 'lote-13-27', '2020-12-27', 'Usado', '800.00', 'Si', '0.00', 0, '', 6, 3, 1, '2021-01-15 03:15:38', 'Activo', 1),
+(18, 'su0001-vh0002-cv0001-000006', 'monitor 19 pulgadas, 8 gb ram drr3, 250gb hdd', 'ninguno', 'Bueno', 'dell', 'oficina', '', 'lote-13-27', '2020-12-27', 'Usado', '800.00', 'Si', '0.00', 0, '', 6, 3, 1, '2021-01-15 03:15:38', 'Activo', 1),
+(19, 'su0001-vh0002-cv0001-000007', 'monitor 19 pulgadas, 8 gb ram drr3, 250gb hdd', 'ninguno', 'Bueno', 'dell', 'oficina', '', 'lote-13-27', '2020-12-27', 'Usado', '800.00', 'Si', '0.00', 0, '', 6, 3, 1, '2021-01-15 03:15:38', 'Activo', 1),
+(20, 'su0001-vh0002-cv0001-000008', 'monitor 19 pulgadas, 8 gb ram drr3, 250gb hdd', 'ninguno', 'Bueno', 'dell', 'oficina', '', 'lote-13-27', '2020-12-27', 'Usado', '800.00', 'Si', '0.00', 0, '', 6, 3, 1, '2021-01-15 03:15:38', 'Activo', 1),
+(21, 'su0001-vh0002-cv0001-000009', 'monitor 19 pulgadas, 8 gb ram drr3, 250gb hdd', 'ninguno', 'Bueno', 'dell', 'oficina', '', 'lote-13-27', '2020-12-27', 'Usado', '800.00', 'Si', '0.00', 0, '', 6, 3, 1, '2021-01-15 03:15:38', 'Activo', 1),
+(22, 'su0001-vh0002-cv0001-000010', 'monitor 19 pulgadas, 8 gb ram drr3, 250gb hdd', 'ninguno', 'Bueno', 'dell', 'oficina', '', 'lote-13-27', '2020-12-27', 'Usado', '800.00', 'Si', '0.00', 0, '', 6, 3, 1, '2021-01-15 03:15:38', 'Activo', 1),
+(23, 'su0001-vh0002-cv0001-000011', 'monitor 19 pulgadas, 8 gb ram drr3, 250gb hdd', 'ninguno', 'Bueno', 'dell', 'oficina', '', 'lote-13-27', '2020-12-27', 'Usado', '800.00', 'Si', '0.00', 0, '', 6, 3, 1, '2021-01-15 03:15:38', 'Activo', 1),
+(24, 'su0001-vh0002-cv0001-000012', 'monitor 19 pulgadas, 8 gb ram drr3, 250gb hdd', 'ninguno', 'Bueno', 'dell', 'oficina', '', 'lote-13-27', '2020-12-27', 'Usado', '800.00', 'Si', '0.00', 0, '', 6, 3, 1, '2021-01-15 03:15:38', 'Activo', 1),
+(25, 'su0001-vh0002-cv0001-000013', 'monitor 19 pulgadas, 8 gb ram drr3, 250gb hdd', 'ninguno', 'Bueno', 'dell', 'oficina', '', 'lote-13-27', '2020-12-27', 'Usado', '800.00', 'Si', '0.00', 0, '', 6, 3, 1, '2021-01-15 03:15:38', 'Activo', 1),
+(26, 'su0001-vh0002-cv0001-000014', 'monitor 19 pulgadas, 8 gb ram drr3, 250gb hdd', 'ninguno', 'Bueno', 'dell', 'oficina', '', 'lote-13-27', '2020-12-27', 'Usado', '800.00', 'Si', '0.00', 0, '', 6, 3, 1, '2021-01-15 03:15:38', 'Activo', 1),
+(27, 'su0001-vh0002-cv0001-000015', 'monitor 19 pulgadas, 8 gb ram drr3, 250gb hdd', 'ninguno', 'Bueno', 'dell', 'oficina', '', 'lote-13-27', '2020-12-27', 'Usado', '800.00', 'Si', '0.00', 0, '', 6, 3, 1, '2021-01-15 03:15:38', 'Activo', 1),
+(28, 'su0001-vh0001-cam0001-000001', 'motor de 2.7/3.1L, potencia de 79@4000', 'ninguna', 'Bueno', 'Kia', 'seriek', 'k2700', '', '2020-12-30', 'Nuevo', '27000.00', 'Si', '0.00', 0, 'fixed_asset/28/documento_adquisicion.pdf', 3, 5, 1, '2021-01-15 03:40:32', 'Activo', 1),
+(29, 'su0001-mb0001-mb0001-000001', 'Vidrio Templado 10mm en acabado nevado con soportes de aluminio.\r\nEscritorio de 1.60×0.70m.\r\nMesa ¾ con base metálica color Plata independiente.', 'ninguno', 'Bueno', 'nevada', 'vidrio', 'nv0123', '', '2020-12-30', 'Nuevo', '700.00', 'Si', '0.00', 0, '', 7, 6, 2, '2021-01-15 05:42:07', 'Activo', 1),
+(30, 'su0001-mb0001-mb0001-000002', 'Top de melamina color madera oscura y estructura en color combinado blanco\r\nIncluye depósitos y espacios en la extensión lateral\r\nModerno pasacables con cepillo\r\nMedidas Totales del Escritorio 140 cms x 70 cms', 'ninguno', 'Bueno', 'acses', 'ejecutivo', '', 'lote-30-44', '2020-12-30', 'Nuevo', '267.00', 'Si', '0.00', 0, '', 7, 6, 2, '2021-01-15 05:46:14', 'Activo', 1),
+(31, 'su0001-mb0001-mb0001-000003', 'Top de melamina color madera oscura y estructura en color combinado blanco\r\nIncluye depósitos y espacios en la extensión lateral\r\nModerno pasacables con cepillo\r\nMedidas Totales del Escritorio 140 cms x 70 cms', 'ninguno', 'Bueno', 'acses', 'ejecutivo', '', 'lote-30-44', '2020-12-30', 'Nuevo', '267.00', 'Si', '0.00', 0, '', 7, 6, 2, '2021-01-15 05:46:14', 'Activo', 1),
+(32, 'su0001-mb0001-mb0001-000004', 'Top de melamina color madera oscura y estructura en color combinado blanco\r\nIncluye depósitos y espacios en la extensión lateral\r\nModerno pasacables con cepillo\r\nMedidas Totales del Escritorio 140 cms x 70 cms', 'ninguno', 'Bueno', 'acses', 'ejecutivo', '', 'lote-30-44', '2020-12-30', 'Nuevo', '267.00', 'Si', '0.00', 0, '', 7, 6, 2, '2021-01-15 05:46:14', 'Activo', 1),
+(33, 'su0001-mb0001-mb0001-000005', 'Top de melamina color madera oscura y estructura en color combinado blanco\r\nIncluye depósitos y espacios en la extensión lateral\r\nModerno pasacables con cepillo\r\nMedidas Totales del Escritorio 140 cms x 70 cms', 'ninguno', 'Bueno', 'acses', 'ejecutivo', '', 'lote-30-44', '2020-12-30', 'Nuevo', '267.00', 'Si', '0.00', 0, '', 7, 6, 2, '2021-01-15 05:46:14', 'Activo', 1),
+(34, 'su0001-mb0001-mb0001-000006', 'Top de melamina color madera oscura y estructura en color combinado blanco\r\nIncluye depósitos y espacios en la extensión lateral\r\nModerno pasacables con cepillo\r\nMedidas Totales del Escritorio 140 cms x 70 cms', 'ninguno', 'Bueno', 'acses', 'ejecutivo', '', 'lote-30-44', '2020-12-30', 'Nuevo', '267.00', 'Si', '0.00', 0, '', 7, 6, 2, '2021-01-15 05:46:14', 'Activo', 1),
+(35, 'su0001-mb0001-mb0001-000007', 'Top de melamina color madera oscura y estructura en color combinado blanco\r\nIncluye depósitos y espacios en la extensión lateral\r\nModerno pasacables con cepillo\r\nMedidas Totales del Escritorio 140 cms x 70 cms', 'ninguno', 'Bueno', 'acses', 'ejecutivo', '', 'lote-30-44', '2020-12-30', 'Nuevo', '267.00', 'Si', '0.00', 0, '', 7, 6, 2, '2021-01-15 05:46:14', 'Activo', 1),
+(36, 'su0001-mb0001-mb0001-000008', 'Top de melamina color madera oscura y estructura en color combinado blanco\r\nIncluye depósitos y espacios en la extensión lateral\r\nModerno pasacables con cepillo\r\nMedidas Totales del Escritorio 140 cms x 70 cms', 'ninguno', 'Bueno', 'acses', 'ejecutivo', '', 'lote-30-44', '2020-12-30', 'Nuevo', '267.00', 'Si', '0.00', 0, '', 7, 6, 2, '2021-01-15 05:46:14', 'Activo', 1),
+(37, 'su0001-mb0001-mb0001-000009', 'Top de melamina color madera oscura y estructura en color combinado blanco\r\nIncluye depósitos y espacios en la extensión lateral\r\nModerno pasacables con cepillo\r\nMedidas Totales del Escritorio 140 cms x 70 cms', 'ninguno', 'Bueno', 'acses', 'ejecutivo', '', 'lote-30-44', '2020-12-30', 'Nuevo', '267.00', 'Si', '0.00', 0, '', 7, 6, 2, '2021-01-15 05:46:14', 'Activo', 1),
+(38, 'su0001-mb0001-mb0001-000010', 'Top de melamina color madera oscura y estructura en color combinado blanco\r\nIncluye depósitos y espacios en la extensión lateral\r\nModerno pasacables con cepillo\r\nMedidas Totales del Escritorio 140 cms x 70 cms', 'ninguno', 'Bueno', 'acses', 'ejecutivo', '', 'lote-30-44', '2020-12-30', 'Nuevo', '267.00', 'Si', '0.00', 0, '', 7, 6, 2, '2021-01-15 05:46:14', 'Activo', 1),
+(39, 'su0001-mb0001-mb0001-000011', 'Top de melamina color madera oscura y estructura en color combinado blanco\r\nIncluye depósitos y espacios en la extensión lateral\r\nModerno pasacables con cepillo\r\nMedidas Totales del Escritorio 140 cms x 70 cms', 'ninguno', 'Bueno', 'acses', 'ejecutivo', '', 'lote-30-44', '2020-12-30', 'Nuevo', '267.00', 'Si', '0.00', 0, '', 7, 6, 2, '2021-01-15 05:46:14', 'Activo', 1),
+(40, 'su0001-mb0001-mb0001-000012', 'Top de melamina color madera oscura y estructura en color combinado blanco\r\nIncluye depósitos y espacios en la extensión lateral\r\nModerno pasacables con cepillo\r\nMedidas Totales del Escritorio 140 cms x 70 cms', 'ninguno', 'Bueno', 'acses', 'ejecutivo', '', 'lote-30-44', '2020-12-30', 'Nuevo', '267.00', 'Si', '0.00', 0, '', 7, 6, 2, '2021-01-15 05:46:14', 'Activo', 1),
+(41, 'su0001-mb0001-mb0001-000013', 'Top de melamina color madera oscura y estructura en color combinado blanco\r\nIncluye depósitos y espacios en la extensión lateral\r\nModerno pasacables con cepillo\r\nMedidas Totales del Escritorio 140 cms x 70 cms', 'ninguno', 'Bueno', 'acses', 'ejecutivo', '', 'lote-30-44', '2020-12-30', 'Nuevo', '267.00', 'Si', '0.00', 0, '', 7, 6, 2, '2021-01-15 05:46:14', 'Activo', 1),
+(42, 'su0001-mb0001-mb0001-000014', 'Top de melamina color madera oscura y estructura en color combinado blanco\r\nIncluye depósitos y espacios en la extensión lateral\r\nModerno pasacables con cepillo\r\nMedidas Totales del Escritorio 140 cms x 70 cms', 'ninguno', 'Bueno', 'acses', 'ejecutivo', '', 'lote-30-44', '2020-12-30', 'Nuevo', '267.00', 'Si', '0.00', 0, '', 7, 6, 2, '2021-01-15 05:46:14', 'Activo', 1),
+(43, 'su0001-mb0001-mb0001-000015', 'Top de melamina color madera oscura y estructura en color combinado blanco\r\nIncluye depósitos y espacios en la extensión lateral\r\nModerno pasacables con cepillo\r\nMedidas Totales del Escritorio 140 cms x 70 cms', 'ninguno', 'Bueno', 'acses', 'ejecutivo', '', 'lote-30-44', '2020-12-30', 'Nuevo', '267.00', 'Si', '0.00', 0, '', 7, 6, 2, '2021-01-15 05:46:14', 'Activo', 1),
+(44, 'su0001-mb0001-mb0001-000016', 'Top de melamina color madera oscura y estructura en color combinado blanco\r\nIncluye depósitos y espacios en la extensión lateral\r\nModerno pasacables con cepillo\r\nMedidas Totales del Escritorio 140 cms x 70 cms', 'ninguno', 'Bueno', 'acses', 'ejecutivo', '', 'lote-30-44', '2020-12-30', 'Nuevo', '267.00', 'Si', '0.00', 0, '', 7, 6, 2, '2021-01-15 05:46:14', 'Activo', 1),
+(45, 'su0001-mb0001-sl0001-000001', 'Asiento de tela color negro y respaldo y estructura color Gris.\r\nRespaldo reclinable con ajuste de tensión', 'ninguna', 'Bueno', 'Eurotek', 'ejecutivo', '', 'lote-45-59', '2020-12-30', 'Nuevo', '154.00', 'Si', '0.00', 0, '', 7, 10, 2, '2021-01-15 05:52:32', 'Activo', 1),
+(46, 'su0001-mb0001-sl0001-000002', 'Asiento de tela color negro y respaldo y estructura color Gris.\r\nRespaldo reclinable con ajuste de tensión', 'ninguna', 'Bueno', 'Eurotek', 'ejecutivo', '', 'lote-45-59', '2020-12-30', 'Nuevo', '154.00', 'Si', '0.00', 0, '', 7, 10, 2, '2021-01-15 05:52:32', 'Activo', 1),
+(47, 'su0001-mb0001-sl0001-000003', 'Asiento de tela color negro y respaldo y estructura color Gris.\r\nRespaldo reclinable con ajuste de tensión', 'ninguna', 'Bueno', 'Eurotek', 'ejecutivo', '', 'lote-45-59', '2020-12-30', 'Nuevo', '154.00', 'Si', '0.00', 0, '', 7, 10, 2, '2021-01-15 05:52:32', 'Activo', 1),
+(48, 'su0001-mb0001-sl0001-000004', 'Asiento de tela color negro y respaldo y estructura color Gris.\r\nRespaldo reclinable con ajuste de tensión', 'ninguna', 'Bueno', 'Eurotek', 'ejecutivo', '', 'lote-45-59', '2020-12-30', 'Nuevo', '154.00', 'Si', '0.00', 0, '', 7, 10, 2, '2021-01-15 05:52:32', 'Activo', 1),
+(49, 'su0001-mb0001-sl0001-000005', 'Asiento de tela color negro y respaldo y estructura color Gris.\r\nRespaldo reclinable con ajuste de tensión', 'ninguna', 'Bueno', 'Eurotek', 'ejecutivo', '', 'lote-45-59', '2020-12-30', 'Nuevo', '154.00', 'Si', '0.00', 0, '', 7, 10, 2, '2021-01-15 05:52:32', 'Activo', 1),
+(50, 'su0001-mb0001-sl0001-000006', 'Asiento de tela color negro y respaldo y estructura color Gris.\r\nRespaldo reclinable con ajuste de tensión', 'ninguna', 'Bueno', 'Eurotek', 'ejecutivo', '', 'lote-45-59', '2020-12-30', 'Nuevo', '154.00', 'Si', '0.00', 0, '', 7, 10, 2, '2021-01-15 05:52:32', 'Activo', 1),
+(51, 'su0001-mb0001-sl0001-000007', 'Asiento de tela color negro y respaldo y estructura color Gris.\r\nRespaldo reclinable con ajuste de tensión', 'ninguna', 'Bueno', 'Eurotek', 'ejecutivo', '', 'lote-45-59', '2020-12-30', 'Nuevo', '154.00', 'Si', '0.00', 0, '', 7, 10, 2, '2021-01-15 05:52:32', 'Activo', 1),
+(52, 'su0001-mb0001-sl0001-000008', 'Asiento de tela color negro y respaldo y estructura color Gris.\r\nRespaldo reclinable con ajuste de tensión', 'ninguna', 'Bueno', 'Eurotek', 'ejecutivo', '', 'lote-45-59', '2020-12-30', 'Nuevo', '154.00', 'Si', '0.00', 0, '', 7, 10, 2, '2021-01-15 05:52:32', 'Activo', 1),
+(53, 'su0001-mb0001-sl0001-000009', 'Asiento de tela color negro y respaldo y estructura color Gris.\r\nRespaldo reclinable con ajuste de tensión', 'ninguna', 'Bueno', 'Eurotek', 'ejecutivo', '', 'lote-45-59', '2020-12-30', 'Nuevo', '154.00', 'Si', '0.00', 0, '', 7, 10, 2, '2021-01-15 05:52:32', 'Activo', 1),
+(54, 'su0001-mb0001-sl0001-000010', 'Asiento de tela color negro y respaldo y estructura color Gris.\r\nRespaldo reclinable con ajuste de tensión', 'ninguna', 'Bueno', 'Eurotek', 'ejecutivo', '', 'lote-45-59', '2020-12-30', 'Nuevo', '154.00', 'Si', '0.00', 0, '', 7, 10, 2, '2021-01-15 05:52:32', 'Activo', 1),
+(55, 'su0001-mb0001-sl0001-000011', 'Asiento de tela color negro y respaldo y estructura color Gris.\r\nRespaldo reclinable con ajuste de tensión', 'ninguna', 'Bueno', 'Eurotek', 'ejecutivo', '', 'lote-45-59', '2020-12-30', 'Nuevo', '154.00', 'Si', '0.00', 0, '', 7, 10, 2, '2021-01-15 05:52:32', 'Activo', 1),
+(56, 'su0001-mb0001-sl0001-000012', 'Asiento de tela color negro y respaldo y estructura color Gris.\r\nRespaldo reclinable con ajuste de tensión', 'ninguna', 'Bueno', 'Eurotek', 'ejecutivo', '', 'lote-45-59', '2020-12-30', 'Nuevo', '154.00', 'Si', '0.00', 0, '', 7, 10, 2, '2021-01-15 05:52:32', 'Activo', 1),
+(57, 'su0001-mb0001-sl0001-000013', 'Asiento de tela color negro y respaldo y estructura color Gris.\r\nRespaldo reclinable con ajuste de tensión', 'ninguna', 'Bueno', 'Eurotek', 'ejecutivo', '', 'lote-45-59', '2020-12-30', 'Nuevo', '154.00', 'Si', '0.00', 0, '', 7, 10, 2, '2021-01-15 05:52:32', 'Activo', 1),
+(58, 'su0001-mb0001-sl0001-000014', 'Asiento de tela color negro y respaldo y estructura color Gris.\r\nRespaldo reclinable con ajuste de tensión', 'ninguna', 'Bueno', 'Eurotek', 'ejecutivo', '', 'lote-45-59', '2020-12-30', 'Nuevo', '154.00', 'Si', '0.00', 0, '', 7, 10, 2, '2021-01-15 05:52:32', 'Activo', 1),
+(59, 'su0001-mb0001-sl0001-000015', 'Asiento de tela color negro y respaldo y estructura color Gris.\r\nRespaldo reclinable con ajuste de tensión', 'ninguna', 'Bueno', 'Eurotek', 'ejecutivo', '', 'lote-45-59', '2020-12-30', 'Nuevo', '154.00', 'Si', '0.00', 0, '', 7, 10, 2, '2021-01-15 05:52:32', 'Activo', 1);
 
 -- --------------------------------------------------------
 
@@ -91,10 +163,10 @@ CREATE TABLE IF NOT EXISTS `activo_subcategoria` (
   `codigo` text NOT NULL,
   `subcategoria` text NOT NULL,
   `id_activo_categoria` int(11) NOT NULL,
-  `fecha_ingreso` timestamp NOT NULL,
+  `fecha_ingreso` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `estado` varchar(8) NOT NULL,
   PRIMARY KEY (`id_activo_subcategoria`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `activo_subcategoria`
@@ -102,7 +174,15 @@ CREATE TABLE IF NOT EXISTS `activo_subcategoria` (
 
 INSERT INTO `activo_subcategoria` (`id_activo_subcategoria`, `codigo`, `subcategoria`, `id_activo_categoria`, `fecha_ingreso`, `estado`) VALUES
 (1, 'ba0001', 'baterias', 1, '2021-01-09 20:24:40', 'Activo'),
-(2, 'bt0002', 'baterias para pc de escritorio', 1, '2021-01-11 22:38:29', 'Activo');
+(2, 'bt0002', 'baterias para pc de escritorio', 1, '2021-01-11 22:38:29', 'Activo'),
+(3, 'cv0001', 'computadora oficina', 6, '2021-01-15 09:35:24', 'Activo'),
+(4, 'de0001', 'dell', 5, '2020-12-07 23:00:00', 'Activo'),
+(5, 'cam0001', 'transporte producto', 3, '2020-12-28 23:00:00', 'Activo'),
+(6, 'mb0001', 'escritorio ', 7, '2021-01-03 23:00:00', 'Activo'),
+(7, 'vh0001', 'camioneta kia', 3, '2021-01-15 09:42:21', 'Activo'),
+(8, 'hp0001', 'HP probook', 5, '2021-01-15 09:56:51', 'Activo'),
+(9, 'le0001', 'lenovo ', 5, '2020-12-22 23:00:00', 'Activo'),
+(10, 'sl0001', 'silla', 7, '2021-01-15 05:23:25', 'Activo');
 
 -- --------------------------------------------------------
 
@@ -122,18 +202,53 @@ CREATE TABLE IF NOT EXISTS `cliente` (
   `direccion` text NOT NULL,
   `correo` varchar(150) NOT NULL,
   `telefono` text NOT NULL,
-  `fecha_ingreso` timestamp NOT NULL,
+  `fotografia` text NOT NULL,
+  `fecha_ingreso` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `estado` varchar(8) NOT NULL,
   `id_usuario` int(11) NOT NULL,
   PRIMARY KEY (`id_cliente`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `cliente`
 --
 
-INSERT INTO `cliente` (`id_cliente`, `nombre`, `apellido`, `dui`, `nit`, `fecha_nac`, `genero`, `direccion`, `correo`, `telefono`, `fecha_ingreso`, `estado`, `id_usuario`) VALUES
-(1, 'juan', 'molina', '78456165-6', '1005-856584-964-5', '2001-06-10', 'Masculino', 'san vicente', 'molina@gmail.com', '7896-8574', '2020-12-25 20:11:12', 'Activo', 1);
+INSERT INTO `cliente` (`id_cliente`, `nombre`, `apellido`, `dui`, `nit`, `fecha_nac`, `genero`, `direccion`, `correo`, `telefono`, `fotografia`, `fecha_ingreso`, `estado`, `id_usuario`) VALUES
+(1, 'juan', 'molina', '78456165-6', '1005-856584-964-5', '2001-06-10', 'Masculino', 'san vicente', 'molina@gmail.com', '7896-8574', '', '2020-12-25 20:11:12', 'Activo', 1),
+(2, 'Luna', 'Molero', '79526542-6', '', '1994-11-30', 'Femenino', '7898 Dejuan Dam', 'ewasuffujy-7892@yopmail.com', '7412-6985', '', '2021-01-15 06:10:28', 'Activo', 1),
+(3, 'Paula', 'Castillo', '41256854-1', '', '1989-07-13', 'Femenino', '332 Kautzer Ramp Apt. 698', 'acylesix-8847@yopmail.com', '7410-2695', '', '2021-01-15 06:15:07', 'Activo', 1),
+(4, 'Matias', 'Moreno', '41259502-5', '', '1994-04-19', 'Masculino', '8747 Hauck Lights Apt. 695', 'yffossussenn-4239@yopmail.com', '7412-9652', '', '2021-01-15 06:21:34', 'Activo', 1),
+(5, 'Andres', 'Morales', '05952025-9', '', '1992-07-22', 'Masculino', '1154 Princess Crossing Suite 294', 'zimofekiv-8501@yopmail.com', '7410-5950', '', '2021-01-15 06:24:52', 'Activo', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `cliente_institucion`
+--
+
+DROP TABLE IF EXISTS `cliente_institucion`;
+CREATE TABLE IF NOT EXISTS `cliente_institucion` (
+  `id_cliente_institucion` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` text NOT NULL,
+  `nit` varchar(17) NOT NULL,
+  `nrc` varchar(10) NOT NULL,
+  `direccion` text NOT NULL,
+  `correo` varchar(150) NOT NULL,
+  `telefono` text NOT NULL,
+  `fotografia` text NOT NULL,
+  `fecha_ingreso` timestamp NOT NULL,
+  `estado` varchar(8) NOT NULL,
+  `id_usuario` int(11) NOT NULL,
+  PRIMARY KEY (`id_cliente_institucion`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `cliente_institucion`
+--
+
+INSERT INTO `cliente_institucion` (`id_cliente_institucion`, `nombre`, `nit`, `nrc`, `direccion`, `correo`, `telefono`, `fotografia`, `fecha_ingreso`, `estado`, `id_usuario`) VALUES
+(1, 'xbfgbdfgbdgfndfbdf', '7854-444444-444-4', '516111-2', 'masfnfgbkh', 'lnwrje@gmail.com', '7896-2225', 'institution_client/1/fotografia.png', '2021-01-14 18:18:47', 'Activo', 1),
+(2, 'siete sv', '7777-777777-777-7', '985744-4', 'san vicente', 'sv@gmail.com', '7896-8574', 'institution_client/2/fotografia.png', '2021-01-14 18:20:38', 'Activo', 1);
 
 -- --------------------------------------------------------
 
@@ -183,7 +298,7 @@ CREATE TABLE IF NOT EXISTS `departamento` (
 --
 
 INSERT INTO `departamento` (`id_departamento`, `codigo`, `nombre`, `descripcion`, `fecha_ingreso`, `estado`, `id_usuario`) VALUES
-(1, 'v15', 'Ventas', 'Ventas de art', '2020-11-28 00:24:15', 'Activo', 1);
+(1, 'v155', 'Ventas', 'Ventas de articulos', '2020-11-28 00:24:15', 'Activo', 1);
 
 -- --------------------------------------------------------
 
@@ -281,18 +396,23 @@ CREATE TABLE IF NOT EXISTS `empleado` (
   `direccion` text NOT NULL,
   `correo` varchar(150) NOT NULL,
   `telefono` text NOT NULL,
+  `fotografia` text NOT NULL,
   `fecha_ingreso` timestamp NOT NULL,
   `estado` varchar(8) NOT NULL,
   `id_usuario` int(11) NOT NULL,
   PRIMARY KEY (`id_empleado`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `empleado`
 --
 
-INSERT INTO `empleado` (`id_empleado`, `nombre`, `apellido`, `dui`, `nit`, `fecha_nac`, `genero`, `puesto`, `direccion`, `correo`, `telefono`, `fecha_ingreso`, `estado`, `id_usuario`) VALUES
-(1, 'juan', 'vega', '84984948-4', '4456-546546-546-5', '2000-07-02', 'Masculino', 'Vendedor', 'San Vicente', 'juan@gmail.com', '(503) 7896-8574', '2020-11-23 00:23:31', 'Activo', 1);
+INSERT INTO `empleado` (`id_empleado`, `nombre`, `apellido`, `dui`, `nit`, `fecha_nac`, `genero`, `puesto`, `direccion`, `correo`, `telefono`, `fotografia`, `fecha_ingreso`, `estado`, `id_usuario`) VALUES
+(1, 'juan', 'vega', '84984948-4', '4456-546546-546-5', '2000-07-02', 'Masculino', 'Vendedor', 'San Vicente', 'juan@gmail.com', '(503) 7896-8574', '', '2020-11-23 00:23:31', 'Inactivo', 1),
+(2, 'maria', 'vega', '78451626-1', '1000-556498-499-9', '1999-02-08', 'Femenino', 'Vendedor', 'San Esteban Catarina', 'maria@gmail.com', '7896-8574', 'employee/2/fotografia.png', '2021-01-12 04:04:33', 'Inactivo', 1),
+(3, 'Sofia', 'Duran', '78968574-4', '1005-446465-165-1', '1999-05-16', 'Femenino', 'Vendedor', 'San Vicente', 'sofia@gmail.com', '7859-6857', 'employee/3/fotografia.png', '2021-01-12 04:32:11', 'Inactivo', 1),
+(4, 'maria cristina', 'vega escamilla', '78451626-2', '1000-556498-499-2', '1998-02-08', 'Masculino', 'Administrador', 'San Esteban Catarinaa', 'mariaa@gmail.com', '7896-8572', 'employee/4/fotografia.png', '2021-01-13 17:48:06', 'Activo', 1),
+(5, 'maria julia', 'vega martinez', '78451626-5', '1000-556498-499-5', '1995-02-08', 'Masculino', 'Administrador', 'San Esteban Catarinaa', 'mariajulia@gmail.com', '7896-8575', 'employee/5/fotografia.png', '2021-01-13 17:51:26', 'Activo', 1);
 
 -- --------------------------------------------------------
 
@@ -312,6 +432,7 @@ CREATE TABLE IF NOT EXISTS `producto` (
   `cantidad` int(11) NOT NULL,
   `precio` decimal(10,2) NOT NULL,
   `descripcion` text NOT NULL,
+  `fotografia` text NOT NULL,
   `categoria` text NOT NULL,
   `proveedor` int(11) NOT NULL,
   `fecha_ingreso` timestamp NOT NULL,
@@ -323,9 +444,10 @@ CREATE TABLE IF NOT EXISTS `producto` (
 -- Volcado de datos para la tabla `producto`
 --
 
-INSERT INTO `producto` (`id_producto`, `codigo`, `nombre`, `marca`, `modelo`, `margen_ganancia`, `stock_minimo`, `cantidad`, `precio`, `descripcion`, `categoria`, `proveedor`, `fecha_ingreso`, `estado`, `id_usuario`) VALUES
-(1, 'la0001', 'lavadora', 'cetro', 'eco', 10, 5, 0, '350.00', 'lavadora blanca', 'Lavadoras', 1, '2021-01-06 17:27:39', 'Activo', 1),
-(2, 'ca0002', 'camarote', 'cetro', 'eco', 15, 3, 2, '400.00', 'color cafe', 'Muebles', 1, '2021-01-07 22:56:54', 'Activo', 1);
+INSERT INTO `producto` (`id_producto`, `codigo`, `nombre`, `marca`, `modelo`, `margen_ganancia`, `stock_minimo`, `cantidad`, `precio`, `descripcion`, `fotografia`, `categoria`, `proveedor`, `fecha_ingreso`, `estado`, `id_usuario`) VALUES
+(1, 'la0001', 'lavadora', 'cetro', 'eco', 10, 5, 0, '350.00', 'lavadora blanca', 'product/1/producto.png', 'Cocinas', 1, '2021-01-06 17:27:39', 'Activo', 1),
+(2, 'ca0002', 'camarote', 'cetro', 'eco', 15, 3, 2, '400.00', 'color cafe', '', 'Muebles', 1, '2021-01-07 22:56:54', 'Activo', 1),
+(3, 'la0003', 'lampara', 'economica', 'reciente', 6, 3, 0, '0.00', 'color negro y blanco', 'product/3/producto.png', 'Muebles', 2, '2021-01-14 21:16:31', 'Inactivo', 1);
 
 -- --------------------------------------------------------
 
@@ -355,7 +477,7 @@ CREATE TABLE IF NOT EXISTS `proveedor` (
 --
 
 INSERT INTO `proveedor` (`id_proveedor`, `nombre`, `nit`, `nombre_responsable`, `apellido_responsable`, `direccion`, `correo`, `telefono`, `observaciones`, `fecha_ingreso`, `estado`, `id_usuario`) VALUES
-(1, 'ABC', '5484-856123-123-1', 'Juan', 'Vega', 'San Vicente', 'abc@gmail.com', '', '', '2020-11-28 15:44:48', 'Activo', 1),
+(1, 'ABC', '5484-856123-123-1', 'Juan', 'Vega', 'San Vicente', 'abc@gmail.com', '7857-4444', '', '2020-11-28 15:44:48', 'Activo', 1),
 (2, 'gte', '5154-986468-646-5', 'Maria', 'Duran', 'San Vicente', 'gte@gmail.com', '7896-8574', 'Ninguna', '2020-11-28 18:38:53', 'Activo', 1);
 
 -- --------------------------------------------------------

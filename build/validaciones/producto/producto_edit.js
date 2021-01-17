@@ -4,7 +4,7 @@ $(document).ready(function(){
     function() {
         $(this).find('a').fadeIn();
     }, function() {
-        $(this).find('a').fadeOut();
+        $(this).find('a').fadeOut(); 
   });
 
   $('#file-select').on('click', function(e) {
@@ -30,6 +30,8 @@ $(document).ready(function(){
   })
   .done(function(lista_proveedores){
     $('#proveedor').html(lista_proveedores)
+    var id_proveedor= $("#id_proveedor").val();
+    $("#proveedor option[value='"+ id_proveedor +"']").attr("selected",true);
   })
   .fail(function(){
     alert('Error al cargar la Pagina Lista Proveedor')
@@ -139,9 +141,9 @@ $(document).ready(function(){
     });
 });
 
-$("#btnguardar").click(function(){
+$("#btneditar").click(function(){
     if($("#form_producto").valid()){
-        $("#bandera").val("add");
+        $("#bandera").val("edit");
        
         var formData = new FormData($("#form_producto")[0]);
         $.ajax({
@@ -155,12 +157,11 @@ $("#btnguardar").click(function(){
           processData: false,
         })
         .done(function(resultado_ajax){
-            alert(resultado_ajax);
           if(resultado_ajax === "Exito"){
-            $("#btnguardar").attr("disabled",true);
+            $("#btneditar").attr("disabled",true);
             PNotify.success({
               title: 'Éxito',
-              text: 'Registro almacenado.',
+              text: 'Registro actualizado.',
               styling: 'bootstrap3',
               icons: 'bootstrap3',
               hide: false,
@@ -172,7 +173,7 @@ $("#btnguardar").click(function(){
                     primary: true,
                     click: function(notice) {
                       notice.close();
-                      location.href='../../pages/producto/producto_add.php';
+                      location.href='../../pages/producto/producto_list.php';
                     }
                   }]
                 },
@@ -201,7 +202,7 @@ $("#btnguardar").click(function(){
                     primary: true,
                     click: function(notice) {
                       notice.close();
-                      location.href='../../pages/producto/producto_add.php';
+                      location.href='../../pages/producto/producto_list.php';
                     }
                   }]
                 },
