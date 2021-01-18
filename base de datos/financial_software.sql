@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 17-01-2021 a las 02:08:21
+-- Tiempo de generación: 18-01-2021 a las 03:48:35
 -- Versión del servidor: 5.7.21
 -- Versión de PHP: 5.6.35
 
@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `activo_categoria` (
 INSERT INTO `activo_categoria` (`id_activo_categoria`, `codigo`, `categoria`, `tipo`, `fecha_ingreso`, `estado`, `id_usuario`) VALUES
 (1, 'AcT', 'Baterias', 'Otros Bienes Muebles', '2020-11-28 03:37:59', 'Activo', 1),
 (2, 'uj78', 'laptop', 'Otros Bienes Muebles', '2020-12-23 18:46:59', 'Activo', 1),
-(3, 'vh0001', 'vehiculo', 'Maquinaria', '2021-01-14 13:16:46', 'Activo', 1),
+(3, 'vh0001', 'vehiculo', 'Vehiculo', '2021-01-18 02:27:11', 'Activo', 1),
 (4, 'mq0001', 'desktop', 'Maquinaria', '2021-01-14 13:17:47', 'Activo', 1),
 (5, 'lp0001', 'laptop', 'Maquinaria', '2021-01-14 13:18:18', 'Activo', 1),
 (6, 'vh0002', 'pc escritorio', 'Maquinaria', '2021-01-15 02:21:30', 'Activo', 1),
@@ -91,9 +91,9 @@ CREATE TABLE IF NOT EXISTS `activo_fijo` (
 --
 
 INSERT INTO `activo_fijo` (`id_activo_fijo`, `codigo`, `descripcion`, `observacion`, `calidad`, `marca`, `modelo`, `num_serie`, `lote`, `fecha_adquisicion`, `financiamiento`, `valor_adquisicion`, `valor_estimado`, `valor_residual`, `vida_util`, `doc_adquisicion`, `id_categoria`, `id_subcategoria`, `id_proveedor`, `fecha_ingreso`, `estado`, `id_usuario`) VALUES
-(1, 'su0001-vh0001-vh0001-000001', 'camioneta color rojo, cuatro puertas,  placa p123-123', 'no hay', 'Bueno', 'Kia', 'sportage', 'ms01231', '', '2020-12-27', 'Nuevo', '27000.00', 'Si', '2700.00', 5, 'fixed_asset/1/documento_adquisicion.pdf', 3, 7, 2, '2021-01-16 20:48:19', 'Activo', 1),
+(1, 'su0001-vh0001-vh0001-000001', 'camioneta color rojo, cuatro puertas,  placa p123-123', 'no hay', 'Bueno', 'Kia', 'sportage', 'ms01231', '', '2020-12-27', 'Nuevo', '27000.00', 'Si', '0.00', 5, 'fixed_asset/1/documento_adquisicion.pdf', 3, 7, 2, '2021-01-17 10:33:40', 'Activo', 1),
 (2, 'su0001-lp0001-hp0001-000001', 'pantalla 14 pulgadas,  8 gb ram drr3, 128gb ssd, procesador i5 4ta generacion', '', 'Bueno', 'Hewlett Packard', 'probook', 'e5440', '', '2020-12-27', 'Nuevo', '800.00', 'Si', '0.00', 0, '', 5, 8, 2, '2021-01-15 03:05:14', 'Activo', 1),
-(3, 'su0001-lp0001-de0001-000001', 'pantalla 14 pulgadas, 8gb ram, 500gb hdd', 'no hay', 'Regular', 'dell', 'Refurbished', '', 'lote-3-12', '2020-12-27', 'Usado', '645.00', 'Si', '0.00', 0, '', 5, 4, 2, '2021-01-15 03:11:08', 'Activo', 1),
+(3, 'su0001-lp0001-de0001-000001', 'pantalla 14 pulgadas, 8gb ram, 500gb hdd', 'no hay', 'Regular', 'dell', 'Refurbished', '', 'lote-3-12', '2020-12-27', 'Usado', '645.00', 'Si', '0.00', 4, '', 5, 4, 2, '2021-01-18 02:53:57', 'Activo', 1),
 (4, 'su0001-lp0001-de0001-000002', 'pantalla 14 pulgadas, 8gb ram, 500gb hdd', 'no hay', 'Regular', 'dell', 'Refurbished', '', 'lote-3-12', '2020-12-27', 'Usado', '645.00', 'Si', '0.00', 0, '', 5, 4, 2, '2021-01-15 03:11:08', 'Activo', 1),
 (5, 'su0001-lp0001-de0001-000003', 'pantalla 14 pulgadas, 8gb ram, 500gb hdd', 'no hay', 'Regular', 'dell', 'Refurbished', '', 'lote-3-12', '2020-12-27', 'Usado', '645.00', 'Si', '0.00', 0, '', 5, 4, 2, '2021-01-15 03:11:08', 'Activo', 1),
 (6, 'su0001-lp0001-de0001-000004', 'pantalla 14 pulgadas, 8gb ram, 500gb hdd', 'no hay', 'Regular', 'dell', 'Refurbished', '', 'lote-3-12', '2020-12-27', 'Usado', '645.00', 'Si', '0.00', 0, '', 5, 4, 2, '2021-01-15 03:11:08', 'Activo', 1),
@@ -103,8 +103,8 @@ INSERT INTO `activo_fijo` (`id_activo_fijo`, `codigo`, `descripcion`, `observaci
 (10, 'su0001-lp0001-de0001-000008', 'pantalla 14 pulgadas, 8gb ram, 500gb hdd', 'no hay', 'Regular', 'dell', 'Refurbished', '', 'lote-3-12', '2020-12-27', 'Usado', '645.00', 'Si', '0.00', 0, '', 5, 4, 2, '2021-01-15 03:11:08', 'Activo', 1),
 (11, 'su0001-lp0001-de0001-000009', 'pantalla 14 pulgadas, 8gb ram, 500gb hdd', 'no hay', 'Regular', 'dell', 'Refurbished', '', 'lote-3-12', '2020-12-27', 'Usado', '645.00', 'Si', '0.00', 0, '', 5, 4, 2, '2021-01-15 03:11:08', 'Activo', 1),
 (12, 'su0001-lp0001-de0001-000010', 'pantalla 14 pulgadas, 8gb ram, 500gb hdd', 'no hay', 'Regular', 'dell', 'Refurbished', '', 'lote-3-12', '2020-12-27', 'Usado', '645.00', 'Si', '0.00', 0, '', 5, 4, 2, '2021-01-15 03:11:08', 'Activo', 1),
-(13, 'su0001-vh0002-cv0001-000001', 'monitor 19 pulgadas, 8 gb ram drr3, 250gb hdd', 'ninguno', 'Bueno', 'dell', 'oficina', '', 'lote-13-27', '2020-12-27', 'Usado', '800.00', 'Si', '0.00', 0, '', 6, 3, 1, '2021-01-15 03:15:38', 'Activo', 1),
-(14, 'su0001-vh0002-cv0001-000002', 'monitor 19 pulgadas, 8 gb ram drr3, 250gb hdd', 'ninguno', 'Bueno', 'dell', 'oficina', '', 'lote-13-27', '2020-12-27', 'Usado', '800.00', 'Si', '0.00', 0, '', 6, 3, 1, '2021-01-15 03:15:38', 'Activo', 1),
+(13, 'su0001-vh0002-cv0001-000001', 'monitor 19 pulgadas, 8 gb ram drr3, 250gb hdd', 'ninguno', 'Bueno', 'dell', 'oficina', '', 'lote-13-27', '2020-12-27', 'Usado', '800.00', 'Si', '100.00', 2, '', 6, 3, 1, '2021-01-17 14:21:35', 'Activo', 1),
+(14, 'su0001-vh0002-cv0001-000002', 'monitor 19 pulgadas, 8 gb ram drr3, 250gb hdd', 'ninguno', 'Bueno', 'dell', 'oficina', '', 'lote-13-27', '2020-12-27', 'Usado', '800.00', 'Si', '0.00', 2, '', 6, 3, 1, '2021-01-17 14:24:24', 'Activo', 1),
 (15, 'su0001-vh0002-cv0001-000003', 'monitor 19 pulgadas, 8 gb ram drr3, 250gb hdd', 'ninguno', 'Bueno', 'dell', 'oficina', '', 'lote-13-27', '2020-12-27', 'Usado', '800.00', 'Si', '0.00', 0, '', 6, 3, 1, '2021-01-15 03:15:38', 'Activo', 1),
 (16, 'su0001-vh0002-cv0001-000004', 'monitor 19 pulgadas, 8 gb ram drr3, 250gb hdd', 'ninguno', 'Bueno', 'dell', 'oficina', '', 'lote-13-27', '2020-12-27', 'Usado', '800.00', 'Si', '0.00', 0, '', 6, 3, 1, '2021-01-15 03:15:38', 'Activo', 1),
 (17, 'su0001-vh0002-cv0001-000005', 'monitor 19 pulgadas, 8 gb ram drr3, 250gb hdd', 'ninguno', 'Bueno', 'dell', 'oficina', '', 'lote-13-27', '2020-12-27', 'Usado', '800.00', 'Si', '0.00', 0, '', 6, 3, 1, '2021-01-15 03:15:38', 'Activo', 1),
@@ -119,7 +119,7 @@ INSERT INTO `activo_fijo` (`id_activo_fijo`, `codigo`, `descripcion`, `observaci
 (26, 'su0001-vh0002-cv0001-000014', 'monitor 19 pulgadas, 8 gb ram drr3, 250gb hdd', 'ninguno', 'Bueno', 'dell', 'oficina', '', 'lote-13-27', '2020-12-27', 'Usado', '800.00', 'Si', '0.00', 0, '', 6, 3, 1, '2021-01-15 03:15:38', 'Activo', 1),
 (27, 'su0001-vh0002-cv0001-000015', 'monitor 19 pulgadas, 8 gb ram drr3, 250gb hdd', 'ninguno', 'Bueno', 'dell', 'oficina', '', 'lote-13-27', '2020-12-27', 'Usado', '800.00', 'Si', '0.00', 0, '', 6, 3, 1, '2021-01-15 03:15:38', 'Activo', 1),
 (28, 'su0001-vh0001-cam0001-000001', 'motor de 2.7/3.1L, potencia de 79@4000', 'ninguna', 'Bueno', 'Kia', 'seriek', 'k2700', '', '2020-12-30', 'Nuevo', '27000.00', 'Si', '0.00', 0, 'fixed_asset/28/documento_adquisicion.pdf', 3, 5, 1, '2021-01-15 03:40:32', 'Activo', 1),
-(29, 'su0001-mb0001-mb0001-000001', 'Vidrio Templado 10mm en acabado nevado con soportes de aluminio.\r\nEscritorio de 1.60×0.70m.\r\nMesa ¾ con base metálica color Plata independiente.', 'ninguno', 'Bueno', 'nevada', 'vidrio', 'nv0123', '', '2020-12-30', 'Nuevo', '700.00', 'Si', '0.00', 0, '', 7, 6, 2, '2021-01-15 05:42:07', 'Activo', 1),
+(29, 'su0001-mb0001-mb0001-000001', 'Vidrio Templado 10mm en acabado nevado con soportes de aluminio.\r\nEscritorio de 1.60ï¿½0.70m.\r\nMesa ï¿½ con base metï¿½lica color Plata independiente.', 'ninguno', 'Bueno', 'nevada', 'vidrio', 'nv0123', '', '2020-12-30', 'Nuevo', '700.00', 'Si', '0.00', 5, '', 7, 6, 2, '2021-01-17 13:43:26', 'Activo', 1),
 (30, 'su0001-mb0001-mb0001-000002', 'Top de melamina color madera oscura y estructura en color combinado blanco\r\nIncluye depósitos y espacios en la extensión lateral\r\nModerno pasacables con cepillo\r\nMedidas Totales del Escritorio 140 cms x 70 cms', 'ninguno', 'Bueno', 'acses', 'ejecutivo', '', 'lote-30-44', '2020-12-30', 'Nuevo', '267.00', 'Si', '0.00', 0, '', 7, 6, 2, '2021-01-15 05:46:14', 'Activo', 1),
 (31, 'su0001-mb0001-mb0001-000003', 'Top de melamina color madera oscura y estructura en color combinado blanco\r\nIncluye depósitos y espacios en la extensión lateral\r\nModerno pasacables con cepillo\r\nMedidas Totales del Escritorio 140 cms x 70 cms', 'ninguno', 'Bueno', 'acses', 'ejecutivo', '', 'lote-30-44', '2020-12-30', 'Nuevo', '267.00', 'Si', '0.00', 0, '', 7, 6, 2, '2021-01-15 05:46:14', 'Activo', 1),
 (32, 'su0001-mb0001-mb0001-000004', 'Top de melamina color madera oscura y estructura en color combinado blanco\r\nIncluye depósitos y espacios en la extensión lateral\r\nModerno pasacables con cepillo\r\nMedidas Totales del Escritorio 140 cms x 70 cms', 'ninguno', 'Bueno', 'acses', 'ejecutivo', '', 'lote-30-44', '2020-12-30', 'Nuevo', '267.00', 'Si', '0.00', 0, '', 7, 6, 2, '2021-01-15 05:46:14', 'Activo', 1),
@@ -214,9 +214,9 @@ CREATE TABLE IF NOT EXISTS `cliente` (
 --
 
 INSERT INTO `cliente` (`id_cliente`, `nombre`, `apellido`, `dui`, `nit`, `fecha_nac`, `genero`, `direccion`, `correo`, `telefono`, `fotografia`, `fecha_ingreso`, `estado`, `id_usuario`) VALUES
-(1, 'juan', 'molina', '78456165-6', '1005-856584-964-5', '2001-06-10', 'Masculino', 'san vicente', 'molina@gmail.com', '7896-8574', '', '2020-12-25 20:11:12', 'Activo', 1),
-(2, 'Luna', 'Molero', '79526542-6', '', '1994-11-30', 'Femenino', '7898 Dejuan Dam', 'ewasuffujy-7892@yopmail.com', '7412-6985', '', '2021-01-15 06:10:28', 'Activo', 1),
-(3, 'Paula', 'Castillo', '41256854-1', '', '1989-07-13', 'Femenino', '332 Kautzer Ramp Apt. 698', 'acylesix-8847@yopmail.com', '7410-2695', '', '2021-01-15 06:15:07', 'Activo', 1),
+(1, 'juan jose', 'molina', '78456165-6', '1005-856584-964-6', '2001-06-10', 'Masculino', 'san vicente', 'molina@gmail.com', '7896-8575', '', '2021-01-18 03:24:46', 'Activo', 1),
+(2, 'Luna', 'Molero', '79526542-6', '1165-161111-111-1', '1994-11-30', 'Femenino', '7898 Dejuan Dam', 'ewasuffujy-7892@yopmail.com', '7412-6985', '', '2021-01-18 03:25:22', 'Activo', 1),
+(3, 'Paula', 'Castillo', '41256854-1', '1476-526516-516-5', '1989-07-13', 'Femenino', '332 Kautzer Ramp Apt. 698', 'acylesix-8847@yopmail.com', '7410-2695', '', '2021-01-18 03:26:15', 'Activo', 1),
 (4, 'Matias', 'Moreno', '41259502-5', '', '1994-04-19', 'Masculino', '8747 Hauck Lights Apt. 695', 'yffossussenn-4239@yopmail.com', '7412-9652', '', '2021-01-15 06:21:34', 'Activo', 1),
 (5, 'Andres', 'Morales', '05952025-9', '', '1992-07-22', 'Masculino', '1154 Princess Crossing Suite 294', 'zimofekiv-8501@yopmail.com', '7410-5950', '', '2021-01-15 06:24:52', 'Activo', 1);
 
@@ -248,7 +248,7 @@ CREATE TABLE IF NOT EXISTS `cliente_institucion` (
 
 INSERT INTO `cliente_institucion` (`id_cliente_institucion`, `nombre`, `nit`, `nrc`, `direccion`, `correo`, `telefono`, `fotografia`, `fecha_ingreso`, `estado`, `id_usuario`) VALUES
 (1, 'xbfgbdfgbdgfndfbdf', '7854-444444-444-4', '516111-2', 'masfnfgbkh', 'lnwrje@gmail.com', '7896-2225', 'institution_client/1/fotografia.png', '2021-01-14 18:18:47', 'Activo', 1),
-(2, 'siete sv', '7777-777777-777-7', '985744-4', 'san vicente', 'sv@gmail.com', '7896-8574', 'institution_client/2/fotografia.png', '2021-01-14 18:20:38', 'Activo', 1);
+(2, 'siete sv', '7777-777744-888-8', '985744-4', 'san vicente', 'sv@gmail.com', '7896-8574', '', '2021-01-14 18:20:38', 'Activo', 1);
 
 -- --------------------------------------------------------
 
@@ -262,7 +262,7 @@ CREATE TABLE IF NOT EXISTS `compra` (
   `tipo_pago` varchar(7) NOT NULL,
   `monto` decimal(10,2) NOT NULL,
   `fecha` date NOT NULL,
-  `fecha_ingreso` timestamp NOT NULL,
+  `fecha_ingreso` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `estado` varchar(9) NOT NULL,
   `id_usuario` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -273,7 +273,9 @@ CREATE TABLE IF NOT EXISTS `compra` (
 
 INSERT INTO `compra` (`id_compra`, `tipo_pago`, `monto`, `fecha`, `fecha_ingreso`, `estado`, `id_usuario`) VALUES
 (1, 'Contado', '7000.00', '2021-01-03', '2021-01-07 00:59:49', 'Cancelado', 1),
-(2, 'Contado', '8000.00', '2021-01-03', '2021-01-07 22:58:25', 'Cancelado', 1);
+(2, 'Contado', '8000.00', '2021-01-03', '2021-01-07 22:58:25', 'Cancelado', 1),
+(3, 'Credito', '26820.00', '2020-12-27', '2021-01-17 08:09:36', 'Pendiente', 1),
+(4, 'Contado', '17750.00', '2020-12-29', '2021-01-17 08:14:12', 'Cancelado', 1);
 
 -- --------------------------------------------------------
 
@@ -314,7 +316,7 @@ CREATE TABLE IF NOT EXISTS `detalle_compra` (
   `id_producto` int(11) NOT NULL,
   `id_compra` int(11) NOT NULL,
   PRIMARY KEY (`id_d_c`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `detalle_compra`
@@ -322,16 +324,13 @@ CREATE TABLE IF NOT EXISTS `detalle_compra` (
 
 INSERT INTO `detalle_compra` (`id_d_c`, `cantidad`, `precio`, `id_producto`, `id_compra`) VALUES
 (1, 20, '350.00', 1, 1),
-(2, 20, '400.00', 2, 2);
-
---
--- Disparadores `detalle_compra`
---
-DROP TRIGGER IF EXISTS `update_producto`;
-DELIMITER $$
-CREATE TRIGGER `update_producto` AFTER INSERT ON `detalle_compra` FOR EACH ROW UPDATE producto SET cantidad=cantidad+NEW.cantidad, precio=(((cantidad-NEW.cantidad)*precio)+(NEW.cantidad*NEW.precio))/(cantidad) WHERE id_producto=NEW.id_producto
-$$
-DELIMITER ;
+(2, 20, '400.00', 2, 2),
+(3, 10, '450.00', 12, 3),
+(4, 10, '560.00', 10, 3),
+(5, 10, '1672.00', 16, 3),
+(6, 10, '455.00', 6, 4),
+(7, 10, '560.00', 9, 4),
+(8, 10, '760.00', 15, 4);
 
 -- --------------------------------------------------------
 
@@ -435,7 +434,7 @@ CREATE TABLE IF NOT EXISTS `producto` (
   `fotografia` text NOT NULL,
   `categoria` text NOT NULL,
   `proveedor` int(11) NOT NULL,
-  `fecha_ingreso` timestamp NOT NULL,
+  `fecha_ingreso` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `estado` varchar(8) NOT NULL,
   `id_usuario` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -447,7 +446,21 @@ CREATE TABLE IF NOT EXISTS `producto` (
 INSERT INTO `producto` (`id_producto`, `codigo`, `nombre`, `marca`, `modelo`, `margen_ganancia`, `stock_minimo`, `cantidad`, `precio`, `descripcion`, `fotografia`, `categoria`, `proveedor`, `fecha_ingreso`, `estado`, `id_usuario`) VALUES
 (1, 'la0001', 'lavadora', 'cetro', 'eco', 10, 5, 0, '350.00', 'lavadora blanca', 'product/1/producto.png', 'Cocinas', 1, '2021-01-06 17:27:39', 'Activo', 1),
 (2, 'ca0002', 'camarote', 'cetro', 'eco', 15, 3, 2, '400.00', 'color cafe', '', 'Muebles', 1, '2021-01-07 22:56:54', 'Activo', 1),
-(3, 'la0003', 'lampara', 'economica', 'reciente', 6, 3, 0, '0.00', 'color negro y blanco', 'product/3/producto.png', 'Muebles', 2, '2021-01-14 21:16:31', 'Inactivo', 1);
+(3, 'la0003', 'lampara', 'economica', 'reciente', 6, 3, 0, '0.00', 'color negro y blanco', 'product/3/producto.png', 'Muebles', 2, '2021-01-14 21:16:31', 'Inactivo', 1),
+(4, 'Re0004', 'Revestidero y porta papeles', 'Sandisk', '4892', 30, 5, 0, '0.00', 'Decora los espacios de tu baño con este útil y práctico revistero y porta papel metálico, organiza tus revistas y coloca el papel higiénico para que se vea ordenado.', '', 'Hogar', 2, '2021-01-16 13:40:33', 'Activo', 1),
+(5, 'Re0005', 'Reloj de pared', 'Bulova', 'C3542', 30, 5, 0, '0.00', 'Caja de madera y acentos decorativos, acabado nogal vintage. Carátula metálica. Cristal decorativo. 3 melodías: Westminster, ave-maría o bim-bam cada hora. Westminster o campanada cada cuarto de hora.', '', 'Hogar', 2, '2021-01-16 13:44:59', 'Activo', 1),
+(6, 'So0006', 'Sofa Cama', ' Home Furniture', 'Nicky', 30, 5, 10, '455.00', 'Las tendencias de la moda en el diseño de muebles están recuperando los días de líneas audaces, formas discretas y acentos de madera.', '', 'Muebles', 1, '2021-01-17 15:14:12', 'Activo', 1),
+(7, 'So0007', 'Sofá gris oscuro Synthia', 'Home Furniture', 'SYNTHIA', 30, 5, 0, '0.00', 'Consigue la mayor comodidad, combinada con un diseño moderno, gracias a este sofá que te ofrecerá horas de descanso y desconexión. ', '', 'Muebles', 2, '2021-01-16 13:53:26', 'Activo', 1),
+(8, 'Ca0008', 'Camarote individual', 'Home Furniture', '8434', 30, 5, 0, '0.00', 'Camarote para colchones de tamaño individual, color blanco. En su frente se encuentra una escalera de 3 peldaños para acceder al 2 nivel.', '', 'Muebles', 1, '2021-01-16 13:59:35', 'Activo', 1),
+(9, 'Me0009', 'Mesa comedor rectangular', 'Home Furniture', 'Rectangular', 30, 5, 10, '560.00', 'Mesa rectangular para comedor que transforma tu área de comedor en un lugar sofisticado y exclusivo hecha de vidrio, y completa tu juego con la cantidad de sillas que mas te convenga.', '', 'Muebles', 2, '2021-01-17 15:14:12', 'Activo', 1),
+(10, 'Co0010', 'Cocina eléctrica ', 'Whirlpool', '102858260', 30, 5, 10, '560.00', 'Este horno de convección eléctrico Whirlpool® con ventilador de convección le ayuda a llevar la cena a la mesa. Omita el precalentamiento para favoritos como la pizza con la tecnología Frozen Bake ™.', '', 'Cocinas', 2, '2021-01-17 15:09:36', 'Activo', 1),
+(11, 'Co0011', 'Cocina Samsung', 'Samsung', 'NX52T5311LS', 30, 5, 0, '0.00', 'Cocine de manera rápida y eficiente con un quemador Rapido, que permite una cocción más rápida y un control de temperatura fácilmente ajustable. Con solo girar un dial, ', '', 'Cocinas', 1, '2021-01-17 07:27:53', 'Activo', 1),
+(12, 'Co0012', 'Cocina a gas de mesa', 'Whirlpool', 'WP2420S', 30, 5, 10, '450.00', 'Cocina a gas de mesa 24 Whirlpool con rejillas de hierro fundido con bisagras.', '', 'Cocinas', 1, '2021-01-17 15:09:36', 'Activo', 1),
+(13, 'La0013', 'Lavadora carga superior', 'Whirlpool', '8MWTWLA31WJG', 30, 5, 0, '0.00', 'avadora Carga Superior con gran capacidad de 22 kg Whirlpool color Gun Metal con panel Shadow grey, cuenta con sistema de lavado Xpert System,', '', 'Lavadoras', 1, '2021-01-17 07:37:56', 'Activo', 1),
+(14, 'La0014', 'Lavadora carga frontal', 'Whirlpool', '7MWFW6621HC', 30, 5, 0, '0.00', 'LAVADORA GRIS 21 KG', '', 'Lavadoras', 1, '2021-01-17 07:40:26', 'Activo', 1),
+(15, 'La0015', 'Lavadora automática', ' General Electric', 'LGH72201WBAB0', 30, 5, 10, '760.00', 'Lavadora automática con capacidad de carga de 22 Kg; Gran capacidad: Ahorra tiempo lavando más en menos cargas. ', '', 'Lavadoras', 2, '2021-01-17 15:14:12', 'Activo', 1),
+(16, 'La0016', 'Laptop gaming Acer Predator ', ' Acer', 'NH.Q53AL.003', 30, 5, 10, '1672.00', 'La computadora portátil para juegos Acer Predator Helios 300 viene con especificaciones de alto nivel, un procesador Intel Core i7-9750H de 6 núcleos de novena generación 2 6 GHz con tecnología Turbo Boost, pantalla \"Full HD (1920 x 1080) LED de pantalla.', '', 'Computo', 2, '2021-01-17 15:09:36', 'Activo', 1),
+(17, 'La0017', 'Laptop HP gaming Omen ', 'Hewlett Packard', '15-EK0007LA', 30, 5, 0, '0.00', 'LA laptop para juegos. La OMEN 15 posee un potente procesador Intel Core i7 10ma generacióny gráficos Intel UHD en un marco compacto. ', '', 'Computo', 1, '2021-01-17 07:56:25', 'Activo', 1);
 
 -- --------------------------------------------------------
 

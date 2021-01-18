@@ -198,9 +198,10 @@ $(document).ready(function(){
 });
 
 $("#btneditar").click(function(){
+  //var tipo = $('#tipo_cliente').val(); 
     if($("#form_cliente").valid()){
         $("#bandera").val("edit");
-        var tipo = $('#tipo_cliente').val(); 
+        
 
         var formData = new FormData($("#form_cliente")[0]);
         $.ajax({
@@ -214,10 +215,12 @@ $("#btneditar").click(function(){
           processData: false,
         })
         .done(function(resultado_ajax){
-            alert(resultado_ajax ," tipo", tipo);
-          if(resultado_ajax === "Exito"){
+          //tipo=resultado_ajax;
+          //resultado_ajax="Exito";
+              alert(resultado_ajax);
+          if(resultado_ajax === "Persona"){
             $("#btnguardar").attr("disabled",true);
-            if (tipo=="Persona") {
+            
               PNotify.success({
               title: 'Éxito',
               text: 'Registro actualizado.',
@@ -245,7 +248,11 @@ $("#btneditar").click(function(){
                 }
               }
             });
-            }else if(tipo=="Institucion"){
+             
+
+          }if(resultado_ajax === "Institucion"){
+            $("#btnguardar").attr("disabled",true);
+            
               PNotify.success({
               title: 'Éxito',
               text: 'Registro actualizado.',
@@ -274,8 +281,6 @@ $("#btneditar").click(function(){
               }
             });
             }
-
-          }
           if(resultado_ajax === "Error"){
             PNotify.error({
               title: 'Error',

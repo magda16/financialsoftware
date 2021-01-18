@@ -89,7 +89,7 @@
                   <label class="control-label" for="fecha"><i class="ic"></i> Fecha de Cálculo</label>
                   <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                    <input type="text" id="fecha" name="fecha" class="form-control" placeholder="Ingrese Fecha: día/mes/año" data-date-end-date = "0d">
+                    <input type="text" id="fecha" name="fecha" class="form-control" placeholder="Ingrese Fecha: día/mes/año">
                   </div>
                   <span class="help-block"></span>
                 </div>

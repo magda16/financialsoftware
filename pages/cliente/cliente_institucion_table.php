@@ -42,12 +42,12 @@
                     echo "<td>" . $lista_cliente_institucion['correo'] . "</td>";
                     echo "<td>";
                                                                  
-                            if($estado_list=="Activo"){
-                                echo "<a class='btn btn-primary' onclick='editar_cliente_inst(".$lista_cliente_institucion['id_cliente_institucion'].")' data-toggle='tooltip' data-placement='top' title='Actualizar Cliente'><i class='fa fa-refresh'></i></a>";
-                                echo "<a class='btn btn-danger' onclick='dar_baja_cliente(".$lista_cliente_institucion['id_cliente_institucion'].")' data-toggle='tooltip' data-placement='top' title='Dar Baja Cliente'><i class='fa fa-long-arrow-down'></i></a>";
-                            }else if($estado_list=="Inactivo"){
-                                echo "<a class='btn bg-orange' onclick='dar_alta_cliente(".$lista_cliente_institucion['id_cliente_institucion'].")' data-toggle='tooltip' data-placement='top' title='Activar Cliente'><i class='fa fa-long-arrow-up'></i></a>";
-                            }  
+                    if($estado_list=="Activo"){
+                        echo "<a class='btn btn-primary' onclick='editar_cliente_inst(".$lista_cliente_institucion['id_cliente_institucion'].")' data-toggle='tooltip' data-placement='top' title='Actualizar Cliente'><i class='fa fa-refresh'></i></a>";
+                        echo "<a class='btn btn-danger' onclick='dar_baja_cliente(".$lista_cliente_institucion['id_cliente_institucion'].")' data-toggle='tooltip' data-placement='top' title='Dar Baja Cliente'><i class='fa fa-long-arrow-down'></i></a>";
+                    }else if($estado_list=="Inactivo"){
+                        echo "<a class='btn bg-orange' onclick='dar_alta_cliente(".$lista_cliente_institucion['id_cliente_institucion'].")' data-toggle='tooltip' data-placement='top' title='Activar Cliente'><i class='fa fa-long-arrow-up'></i></a>";
+                    }  
                             
                     echo "</td>";
                 echo "</tr>";

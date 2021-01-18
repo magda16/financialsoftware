@@ -319,7 +319,7 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
             
 
             if($stmt->execute()){
-              return "Exito";
+              return "Persona";
             }else{
               $url="../../".$fotografia;
               if(file_exists($url)){
@@ -398,7 +398,7 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
             
 
             if($stmt->execute()){
-              return "Exito";
+              return "Institucion";
             }else{
               $url="../../".$fotografia;
               if(file_exists($url)){

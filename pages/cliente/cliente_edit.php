@@ -9,45 +9,41 @@ $nivel_usu=$_SESSION['nivel'];*/
 //$id_cliente=1;
   if(isset($_POST["id"])){
     
-   $id_cliente=$_POST["id"];
+    $id_cliente=$_POST["id"];
 
-$tipo_r=$_POST["tipo"];
+    $tipo_r=$_POST["tipo"];
     if ($tipo_r=="Persona") {
-  # code...
       $stmt= $pdo->prepare("SELECT * FROM cliente WHERE id_cliente=:id_cliente");
-    $stmt->bindParam(":id_cliente",$id_cliente,PDO::PARAM_INT);
-    $stmt->execute();
-    $result=$stmt->fetchAll(PDO::FETCH_ASSOC);
-    foreach($result as $lista_cliente){ 
-      $nombre_r=$lista_cliente['nombre'];
-      $apellido_r=$lista_cliente['apellido'];
-      $dui_r=$lista_cliente['dui'];
-      $nit_r=$lista_cliente['nit'];
-      $fechanac_r=$lista_cliente['fecha_nac'];
-      $genero_r=$lista_cliente['genero'];
-      $direccion_r=$lista_cliente['direccion'];
-      $correo_r=$lista_cliente['correo'];
-      $telefono_r=$lista_cliente['telefono'];
-      $fotografia_r=$lista_cliente['fotografia'];
-      
-    }
+      $stmt->bindParam(":id_cliente",$id_cliente,PDO::PARAM_INT);
+      $stmt->execute();
+      $result=$stmt->fetchAll(PDO::FETCH_ASSOC);
+      foreach($result as $lista_cliente){ 
+        $nombre_r=$lista_cliente['nombre'];
+        $apellido_r=$lista_cliente['apellido'];
+        $dui_r=$lista_cliente['dui'];
+        $nit_r=$lista_cliente['nit'];
+        $fechanac_r=$lista_cliente['fecha_nac'];
+        $genero_r=$lista_cliente['genero'];
+        $direccion_r=$lista_cliente['direccion'];
+        $correo_r=$lista_cliente['correo'];
+        $telefono_r=$lista_cliente['telefono'];
+        $fotografia_r=$lista_cliente['fotografia'];
+      }
 
     }else {
-      # code...
       $stmt= $pdo->prepare("SELECT * FROM cliente_institucion WHERE id_cliente_institucion=:id_cliente");
-    $stmt->bindParam(":id_cliente",$id_cliente,PDO::PARAM_INT);
-    $stmt->execute();
-    $result=$stmt->fetchAll(PDO::FETCH_ASSOC);
-    foreach($result as $lista_cliente){ 
-      $nombrei_r=$lista_cliente['nombre'];
-      $niti_r=$lista_cliente['nit'];
-      $nrci_r=$lista_cliente['nrc'];
-      $direccioni_r=$lista_cliente['direccion'];
-      $correoi_r=$lista_cliente['correo'];
-      $telefonoi_r=$lista_cliente['telefono'];
-      $fotografia_r=$lista_cliente['fotografia'];
-      
-    }
+      $stmt->bindParam(":id_cliente",$id_cliente,PDO::PARAM_INT);
+      $stmt->execute();
+      $result=$stmt->fetchAll(PDO::FETCH_ASSOC);
+      foreach($result as $lista_cliente){ 
+        $nombrei_r=$lista_cliente['nombre'];
+        $niti_r=$lista_cliente['nit'];
+        $nrci_r=$lista_cliente['nrc'];
+        $direccioni_r=$lista_cliente['direccion'];
+        $correoi_r=$lista_cliente['correo'];
+        $telefonoi_r=$lista_cliente['telefono'];
+        $fotografia_r=$lista_cliente['fotografia'];
+      }
     }
     
  }else{

@@ -51,12 +51,12 @@
                     echo "<td>" . $lista_cliente['direccion'] . "</td>";
                     echo "<td>";
                                                             
-                            if($estado_list=="Activo"){
-                                echo "<a class='btn btn-primary' onclick='editar_cliente(".$lista_cliente['id_cliente'].")' data-toggle='tooltip' data-placement='top' title='Actualizar Cliente'><i class='fa fa-refresh'></i></a>";
-                                echo "<a class='btn btn-danger' onclick='dar_baja_cliente(".$lista_cliente['id_cliente'].")' data-toggle='tooltip' data-placement='top' title='Dar Baja Cliente'><i class='fa fa-long-arrow-down'></i></a>";
-                            }else if($estado_list=="Inactivo"){
-                                echo "<a class='btn bg-orange' onclick='dar_alta_cliente(".$lista_cliente['id_cliente'].")' data-toggle='tooltip' data-placement='top' title='Activar Cliente'><i class='fa fa-long-arrow-up'></i></a>";
-                            }  
+                        if($estado_list=="Activo"){
+                            echo "<a class='btn btn-primary' onclick='editar_cliente(".$lista_cliente['id_cliente'].")' data-toggle='tooltip' data-placement='top' title='Actualizar Cliente'><i class='fa fa-refresh'></i></a>";
+                            echo "<a class='btn btn-danger' onclick='dar_baja_cliente(".$lista_cliente['id_cliente'].")' data-toggle='tooltip' data-placement='top' title='Dar Baja Cliente'><i class='fa fa-long-arrow-down'></i></a>";
+                        }else if($estado_list=="Inactivo"){
+                            echo "<a class='btn bg-orange' onclick='dar_alta_cliente(".$lista_cliente['id_cliente'].")' data-toggle='tooltip' data-placement='top' title='Activar Cliente'><i class='fa fa-long-arrow-up'></i></a>";
+                        }  
                             
                     echo "</td>";
                 echo "</tr>";
