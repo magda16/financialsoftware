@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 19-01-2021 a las 17:11:54
+-- Tiempo de generación: 19-01-2021 a las 21:47:39
 -- Versión del servidor: 5.7.21
 -- Versión de PHP: 5.6.35
 
@@ -541,31 +541,32 @@ INSERT INTO `sucursal` (`id_sucursal`, `nombre`, `codigo`, `nit`, `nrc`, `giro`,
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `usuario`
+-- Estructura de tabla para la tabla `usuarios`
 --
 
-DROP TABLE IF EXISTS `usuario`;
-CREATE TABLE IF NOT EXISTS `usuario` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `usuario` varchar(30) NOT NULL,
-  `password` varchar(130) NOT NULL,
-  `nombre` varchar(100) NOT NULL,
-  `correo` varchar(80) NOT NULL,
-  `last_session` datetime DEFAULT NULL,
-  `activacion` int(11) NOT NULL DEFAULT '0',
-  `token` varchar(40) NOT NULL,
-  `token_password` varchar(100) DEFAULT NULL,
-  `password_request` int(11) DEFAULT '0',
-  `id_tipo` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+DROP TABLE IF EXISTS `usuarios`;
+CREATE TABLE IF NOT EXISTS `usuarios` (
+  `id_usuario` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` text COLLATE utf8_spanish_ci NOT NULL,
+  `apellido` text COLLATE utf8_spanish_ci NOT NULL,
+  `dui` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
+  `nit` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
+  `usuario` varchar(75) COLLATE utf8_spanish_ci NOT NULL,
+  `clave` varchar(75) COLLATE utf8_spanish_ci NOT NULL,
+  `correo` varchar(150) COLLATE utf8_spanish_ci NOT NULL,
+  `nivel` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
+  `estado` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
+  `respuesta_secreta` text COLLATE utf8_spanish_ci NOT NULL,
+  `id_jefe` int(11) NOT NULL,
+  PRIMARY KEY (`id_usuario`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Volcado de datos para la tabla `usuario`
+-- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuario` (`id`, `usuario`, `password`, `nombre`, `correo`, `last_session`, `activacion`, `token`, `token_password`, `password_request`, `id_tipo`) VALUES
-(1, 'Magda', '$2y$10$2G9tGEYDdZ5v.zGmC9tz3.dGwRb/CqMYwebFlaAEn2VKWhdErsXwa', 'Magdalena', 'magdacordova2@gmail.com', '2020-09-10 16:59:52', 1, '93e23525a4ad5ae54a43c89ba48cea5a', '', 0, 1);
+INSERT INTO `usuarios` (`id_usuario`, `nombre`, `apellido`, `dui`, `nit`, `usuario`, `clave`, `correo`, `nivel`, `estado`, `respuesta_secreta`, `id_jefe`) VALUES
+(1, 'Suyapa ', 'Martinez', '789685-8', '', 'Suyapa', '123456', 'suyapa@gmail.com', 'Administrador', 'Activo', '', 0);
 
 -- --------------------------------------------------------
 

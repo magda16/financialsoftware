@@ -162,7 +162,7 @@ if($logueo=='si'){
 <?php 
 
 }else{
-  header('location: index.php');
+  header('location: ../../index.php');
 }
 
 ?>
