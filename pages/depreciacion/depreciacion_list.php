@@ -1,4 +1,7 @@
 <?php
+session_start();
+$logueo=$_SESSION['acceso'];
+if($logueo=='si'){
 
   if(isset($_POST['activo_fijo'])){
     $fecha="";
@@ -499,3 +502,11 @@
 <script src="../../dist/js/demo.js"></script>
 </body>
 </html>
+
+<?php 
+
+}else{
+  header('location: index.php');
+}
+
+?>

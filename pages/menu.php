@@ -8,7 +8,7 @@
           <img src="../../dist/img/user2.png" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p>Alexander Pierce</p>
+          <p><?php echo $_SESSION['usuario']; ?></p>
           <a href="#"><i class="fa fa-circle text-success"></i> Conectado</a>
         </div>
       </div>

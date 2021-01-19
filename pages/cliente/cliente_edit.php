@@ -1,10 +1,8 @@
 <?php
-/*session_start();
+session_start();
 $logueo=$_SESSION['acceso'];
 if($logueo=='si'){
-include ("../build/conexion.php");
-$nivel_usu=$_SESSION['nivel'];*/
- 
+
   include ("../../build/controladores/conexion.php");
 //$id_cliente=1;
   if(isset($_POST["id"])){
@@ -370,3 +368,10 @@ $nivel_usu=$_SESSION['nivel'];*/
 <script src="../../dist/js/demo.js"></script>
 </body>
 </html>
+<?php 
+
+}else{
+  header('location: index.php');
+}
+
+?>

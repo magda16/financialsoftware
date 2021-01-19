@@ -1,3 +1,9 @@
+<?php
+session_start();
+$logueo=$_SESSION['acceso'];
+if($logueo=='si'){
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -151,3 +157,10 @@
 <script src="../../dist/js/demo.js"></script>
 </body>
 </html>
+<?php 
+
+}else{
+  header('location: index.php');
+}
+
+?>
