@@ -330,6 +330,17 @@ $nivel_usu=$_SESSION['nivel'];*/
 </div>
 <!-- ./wrapper -->
 
+<script type="text/javascript">
+  $(document).ready(function(){
+    table=$('#example1').DataTable({
+      "language": {
+        "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+      }
+    });
+
+  }
+</script>
+
 <!-- jQuery 3 -->
 <script src="../../bower_components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->

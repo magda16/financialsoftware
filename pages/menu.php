@@ -178,11 +178,21 @@
             <li><a href="../../pages/sucursal/sucursal_edit.php"><i class="fa fa-institution"></i> Sucursal</a></li>
           </ul>
         </li>
-        
-        
-        
-        
-        
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-folder-open"></i>
+            <span>Reportes</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="../../pdf/repProv.php" target="_blank"><i class="fa fa-file-pdf-o"></i> Reportes de Proveedores</a></li>
+            <li><a href="../../pdf/repProd.php" target="_blank"><i class="fa fa-file-pdf-o"></i> Reportes de Productos</a></li>
+            <li><a href="../../pdf/repProdStock.php" target="_blank"><i class="fa fa-file-pdf-o"></i> Productos en Stock</a></li>
+            <li><a href="../../pdf/repVentCont.php" target="_blank"><i class="fa fa-file-pdf-o"></i> Ventas al Contado</a></li>
+          </ul>
+        </li>
         
         
         <li class="treeview">

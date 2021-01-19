@@ -52,22 +52,22 @@
       $anios=($dias / 360);
       $meses=($dias / 30);
 
-      if($financiamiento == "Nuevo"){
+      if($financiamiento == "Nuevo" || $financiamiento == "Donado"){
         $porcentaje=100;
         $costo=$valor_adq;
-      }else if($financiamiento == "Usado" || $financiamiento == "Donado"){
+      }else if($financiamiento == "Usado"){
         if($anios > 0 && $anios <= 1 ){
           $porcentaje=80;
-          $costo=($valor_adq - ($valor_adq * (80/100)));
+          $costo=($valor_adq * (80/100));
         }else if($anios > 1 && $anios <= 2 ){
           $porcentaje=60;
-          $costo=($valor_adq - ($valor_adq * (60/100)));
+          $costo=($valor_adq * (60/100));
         }else if($anios > 2 && $anios <= 3 ){
           $porcentaje=40;
-          $costo=($valor_adq - ($valor_adq * (40/100)));
+          $costo=($valor_adq * (40/100));
         }else if($anios > 3 && $anios <= $vida_util ){
           $porcentaje=20;
-          $costo=($valor_adq - ($valor_adq * (20/100)));
+          $costo=($valor_adq * (20/100));
         }
       }
 

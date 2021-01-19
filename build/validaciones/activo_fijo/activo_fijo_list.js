@@ -77,7 +77,11 @@ $(document).ready(function(){
       .done(function(obtenerDatos){
         table.destroy();
         $('#div_activo_fijo_table').html(obtenerDatos);  
-        table=$('#example1').DataTable();  
+        table=$('#example1').DataTable({
+          "language": {
+            "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+          }
+        });
       })
       .fail(function(){
         alert('Error al cargar la Pagina Activo Fijo')
@@ -112,7 +116,11 @@ $(document).ready(function(){
       .done(function(obtenerDatos){
         table.destroy();
         $('#div_activo_fijo_table').html(obtenerDatos);  
-        table=$('#example1').DataTable();
+        table=$('#example1').DataTable({
+          "language": {
+            "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+          }
+        });
       })
       .fail(function(){
         alert('Error al cargar la Pagina')
@@ -146,7 +154,11 @@ $(document).ready(function(){
       .done(function(obtenerDatos){
         table.destroy();
         $('#div_activo_fijo_table').html(obtenerDatos);  
-        table=$('#example1').DataTable();
+        table=$('#example1').DataTable({
+          "language": {
+            "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+          }
+        });
       })
       .fail(function(){
         alert('Error al cargar la Pagina')
