@@ -1,6 +1,7 @@
 $(document).ready(function(){
   
     $("#divcantidad_lote").hide();
+    $("#div_anios_uso").hide();
 
     $.ajax({
       type: 'POST',
@@ -129,6 +130,10 @@ $(document).ready(function(){
         financiamiento: {
           required: true
         },
+        anios_uso: {
+          required: true,
+          minlength: 1
+        },
         valor_adquisicion: {
           required: true,
           minlength: 1
@@ -185,6 +190,10 @@ $(document).ready(function(){
         financiamiento: {
           required: "Por favor, seleccione financiamiento."
         },
+        anios_uso: {
+          required: "Por favor, ingrese años de uso.",
+          minlength: "Debe ingresar m&iacute;nimo 1 dígitos."
+        },
         valor_adquisicion: {
           required: "Por favor, ingrese valor de adquisición.",
           minlength: "Debe ingresar m&iacute;nimo 1 dígitos."
@@ -202,7 +211,7 @@ $(document).ready(function(){
         },
         proveedor: {
           required: "Por favor, seleccione proveedor."
-        },
+        }
       }
     });
 
@@ -217,7 +226,16 @@ $(document).ready(function(){
           $("#cantidad").val("");
       }
     });
-    
+
+    $("#financiamiento").on('change', function() {
+
+      var financiamiento = $("#financiamiento").val();
+      $("#div_anios_uso").hide();
+      if(financiamiento == "Usado"){
+        $("#anios_uso").val("");
+        $("#div_anios_uso").show();
+      }
+    });
     
 });
 
@@ -236,7 +254,7 @@ $("#btnguardar").click(function(){
           processData: false,
         })
         .done(function(resultado_ajax){
-            alert(resultado_ajax);
+            
           if(resultado_ajax === "Exito"){
             $("#btnguardar").attr("disabled",true);
             PNotify.success({

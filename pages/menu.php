@@ -5,7 +5,7 @@
       <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="../../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+          <img src="../../dist/img/user2.png" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
           <p>Alexander Pierce</p>
@@ -103,7 +103,7 @@
         
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-users"></i>
+            <i class="fa fa-user-plus"></i>
             <span>Cliente</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
@@ -168,8 +168,21 @@
         </li>
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-gears"></i>
-            <span>Configuración</span>
+            <i class="fa fa-credit-card"></i>
+            <span>Venta Crédito</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="../../pages/venta/venta_add.php"><i class="fa fa-plus-circle"></i> Agregar</a></li>
+            <li><a href="../../pages/venta/venta_list.php"><i class="fa fa-wrench"></i> Mantenimiento</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-calendar-o"></i>
+            <span>Cartera de Clientes</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -194,45 +207,8 @@
           </ul>
         </li>
         
-        
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-share"></i> <span>Multilevel</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
-            <li class="treeview">
-              <a href="#"><i class="fa fa-circle-o"></i> Level One
-                <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-                </span>
-              </a>
-              <ul class="treeview-menu">
-                <li><a href="#"><i class="fa fa-circle-o"></i> Level Two</a></li>
-                <li class="treeview">
-                  <a href="#"><i class="fa fa-circle-o"></i> Level Two
-                    <span class="pull-right-container">
-                      <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                  </a>
-                  <ul class="treeview-menu">
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
-          </ul>
-        </li>
-        <li><a href="https://adminlte.io/docs"><i class="fa fa-book"></i> <span>Documentation</span></a></li>
-        <li class="header">LABELS</li>
-        <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li>
-        <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li>
-        <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>
+        <span class="text-blue">&nbsp;<i class="header fa fa-gears"> </i><strong> Configuración</strong></span>
+        <li><a href="../../pages/sucursal/sucursal_edit.php"><i class="fa fa-institution text-orange"></i> Sucursal</a></li>
       </ul>
     </section>
     <!-- /.sidebar -->

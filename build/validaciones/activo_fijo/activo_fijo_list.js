@@ -59,6 +59,7 @@ $(document).ready(function(){
         }
       }
     });
+
   
   });
   
@@ -215,3 +216,213 @@ $(document).ready(function(){
     });
     
    }
+
+ 
+
+   function dar_baja_activo_fijo(id){
+
+    var notice = PNotify.notice({
+      title: 'Advertencia',
+      text: '¿Esta seguro que desea dar de baja al registro?',
+      styling: 'bootstrap3',
+      icons: 'bootstrap3',
+      icon: true,
+      hide: false,
+      stack: {
+        'dir1': 'down',
+        'modal': true,
+        'firstpos1': 25
+      },
+      modules: {
+        Confirm: {
+          confirm: true
+        },
+        Buttons: {
+          closer: false,
+          sticker: false
+        },
+        History: {
+          history: false
+        },
+      }
+    });
+  
+    notice.on('pnotify.confirm', function() {
+      $('#bandera').val("dar_baja");
+      $('#baccion').val(id);
+      $('#darBaja').modal({show:true});
+    });
+    notice.on('pnotify.cancel', function() {
+      PNotify.success({
+        title: 'Éxito',
+        text: 'Proceso Cancelado.',
+        styling: 'bootstrap3',
+        icons: 'bootstrap3'
+      });
+    });
+
+  }
+  
+  function dar_alta_activo_fijo(id){
+    var notice = PNotify.notice({
+      title: 'Advertencia',
+      text: '¿Esta seguro que desea activar el registro?',
+      styling: 'bootstrap3',
+      icons: 'bootstrap3',
+      icon: true,
+      hide: false,
+      stack: {
+        'dir1': 'down',
+        'modal': true,
+        'firstpos1': 25
+      },
+      modules: {
+        Confirm: {
+          confirm: true
+        },
+        Buttons: {
+          closer: false,
+          sticker: false
+        },
+        History: {
+          history: false
+        },
+      }
+    });
+  
+    notice.on('pnotify.confirm', function() {
+      $('#bandera').val("dar_alta");
+      $('#baccion').val(id);
+      $('#darBaja').modal({show:true});
+    });
+    notice.on('pnotify.cancel', function() {
+      PNotify.success({
+        title: 'Éxito',
+        text: 'Proceso Cancelado.',
+        styling: 'bootstrap3',
+        icons: 'bootstrap3'
+      });
+    });
+
+  }
+
+  $("#form_activo_fijo_baja_alta").validate({
+    errorPlacement: function (error, element) {
+          $(element).closest('.form-group').find('.help-block').html(error.html());
+      },
+      highlight: function (element) {
+          $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+          $(element).closest('.form-group').find('.ic').removeClass('fa fa-check').addClass('fa fa-times-circle-o');
+      },
+      unhighlight: function (element, errorClass, validClass) {
+          $(element).closest('.form-group').removeClass('has-error').addClass('has-success');
+          $(element).closest('.form-group').find('.ic').removeClass('fa fa-times-circle-o').addClass('fa fa-check');
+          $(element).closest('.form-group').find('.help-block').html('');
+      },
+    rules: {
+      descripcion: {
+        required: true,
+        minlength: 3
+      }
+    },
+    messages: {
+      descripcion: {
+        required: "Por favor, ingrese descripción.",
+        minlength: "Debe ingresar m&iacute;nimo 3 dígitos."
+      }
+    }
+  });
+  
+  
+  $("#btneditarmodal").click(function(){
+    var descripcion = $("#observacion").val();
+
+    if(descripcion != ""){
+      var formData = new FormData($("#form_activo_fijo_baja_alta")[0]);
+      $.ajax({
+        type: 'POST',
+        url: '../../build/controladores/crud_activo_fijo.php',
+        //datos del formulario
+        data: formData,
+        //necesario para subir archivos via ajax
+        cache: false,
+        contentType: false,
+        processData: false,
+      })
+      .done(function(resultado_ajax){
+          alert(resultado_ajax);
+        if(resultado_ajax === "Exito"){
+          $("#btneditarmodal").attr("disabled",true);
+          PNotify.success({
+            title: 'Éxito',
+            text: 'Registro actualizado.',
+            styling: 'bootstrap3',
+            icons: 'bootstrap3',
+            hide: false,
+            modules: {
+              Confirm: {
+                confirm: true,
+                buttons: [{
+                  text: 'Aceptar',
+                  primary: true,
+                  click: function(notice) {
+                    notice.close();
+                    location.href='../../pages/activo_fijo/activo_fijo_list.php';
+                  }
+                }]
+              },
+              Buttons: {
+                closer: false,
+                sticker: false
+              },
+              History: {
+                history: false
+              }
+            }
+          });
+        }
+        if(resultado_ajax === "Error"){
+          PNotify.error({
+            title: 'Error',
+            text: 'Sin conexión a la base de datos.',
+            styling: 'bootstrap3',
+            icons: 'bootstrap3',
+            hide: false,
+            modules: {
+              Confirm: {
+                confirm: true,
+                buttons: [{
+                  text: 'Aceptar',
+                  primary: true,
+                  click: function(notice) {
+                    notice.close();
+                    location.href='../../pages/activo_fijo/activo_fijo_list.php';
+                  }
+                }]
+              },
+              Buttons: {
+                closer: false,
+                sticker: false
+              },
+              History: {
+                history: false
+              }
+            }
+          });
+   
+        }             
+      })
+      .fail(function(){
+        alert('Error al cargar la Pagina Activo Fijo')
+      })
+  }else{
+    PNotify.info({
+      title: 'Información',
+      text: 'Revise que los datos esten completos.',
+      styling: 'bootstrap3',
+      icons: 'bootstrap3'
+    });
+
+  }
+      
+});

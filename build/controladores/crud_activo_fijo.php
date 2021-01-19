@@ -30,11 +30,16 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
           $modelo=$_POST["modelo"];
           $fecha_adq=$_POST["fecha_adquisicion"];
           $financiamiento=$_POST["financiamiento"];
+          $anios_uso="0";
+          if($_POST["anios_uso"]!=""){
+            $anios_uso=$_POST["anios_uso"];
+          }
           $valor_adquisicion=$_POST["valor_adquisicion"];
           $valor_estimado=$_POST["valor_estimado"];
           $valor_residual=$_POST["valor_residual"];
           $vida_util=$_POST["vida_util"];
           $id_proveedor=$_POST["proveedor"];
+          $motivo="";
           $lote="";
           $acum=0;
           $directorio="";
@@ -125,7 +130,7 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
             
             $codigo=$codigo_inv."-".$correlativo;
 
-            $stmt1=$pdo->prepare("INSERT INTO activo_fijo (id_activo_fijo, codigo, descripcion, observacion, calidad, marca, modelo, num_serie, lote, fecha_adquisicion, financiamiento, valor_adquisicion, valor_estimado, valor_residual, vida_util, doc_adquisicion, id_categoria, id_subcategoria, id_proveedor, fecha_ingreso, estado, id_usuario) VALUES (:id_activo_fijo, :codigo, :descripcion, :observacion, :calidad, :marca, :modelo, :num_serie, :lote, :fecha_adquisicion, :financiamiento, :valor_adquisicion, :valor_estimado, :valor_residual, :vida_util, :doc_adquisicion, :id_categoria, :id_subcategoria, :id_proveedor, :fecha_ingreso, :estado, :id_usuario)");
+            $stmt1=$pdo->prepare("INSERT INTO activo_fijo (id_activo_fijo, codigo, descripcion, observacion, calidad, marca, modelo, num_serie, lote, fecha_adquisicion, financiamiento, anios_uso, valor_adquisicion, valor_estimado, valor_residual, vida_util, doc_adquisicion, id_categoria, id_subcategoria, id_proveedor, fecha_ingreso, estado, motivo, id_usuario) VALUES (:id_activo_fijo, :codigo, :descripcion, :observacion, :calidad, :marca, :modelo, :num_serie, :lote, :fecha_adquisicion, :financiamiento, :anios_uso, :valor_adquisicion, :valor_estimado, :valor_residual, :vida_util, :doc_adquisicion, :id_categoria, :id_subcategoria, :id_proveedor, :fecha_ingreso, :estado, :motivo, :id_usuario)");
             $stmt1->bindParam(":id_activo_fijo",$id_activo_fijo,PDO::PARAM_INT);
             $stmt1->bindParam(":codigo",$codigo,PDO::PARAM_STR);
             $stmt1->bindParam(":descripcion",$descripcion,PDO::PARAM_STR);
@@ -137,6 +142,7 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
             $stmt1->bindParam(":lote",$lote,PDO::PARAM_STR);
             $stmt1->bindParam(":fecha_adquisicion",$fecha_adquisicion,PDO::PARAM_STR);
             $stmt1->bindParam(":financiamiento",$financiamiento,PDO::PARAM_STR);
+            $stmt1->bindParam(":anios_uso",$anios_uso,PDO::PARAM_INT);
             $stmt1->bindParam(":valor_adquisicion",$valor_adquisicion,PDO::PARAM_STR);
             $stmt1->bindParam(":valor_estimado",$valor_estimado,PDO::PARAM_STR);
             $stmt1->bindParam(":valor_residual",$valor_residual,PDO::PARAM_STR);
@@ -147,6 +153,7 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
             $stmt1->bindParam(":id_proveedor",$id_proveedor,PDO::PARAM_INT);
             $stmt1->bindParam(":fecha_ingreso",$fecha_ingreso,PDO::PARAM_STR);
             $stmt1->bindParam(":estado",$estado,PDO::PARAM_STR);
+            $stmt1->bindParam(":motivo",$motivo,PDO::PARAM_STR);
             $stmt1->bindParam(":id_usuario",$id_usuario,PDO::PARAM_INT);
             if($stmt1->execute()){
               $pdo->commit();
@@ -172,7 +179,7 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
               $result="stmt".$i;
               $numeroConCeros = str_pad($cod, 6, "0", STR_PAD_LEFT);
               $codigo=$codigo_inv."-".$numeroConCeros;
-              $result=$pdo->prepare("INSERT INTO activo_fijo (codigo, descripcion, observacion, calidad, marca, modelo, num_serie, lote, fecha_adquisicion, financiamiento, valor_adquisicion, valor_estimado, valor_residual, vida_util, doc_adquisicion, id_categoria, id_subcategoria, id_proveedor, fecha_ingreso, estado, id_usuario) VALUES (:codigo, :descripcion, :observacion, :calidad, :marca, :modelo, :num_serie, :lote, :fecha_adquisicion, :financiamiento, :valor_adquisicion, :valor_estimado, :valor_residual, :vida_util, :doc_adquisicion, :id_categoria, :id_subcategoria, :id_proveedor, :fecha_ingreso, :estado, :id_usuario)");
+              $result=$pdo->prepare("INSERT INTO activo_fijo (codigo, descripcion, observacion, calidad, marca, modelo, num_serie, lote, fecha_adquisicion, financiamiento, anios_uso, valor_adquisicion, valor_estimado, valor_residual, vida_util, doc_adquisicion, id_categoria, id_subcategoria, id_proveedor, fecha_ingreso, estado, motivo, id_usuario) VALUES (:codigo, :descripcion, :observacion, :calidad, :marca, :modelo, :num_serie, :lote, :fecha_adquisicion, :financiamiento, :anios_uso, :valor_adquisicion, :valor_estimado, :valor_residual, :vida_util, :doc_adquisicion, :id_categoria, :id_subcategoria, :id_proveedor, :fecha_ingreso, :estado, :motivo, :id_usuario)");
               $result->bindParam(":codigo",$codigo,PDO::PARAM_STR);
               $result->bindParam(":descripcion",$descripcion,PDO::PARAM_STR);
               $result->bindParam(":observacion",$observacion,PDO::PARAM_STR);
@@ -183,6 +190,7 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
               $result->bindParam(":lote",$lote,PDO::PARAM_STR);
               $result->bindParam(":fecha_adquisicion",$fecha_adquisicion,PDO::PARAM_STR);
               $result->bindParam(":financiamiento",$financiamiento,PDO::PARAM_STR);
+              $result->bindParam(":anios_uso",$anios_uso,PDO::PARAM_INT);
               $result->bindParam(":valor_adquisicion",$valor_adquisicion,PDO::PARAM_STR);
               $result->bindParam(":valor_estimado",$valor_estimado,PDO::PARAM_STR);
               $result->bindParam(":valor_residual",$valor_residual,PDO::PARAM_STR);
@@ -193,6 +201,7 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
               $result->bindParam(":id_proveedor",$id_proveedor,PDO::PARAM_INT);
               $result->bindParam(":fecha_ingreso",$fecha_ingreso,PDO::PARAM_STR);
               $result->bindParam(":estado",$estado,PDO::PARAM_STR);
+              $result->bindParam(":motivo",$motivo,PDO::PARAM_STR);
               $result->bindParam(":id_usuario",$id_usuario,PDO::PARAM_INT);
               if($result->execute()){
                 $acum++;
@@ -237,6 +246,14 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
           $modelo=$_POST["modelo"];
           $fecha_adq=$_POST["fecha_adquisicion"];
           $financiamiento=$_POST["financiamiento"];
+          $anios_uso="0";
+          if($_POST["anios_uso"]!=""){
+            $anios_uso=$_POST["anios_uso"];
+          }
+
+          if($financiamiento == "Nuevo" || $financiamiento == "Donado"){
+            $anios_uso="0";
+          }
           $valor_adquisicion=$_POST["valor_adquisicion"];
           $valor_estimado=$_POST["valor_estimado"];
           $valor_residual=$_POST["valor_residual"];
@@ -310,7 +327,7 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 
           $pdo->beginTransaction();
             
-          $stmt1=$pdo->prepare("UPDATE activo_fijo SET descripcion=:descripcion, observacion=:observacion, calidad=:calidad, marca=:marca, modelo=:modelo, num_serie=:num_serie, fecha_adquisicion=:fecha_adquisicion, financiamiento=:financiamiento, valor_adquisicion=:valor_adquisicion, valor_estimado=:valor_estimado, valor_residual=:valor_residual, vida_util=:vida_util, doc_adquisicion=:doc_adquisicion, id_proveedor=:id_proveedor WHERE id_activo_fijo=:id_activo_fijo");
+          $stmt1=$pdo->prepare("UPDATE activo_fijo SET descripcion=:descripcion, observacion=:observacion, calidad=:calidad, marca=:marca, modelo=:modelo, num_serie=:num_serie, fecha_adquisicion=:fecha_adquisicion, financiamiento=:financiamiento, anios_uso=:anios_uso, valor_adquisicion=:valor_adquisicion, valor_estimado=:valor_estimado, valor_residual=:valor_residual, vida_util=:vida_util, doc_adquisicion=:doc_adquisicion, id_proveedor=:id_proveedor WHERE id_activo_fijo=:id_activo_fijo");
           $stmt1->bindParam(":id_activo_fijo",$id_activo_fijo,PDO::PARAM_INT);
           $stmt1->bindParam(":descripcion",$descripcion,PDO::PARAM_STR);
           $stmt1->bindParam(":observacion",$observacion,PDO::PARAM_STR);
@@ -320,6 +337,7 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
           $stmt1->bindParam(":num_serie",$num_serie,PDO::PARAM_STR);
           $stmt1->bindParam(":fecha_adquisicion",$fecha_adquisicion,PDO::PARAM_STR);
           $stmt1->bindParam(":financiamiento",$financiamiento,PDO::PARAM_STR);
+          $stmt1->bindParam(":anios_uso",$anios_uso,PDO::PARAM_INT);
           $stmt1->bindParam(":valor_adquisicion",$valor_adquisicion,PDO::PARAM_STR);
           $stmt1->bindParam(":valor_estimado",$valor_estimado,PDO::PARAM_STR);
           $stmt1->bindParam(":valor_residual",$valor_residual,PDO::PARAM_STR);
@@ -345,6 +363,53 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
         
           return $msj;
         }
+  }else if($bandera=="dar_baja"){
+    $msj="Error";
+  
+    function obtenerResultado(){
+        include ("conexion.php");
+        $id_activo_fijo=$_POST["baccion"];
+        $motivo=$_POST["observacion"];
+        $estado="Inactivo";
+    
+        $stmt=$pdo->prepare("UPDATE activo_fijo SET estado=:estado, motivo=:motivo WHERE id_activo_fijo=:id_activo_fijo");
+        $stmt->bindParam(":estado",$estado,PDO::PARAM_STR);
+        $stmt->bindParam(":motivo",$motivo,PDO::PARAM_STR);
+        $stmt->bindParam(":id_activo_fijo",$id_activo_fijo,PDO::PARAM_INT);
+        
+
+        if($stmt->execute()){
+          return "Exito";
+        }else{
+          return "Error";
+        }
+        $stmt->close();
+    
+      return $msj;
+    }
+  }else if($bandera=="dar_alta"){
+    $msj="Error";
+  
+    function obtenerResultado(){
+        include ("conexion.php");
+        $id_activo_fijo=$_POST["baccion"];
+        $motivo=$_POST["observacion"];
+        $estado="Activo";
+    
+        $stmt=$pdo->prepare("UPDATE activo_fijo SET estado=:estado, motivo=:motivo WHERE id_activo_fijo=:id_activo_fijo");
+        $stmt->bindParam(":estado",$estado,PDO::PARAM_STR);
+        $stmt->bindParam(":motivo",$motivo,PDO::PARAM_STR);
+        $stmt->bindParam(":id_activo_fijo",$id_activo_fijo,PDO::PARAM_INT);
+
+        if($stmt->execute()){
+          return "Exito";
+        }else{
+          return "Error";
+        }
+        $stmt->close();
+    
+      return $msj;
+    }
   }
 }
 
