@@ -232,7 +232,7 @@ function editar_cliente_inst(id){
   
  }
 
- function dar_baja_cliente(id){
+function dar_baja_cliente(id){
 var tipo=$('#tipo').val();
    if (tipo=="Persona") {
     var notice = PNotify.notice({

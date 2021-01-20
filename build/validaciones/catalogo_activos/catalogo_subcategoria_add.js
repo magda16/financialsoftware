@@ -2,10 +2,12 @@ $(document).ready(function(){
 
   $.ajax({
     type: 'POST',
-    url: '../../build/controladores/lista_activo_categorias.php'
+    url: '../../build/controladores/lista_activo_all_categorias.php'
   })
   .done(function(lista_activo_categorias){
     $('#categoria').html(lista_activo_categorias)
+    var id_categoria= $("#id_categoria").val();
+    $("#categoria option[value='"+ id_categoria +"']").attr("selected",true);
   })
   .fail(function(){
     alert('Error al cargar la Pagina Lista Categorías')
@@ -49,9 +51,6 @@ $(document).ready(function(){
           letrasOespacio: true,
           required: true,
           minlength: 3
-        },
-        categoria: {
-          required: true
         }
       },
       messages: {
@@ -62,9 +61,6 @@ $(document).ready(function(){
         subcategoria: {
           required: "Por favor, ingrese subcategoría.",
           minlength: "Debe ingresar m&iacute;nimo 3 dígitos."
-        },
-        categoria: {
-          required: "Por favor, seleccione categoría."
         }
       }
     });
@@ -97,7 +93,9 @@ $("#btnguardar").click(function(){
                     primary: true,
                     click: function(notice) {
                       notice.close();
-                      location.href='../../pages/catalogo_activos/catalogo_subcategoria_add.php';
+                      $("#codigo").val("");
+                      $("#subcategoria").val("");
+                      $("#btnguardar").attr("disabled",false);
                     }
                   }]
                 },
@@ -126,7 +124,8 @@ $("#btnguardar").click(function(){
                     primary: true,
                     click: function(notice) {
                       notice.close();
-                      location.href='../../pages/catalogo_activos/catalogo_subcategoria_add.php';
+                      $("#codigo").val("");
+                      $("#subcategoria").val("");
                     }
                   }]
                 },

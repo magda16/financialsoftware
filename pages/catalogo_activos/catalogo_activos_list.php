@@ -88,7 +88,7 @@ if($logueo=='si'){
                     echo "<thead>";
                     echo "<tr>";
                     echo "<th colspan='2'> <h4 style='color: #00c0ef;'><strong>".$lista_activo_categoria['categoria'].".</strong></h4></th>";                    
-                    echo "<th ><div align='center'><a id='paso4' href='../../pages/catalogo_activos/catalogo_subcategoria_add.php' class='btn btn-info' type='button' onclick='imprecepciondocumentos(".$id_activo_categoria.")' data-toggle='tooltip' data-placement='top' title='Agregar Tipo de Bien'><i class='fa fa-plus'></i></a>";
+                    echo "<th ><div align='center'><a class='btn btn-info' type='button' onclick='subcategoria(".$id_activo_categoria.")' data-toggle='tooltip' data-placement='top' title='Agregar Tipo de Bien'><i class='fa fa-plus'></i></a>";
                     echo "</tr>";
 
                     echo "<tr>";
@@ -128,6 +128,10 @@ if($logueo=='si'){
 
         </div>
         </form>
+
+        <form id="from_catalogo_activos_edit" name="from_catalogo_activos_edit" action="catalogo_subcategoria_add.php" method="POST">
+          <input type="hidden" id="id" name="id">
+        </form>
       </div>
       <!-- /.row -->
     </section>
@@ -165,7 +169,7 @@ if($logueo=='si'){
 <script src="../../plugins/PNotify/dist/iife/PNotifyMobile.js"></script>
 <!-- Validate -->
 <script src="../../plugins/validar/jquery.validate.js"></script>
-<script src="../../build/validaciones/proveedor/proveedor_list.js"></script>
+<script src="../../build/validaciones/catalogo_activos/catalogo_activos_list.js"></script>
 <!-- AdminLTE App -->
 <script src="../../dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->

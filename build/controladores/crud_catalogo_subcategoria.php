@@ -11,7 +11,7 @@
           
         $codigo=$_POST["codigo"];
         $subcategoria=$_POST["subcategoria"];
-        $id_activo_categoria=$_POST["categoria"];
+        $id_activo_categoria=$_POST["id_categoria"];
        
         $stmt = $pdo->prepare("SELECT MAX(id_activo_subcategoria)+1 AS 'id' FROM activo_subcategoria");
         $stmt->execute();

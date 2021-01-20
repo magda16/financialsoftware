@@ -41,7 +41,7 @@ if($clave==$clave2){
   <!-- PNotify -->
   <link href="plugins/PNotify/dist/PNotifyBrightTheme.css" rel="stylesheet" type="text/css" />
   <!-- Theme style -->
-  <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="dist/css/AdminLTE.css">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
@@ -59,7 +59,8 @@ if($clave==$clave2){
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="index.php"><i class="text-blue"><b>Financial Software</b></i><p class="login-box-msg"><i class="text-blue">F</i><b>S</b></p></a>
+    <a href="index.php"><i class="text-blue"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Financial Software</b></i><p class="login-box-msg"><i class="text-blue">F</i><b>S</b></p></a>
+  
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
@@ -74,6 +75,7 @@ if($clave==$clave2){
         <input type="password" id="clave" name="clave" class="form-control" placeholder="Contraseña">
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
+      <span class="help-block text-red" id="result_clave_error"></span>
 
       </br>
       

@@ -20,9 +20,9 @@
 <table class="table table-bordered">
         <tr>
             <th colspan="4">Producto</th>
-            <th colspan="3"><?php echo $nombre_r; ?></th>
+            <td colspan="3"><?php echo $nombre_r; ?></td>
             <th colspan="3">Stock Mínimo</th>
-            <th colspan="3"><?php echo $stock_minimo_r; ?></th>
+            <td colspan="3"><?php echo $stock_minimo_r; ?></td>
         </tr>
         <tr align="center">
             <td style="width: 10px" colspan="3"><strong>Fecha</strong></td>
@@ -80,19 +80,19 @@
             }       
         ?>
         <tr>
-            <td>D</td>
-            <td>M</td>
-            <td>A</td>
-            <td>Cantidad</td>
-            <td>Cantidad</td>
-            <td>V/ Unitario</td>
-            <td>V/ Total</td>
-            <td>Cantidad</td>
-            <td>V/ Unitario</td>
-            <td>V/ Total</td>
-            <td>Cantidad</td>
-            <td>V/ Unitario</td>
-            <td>V/ Total</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>

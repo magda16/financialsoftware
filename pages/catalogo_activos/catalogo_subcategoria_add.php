@@ -3,6 +3,12 @@ session_start();
 $logueo=$_SESSION['acceso'];
 if($logueo=='si'){
 
+  if(isset($_POST['id'])){
+    $id_categoria=$_POST['id'];
+  }else{
+    header('location: catalogo_activos_list.php');
+  }
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -62,6 +68,7 @@ if($logueo=='si'){
       <div class="row">
       <form id="form_catalogo_subcategoria" name="form_catalogo_subcategoria" action="" method="POST">
         <input type="hidden" name="bandera" id="bandera">
+        <input type="hidden" name="id_categoria" id="id_categoria" value="<?php echo $id_categoria; ?>" >
 
         <!-- left column -->
         <div class="col-md-6">
@@ -92,7 +99,7 @@ if($logueo=='si'){
 
               <div class="form-group">
                 <label class="control-label" for="categoria"><i class="ic"></i> Categoría</label>
-                <select class="form-control" id="categoria" name="categoria">
+                <select class="form-control" id="categoria" name="categoria" disabled>
                 </select>
                 <span class="help-block"></span>
               </div>
