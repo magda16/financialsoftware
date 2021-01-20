@@ -489,8 +489,8 @@ $pdf->SetFont('Arial','',14);
 
 
     //Esta parte solo es el es logan de la factura
-    $titulo_1_factura='TITULO 1';
-    $titulo_2_factura='TITULO 2';
+    $titulo_1_factura='';
+    $titulo_2_factura='';
     $nombre_empresa=$nombre_r;
     $eslogan1='VENTAS AL POR MENOR DE NUESTROS PRODUCTOS';
     $eslogan2='EN COMERCIOS NO ESPECIALIZADOS';
@@ -519,7 +519,7 @@ $pdf->SetFont('Arial','',14);
  
     //// Fin Llenan la tabla de la factura 
 
-    $iva=0.13;// es el iva
+    $iva=null;// es el iva
 
     //carnet o pasaporte
     $carnet_pasaporte='';

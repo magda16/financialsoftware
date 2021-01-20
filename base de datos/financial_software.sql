@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 19-01-2021 a las 21:47:39
+-- Tiempo de generación: 20-01-2021 a las 03:13:58
 -- Versión del servidor: 5.7.21
 -- Versión de PHP: 5.6.35
 
@@ -274,10 +274,7 @@ CREATE TABLE IF NOT EXISTS `compra` (
 --
 
 INSERT INTO `compra` (`id_compra`, `tipo_pago`, `monto`, `fecha`, `fecha_ingreso`, `estado`, `id_usuario`) VALUES
-(1, 'Contado', '7000.00', '2021-01-03', '2021-01-07 00:59:49', 'Cancelado', 1),
-(2, 'Contado', '8000.00', '2021-01-03', '2021-01-07 22:58:25', 'Cancelado', 1),
-(3, 'Credito', '26820.00', '2020-12-27', '2021-01-17 08:09:36', 'Pendiente', 1),
-(4, 'Contado', '17750.00', '2020-12-29', '2021-01-17 08:14:12', 'Cancelado', 1);
+(1, 'Contado', '5000.00', '2020-12-27', '2021-01-20 03:10:01', 'Cancelado', 1);
 
 -- --------------------------------------------------------
 
@@ -332,21 +329,23 @@ CREATE TABLE IF NOT EXISTS `detalle_compra` (
   `id_producto` int(11) NOT NULL,
   `id_compra` int(11) NOT NULL,
   PRIMARY KEY (`id_d_c`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `detalle_compra`
 --
 
 INSERT INTO `detalle_compra` (`id_d_c`, `cantidad`, `precio`, `id_producto`, `id_compra`) VALUES
-(1, 20, '350.00', 1, 1),
-(2, 20, '400.00', 2, 2),
-(3, 10, '450.00', 12, 3),
-(4, 10, '560.00', 10, 3),
-(5, 10, '1672.00', 16, 3),
-(6, 10, '455.00', 6, 4),
-(7, 10, '560.00', 9, 4),
-(8, 10, '760.00', 15, 4);
+(1, 10, '500.00', 12, 1);
+
+--
+-- Disparadores `detalle_compra`
+--
+DROP TRIGGER IF EXISTS `update_producto`;
+DELIMITER $$
+CREATE TRIGGER `update_producto` AFTER INSERT ON `detalle_compra` FOR EACH ROW UPDATE producto SET cantidad=cantidad+NEW.cantidad, precio=(((cantidad-NEW.cantidad)*precio)+(NEW.cantidad*NEW.precio))/(cantidad) WHERE id_producto=NEW.id_producto
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -362,26 +361,7 @@ CREATE TABLE IF NOT EXISTS `detalle_venta_contado` (
   `id_producto` int(11) NOT NULL,
   `id_venta_contado` int(11) NOT NULL,
   PRIMARY KEY (`id_d_v_c`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `detalle_venta_contado`
---
-
-INSERT INTO `detalle_venta_contado` (`id_d_v_c`, `cantidad`, `precio`, `id_producto`, `id_venta_contado`) VALUES
-(2, 1, '385.00', 1, 1),
-(3, 2, '460.00', 2, 2),
-(5, 1, '385.00', 1, 3),
-(6, 1, '385.00', 1, 4),
-(7, 1, '460.00', 2, 5),
-(8, 1, '460.00', 2, 6),
-(9, 1, '385.00', 1, 7),
-(10, 1, '385.00', 1, 8),
-(11, 1, '460.00', 2, 9),
-(13, 1, '460.00', 2, 10),
-(14, 1, '460.00', 2, 11),
-(15, 2, '460.00', 2, 12),
-(16, 1, '460.00', 2, 13);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Disparadores `detalle_venta_contado`
@@ -461,7 +441,7 @@ CREATE TABLE IF NOT EXISTS `producto` (
 
 INSERT INTO `producto` (`id_producto`, `codigo`, `nombre`, `marca`, `modelo`, `margen_ganancia`, `stock_minimo`, `cantidad`, `precio`, `descripcion`, `fotografia`, `categoria`, `proveedor`, `fecha_ingreso`, `estado`, `id_usuario`) VALUES
 (1, 'la0001', 'lavadora', 'cetro', 'eco', 10, 5, 0, '350.00', 'lavadora blanca', 'product/1/producto.png', 'Cocinas', 1, '2021-01-06 17:27:39', 'Activo', 1),
-(2, 'ca0002', 'camarote', 'cetro', 'eco', 15, 3, 2, '400.00', 'color cafe', '', 'Muebles', 1, '2021-01-07 22:56:54', 'Activo', 1),
+(2, 'ca0002', 'camarote', 'cetro', 'eco', 15, 3, 0, '400.00', 'color cafe', '', 'Muebles', 1, '2021-01-19 22:20:23', 'Activo', 1),
 (3, 'la0003', 'lampara', 'economica', 'reciente', 6, 3, 0, '0.00', 'color negro y blanco', 'product/3/producto.png', 'Muebles', 2, '2021-01-14 21:16:31', 'Inactivo', 1),
 (4, 'Re0004', 'Revestidero y porta papeles', 'Sandisk', '4892', 30, 5, 0, '0.00', 'Decora los espacios de tu baño con este útil y práctico revistero y porta papel metálico, organiza tus revistas y coloca el papel higiénico para que se vea ordenado.', '', 'Hogar', 2, '2021-01-16 13:40:33', 'Activo', 1),
 (5, 'Re0005', 'Reloj de pared', 'Bulova', 'C3542', 30, 5, 0, '0.00', 'Caja de madera y acentos decorativos, acabado nogal vintage. Carátula metálica. Cristal decorativo. 3 melodías: Westminster, ave-maría o bim-bam cada hora. Westminster o campanada cada cuarto de hora.', '', 'Hogar', 2, '2021-01-16 13:44:59', 'Activo', 1),
@@ -471,7 +451,7 @@ INSERT INTO `producto` (`id_producto`, `codigo`, `nombre`, `marca`, `modelo`, `m
 (9, 'Me0009', 'Mesa comedor rectangular', 'Home Furniture', 'Rectangular', 30, 5, 10, '560.00', 'Mesa rectangular para comedor que transforma tu área de comedor en un lugar sofisticado y exclusivo hecha de vidrio, y completa tu juego con la cantidad de sillas que mas te convenga.', '', 'Muebles', 2, '2021-01-17 15:14:12', 'Activo', 1),
 (10, 'Co0010', 'Cocina eléctrica ', 'Whirlpool', '102858260', 30, 5, 10, '560.00', 'Este horno de convección eléctrico Whirlpool® con ventilador de convección le ayuda a llevar la cena a la mesa. Omita el precalentamiento para favoritos como la pizza con la tecnología Frozen Bake ™.', '', 'Cocinas', 2, '2021-01-17 15:09:36', 'Activo', 1),
 (11, 'Co0011', 'Cocina Samsung', 'Samsung', 'NX52T5311LS', 30, 5, 0, '0.00', 'Cocine de manera rápida y eficiente con un quemador Rapido, que permite una cocción más rápida y un control de temperatura fácilmente ajustable. Con solo girar un dial, ', '', 'Cocinas', 1, '2021-01-17 07:27:53', 'Activo', 1),
-(12, 'Co0012', 'Cocina a gas de mesa', 'Whirlpool', 'WP2420S', 30, 5, 10, '450.00', 'Cocina a gas de mesa 24 Whirlpool con rejillas de hierro fundido con bisagras.', '', 'Cocinas', 1, '2021-01-17 15:09:36', 'Activo', 1),
+(12, 'Co0012', 'Cocina a gas de mesa', 'Whirlpool', 'WP2420S', 30, 5, 9, '500.00', 'Cocina a gas de mesa 24 Whirlpool con rejillas de hierro fundido con bisagras.', '', 'Cocinas', 1, '2021-01-20 03:11:15', 'Activo', 1),
 (13, 'La0013', 'Lavadora carga superior', 'Whirlpool', '8MWTWLA31WJG', 30, 5, 0, '0.00', 'avadora Carga Superior con gran capacidad de 22 kg Whirlpool color Gun Metal con panel Shadow grey, cuenta con sistema de lavado Xpert System,', '', 'Lavadoras', 1, '2021-01-17 07:37:56', 'Activo', 1),
 (14, 'La0014', 'Lavadora carga frontal', 'Whirlpool', '7MWFW6621HC', 30, 5, 0, '0.00', 'LAVADORA GRIS 21 KG', '', 'Lavadoras', 1, '2021-01-17 07:40:26', 'Activo', 1),
 (15, 'La0015', 'Lavadora automática', ' General Electric', 'LGH72201WBAB0', 30, 5, 10, '760.00', 'Lavadora automática con capacidad de carga de 22 Kg; Gran capacidad: Ahorra tiempo lavando más en menos cargas. ', '', 'Lavadoras', 2, '2021-01-17 15:14:12', 'Activo', 1),
@@ -586,25 +566,6 @@ CREATE TABLE IF NOT EXISTS `venta_contado` (
   `id_usuario` int(11) NOT NULL,
   PRIMARY KEY (`id_venta_contado`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `venta_contado`
---
-
-INSERT INTO `venta_contado` (`id_venta_contado`, `tipo_comprobante`, `codigo`, `monto`, `cliente`, `fecha_ingreso`, `estado`, `id_usuario`) VALUES
-(1, 'Ticket', '000001', '385.00', 'marcos vega', '2021-01-08 02:24:46', 'Cancelado', 1),
-(2, 'Ticket', '000002', '920.00', '', '2021-01-08 12:10:14', 'Cancelado', 1),
-(3, 'Ticket', '000003', '385.00', '', '2021-01-08 12:15:41', 'Cancelado', 1),
-(4, 'Ticket', '000003', '385.00', '', '2021-01-08 12:15:41', 'Cancelado', 1),
-(5, 'Ticket', '000005', '460.00', '', '2021-01-08 12:19:45', 'Cancelado', 1),
-(6, 'Ticket', '000006', '460.00', 'samuel', '2021-01-08 13:28:29', 'Cancelado', 1),
-(7, 'Ticket', '000007', '385.00', 'maria vega', '2021-01-08 13:34:24', 'Cancelado', 1),
-(8, 'Ticket', '000007', '385.00', 'maria vega', '2021-01-08 13:34:24', 'Cancelado', 1),
-(9, 'Ticket', '000009', '460.00', '', '2021-01-08 14:26:33', 'Cancelado', 1),
-(10, 'Ticket', '000010', '460.00', '', '2021-01-08 22:32:49', 'Cancelado', 1),
-(11, 'Ticket', '000011', '460.00', '', '2021-01-08 22:52:09', 'Cancelado', 1),
-(12, 'Ticket', '000012', '920.00', '', '2021-01-09 01:08:40', 'Cancelado', 1),
-(13, 'Ticket', '000013', '460.00', '', '2021-01-09 01:17:34', 'Cancelado', 1);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

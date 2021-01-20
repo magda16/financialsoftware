@@ -12,7 +12,7 @@
     $result=$stmt->fetchAll(PDO::FETCH_ASSOC);  			     	
     foreach($result as $fila){
 
-        $num = str_pad($fila["id_factura"], 6, "0", STR_PAD_LEFT);
+        $num = str_pad($fila["id_factura"], 5, "0", STR_PAD_LEFT);
              
         $datos = array(
           0 => $num,

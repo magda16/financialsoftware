@@ -162,7 +162,7 @@ if($logueo=='si'){
         <!--/.col (left) -->
       </form>
 
-      <form id="form_venta" name="form_venta" action="../../report/venta/ticket.php" method="POST" target="_blank">
+      <form id="form_venta" name="form_venta" action="../../report/venta/comprobante.php" method="POST" target="_blank">
         <input type="hidden" name="bandera" id="bandera">
           
         <!-- right column -->
