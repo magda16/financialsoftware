@@ -198,7 +198,6 @@ if($logueo=='si'){
                     <option selected="selected" value="">Seleccione Tipo Comprobante...</option>
                     <option value="Ticket">Ticket</option>
                     <option value="Consumidor Final">Consumidor Final</option>
-                    <option value="Credito Fiscal">Crédito Fiscal</option>
                   </select>
                   <span class="help-block"></span>
                 </div>
@@ -362,7 +361,7 @@ if($logueo=='si'){
 <?php 
 
 }else{
-  header('location: index.php');
+  header('location: ../../index.php');
 }
 
 ?>

@@ -6,9 +6,9 @@ if($logueo=='si'){
   include ("../../build/controladores/conexion.php");
 
   if(isset($_POST['id'])){
-    $id_compra=$_POST['id'];
+    $id_venta_contado=$_POST['id'];
   }else{
-    header('location: compra_list.php');
+    header('location: venta_list.php');
   }
 ?>
 <!DOCTYPE html>
@@ -58,8 +58,8 @@ if($logueo=='si'){
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1><i class="fa fa-cart-plus"></i>
-        Compra
+      <h1><i class="fa fa-cart-arrow-down"></i>
+        Venta
         <small>Mantenimiento</small>
       </h1>
     </section>
@@ -71,10 +71,10 @@ if($logueo=='si'){
         <div class="col-xs-12">
           <div class="box box-info">
             <div class="box-header">
-              <button type="button" class="btn bg-blue" onclick="location.href='../../pages/compra/compra_list.php'">
+              <button type="button" class="btn bg-blue" onclick="location.href='../../pages/venta/venta_list.php'">
                 <span class="fa fa-arrow-circle-left">&nbsp;&nbsp;&nbsp;</span>Regresar
               </button>
-              <h3 class="box-title">&nbsp;&nbsp;&nbsp;Detalle de Compras</h3>
+              <h3 class="box-title">&nbsp;&nbsp;&nbsp;Detalle de Ventas</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -93,26 +93,26 @@ if($logueo=='si'){
                 <?php
                     $contador=1;
                                 
-                    $stmt1= $pdo->prepare("SELECT dc.cantidad, dc.precio, dc.id_producto, p.nombre, (dc.cantidad * dc.precio) AS subtotal FROM detalle_compra AS dc INNER JOIN producto AS p ON (dc.id_producto=p.id_producto) WHERE dc.id_compra=:id_compra");
-                    $stmt1->bindParam(":id_compra",$id_compra,PDO::PARAM_INT);
+                    $stmt1= $pdo->prepare("SELECT dv.cantidad, dv.precio, dv.id_producto, p.nombre, (dv.cantidad * dv.precio) AS subtotal FROM detalle_venta_contado AS dv INNER JOIN producto AS p ON (dv.id_producto=p.id_producto) WHERE dv.id_venta_contado=:id_venta_contado");
+                    $stmt1->bindParam(":id_venta_contado",$id_venta_contado,PDO::PARAM_INT);
                     $stmt1->execute();
                     $result=$stmt1->fetchAll(PDO::FETCH_ASSOC);
                     $total=0;
-                    foreach($result as $lista_detalle_compra){
+                    foreach($result as $lista_detalle_venta){
                       echo "<tr>";
                         echo "<td>" .$contador. "</td>";
-                        echo "<td>" . $lista_detalle_compra['nombre'] . "</td>";
-                        echo "<td>" . $lista_detalle_compra['cantidad'] . "</td>";
-                        echo "<td> $ " . $lista_detalle_compra[ 'precio'] ."</td>";
-                        echo "<td> $ " . $lista_detalle_compra[ 'subtotal'] ."</td>";
+                        echo "<td>" . $lista_detalle_venta['nombre'] . "</td>";
+                        echo "<td>" . $lista_detalle_venta['cantidad'] . "</td>";
+                        echo "<td> $ " . $lista_detalle_venta[ 'precio'] ."</td>";
+                        echo "<td> $ " . $lista_detalle_venta[ 'subtotal'] ."</td>";
                       echo "</tr>";
                       $contador++;
-                      $total= ($total + $lista_detalle_compra[ 'subtotal']);
+                      $total= ($total + $lista_detalle_venta[ 'subtotal']);
                     }
                 ?>
                 </tbody>
                 </tfoot>
-                <span class="label label-info fa fa-caret-right">&nbsp;&nbsp;<?php echo "TOTAL DETALLE DE COMPRA $".$total; ?> &nbsp;</span>
+                <span class="label label-info fa fa-caret-right">&nbsp;&nbsp;<?php echo "TOTAL DETALLE DE VENTA $".$total; ?> &nbsp;</span>
                 </br></br>
               </table>
               

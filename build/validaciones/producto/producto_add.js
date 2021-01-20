@@ -155,7 +155,7 @@ $("#btnguardar").click(function(){
           processData: false,
         })
         .done(function(resultado_ajax){
-            alert(resultado_ajax);
+         
           if(resultado_ajax === "Exito"){
             $("#btnguardar").attr("disabled",true);
             PNotify.success({

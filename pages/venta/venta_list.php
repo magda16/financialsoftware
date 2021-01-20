@@ -3,13 +3,6 @@ session_start();
 $logueo=$_SESSION['acceso'];
 if($logueo=='si'){
 
-  include ("../../build/controladores/conexion.php");
-
-  if(isset($_POST['id'])){
-    $id_compra=$_POST['id'];
-  }else{
-    header('location: compra_list.php');
-  }
 ?>
 <!DOCTYPE html>
 <html>
@@ -58,8 +51,8 @@ if($logueo=='si'){
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1><i class="fa fa-cart-plus"></i>
-        Compra
+      <h1><i class="fa fa-cart-arrow-down"></i>
+        Venta
         <small>Mantenimiento</small>
       </h1>
     </section>
@@ -71,50 +64,52 @@ if($logueo=='si'){
         <div class="col-xs-12">
           <div class="box box-info">
             <div class="box-header">
-              <button type="button" class="btn bg-blue" onclick="location.href='../../pages/compra/compra_list.php'">
-                <span class="fa fa-arrow-circle-left">&nbsp;&nbsp;&nbsp;</span>Regresar
-              </button>
-              <h3 class="box-title">&nbsp;&nbsp;&nbsp;Detalle de Compras</h3>
+              <h3 class="box-title">Lista de Ventas Realizadas</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-
+              
+            </br>
             <table id="example1" class="table table-bordered table-striped">
                 <thead>
                     <tr>
                       <th>#</th>
-                      <th>Producto</th>
-                      <th>Cantidad</th>
-                      <th>Precio</th>
-                      <th>Subtotal</th>
+                      <th>Fecha y Hora</th>
+                      <th>Tipo de Comprbante</th>
+                      <th>Monto</th>
+                      <th>Estado</th>
+                      <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                 <?php
+                    include ("../../build/controladores/conexion.php");
                     $contador=1;
                                 
-                    $stmt1= $pdo->prepare("SELECT dc.cantidad, dc.precio, dc.id_producto, p.nombre, (dc.cantidad * dc.precio) AS subtotal FROM detalle_compra AS dc INNER JOIN producto AS p ON (dc.id_producto=p.id_producto) WHERE dc.id_compra=:id_compra");
-                    $stmt1->bindParam(":id_compra",$id_compra,PDO::PARAM_INT);
+                    $stmt1= $pdo->prepare("SELECT id_venta_contado, tipo_comprobante, codigo, monto, cliente, DATE_FORMAT(fecha_ingreso, '%d/%m/%Y %h:%m %p') AS fecha, estado FROM venta_contado ORDER BY fecha_ingreso");
                     $stmt1->execute();
                     $result=$stmt1->fetchAll(PDO::FETCH_ASSOC);
-                    $total=0;
-                    foreach($result as $lista_detalle_compra){
-                      echo "<tr>";
-                        echo "<td>" .$contador. "</td>";
-                        echo "<td>" . $lista_detalle_compra['nombre'] . "</td>";
-                        echo "<td>" . $lista_detalle_compra['cantidad'] . "</td>";
-                        echo "<td> $ " . $lista_detalle_compra[ 'precio'] ."</td>";
-                        echo "<td> $ " . $lista_detalle_compra[ 'subtotal'] ."</td>";
-                      echo "</tr>";
-                      $contador++;
-                      $total= ($total + $lista_detalle_compra[ 'subtotal']);
+                    foreach($result as $lista_compra){
+                        echo "<tr>";
+                            echo "<td>" .$contador. "</td>";
+                            echo "<td>" . $lista_compra['fecha'] . "</td>";
+                            echo "<td>" . $lista_compra['tipo_comprobante'] . "</td>";
+                            echo "<td> $ " . $lista_compra[ 'monto'] ."</td>";
+                            echo "<td>" . $lista_compra[ 'estado'] ."</td>";
+                            echo "<td>";
+                            echo "<a class='btn bg-purple' onclick='detalle_venta_contado(".$lista_compra['id_venta_contado'].")' data-toggle='tooltip' data-placement='top' title='Detalle de Venta'><i class='fa fa-calendar-plus-o'></i>&nbsp;&nbsp;Detalle</a>";
+                            echo "</td>";
+                        echo "</tr>";
+                        $contador++;
                     }
                 ?>
-                </tbody>
+         
                 </tfoot>
-                <span class="label label-info fa fa-caret-right">&nbsp;&nbsp;<?php echo "TOTAL DETALLE DE COMPRA $".$total; ?> &nbsp;</span>
-                </br></br>
               </table>
+
+              <form id="from_detalle_venta" name="from_detalle_venta" action="detalle_venta_list.php" method="POST">
+                <input type="hidden" id="id" name="id">
+              </form>
               
             </div>
             <!-- /.box-body -->
@@ -141,17 +136,6 @@ if($logueo=='si'){
 </div>
 <!-- ./wrapper -->
 
-<script type="text/javascript">
-  $(document).ready(function(){
-    table=$('#example1').DataTable({
-      "language": {
-        "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
-      }
-    });
-
-  });
-</script>
-
 <!-- jQuery 3 -->
 <script src="../../bower_components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
@@ -170,13 +154,14 @@ if($logueo=='si'){
 <script src="../../plugins/PNotify/dist/iife/PNotifyMobile.js"></script>
 <!-- Validate -->
 <script src="../../plugins/validar/jquery.validate.js"></script>
-<script src="../../build/validaciones/proveedor/proveedor_list.js"></script>
+<script src="../../build/validaciones/venta/venta_list.js"></script>
 <!-- AdminLTE App -->
 <script src="../../dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../../dist/js/demo.js"></script>
 </body>
 </html>
+
 <?php 
 
 }else{

@@ -1,0 +1,13 @@
+$(document).ready(function(){
+  table=$('#example1').DataTable({
+      "language": {
+        "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+      },
+  });
+});
+
+function detalle_venta_contado(id){
+    $("#id").val(id);
+    $("#from_detalle_venta").submit();
+    
+}

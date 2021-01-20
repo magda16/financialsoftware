@@ -52,7 +52,6 @@ $("#btningresar").click(function(){
             data: {'usuario': usuario, 'clave': clave}
           })
           .done(function(resultado_ajax){
-              alert(resultado_ajax);
             if(resultado_ajax===""){
               $("#usuario").val("");
               $("#clave").val("");

@@ -71,7 +71,7 @@ $("#btnguardar").click(function(){
           data: $("#form_departamento").serialize()
         })
         .done(function(resultado_ajax){
-            alert(resultado_ajax);
+           // alert(resultado_ajax);
           if(resultado_ajax === "Exito"){
             $("#btnguardar").attr("disabled",true);
             PNotify.success({

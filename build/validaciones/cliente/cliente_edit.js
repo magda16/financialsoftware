@@ -217,7 +217,7 @@ $("#btneditar").click(function(){
         .done(function(resultado_ajax){
           //tipo=resultado_ajax;
           //resultado_ajax="Exito";
-              alert(resultado_ajax);
+             // alert(resultado_ajax);
           if(resultado_ajax === "Persona"){
             $("#btnguardar").attr("disabled",true);
             
