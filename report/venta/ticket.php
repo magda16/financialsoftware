@@ -487,29 +487,7 @@ $pdf = new PDF('P','mm',array(245,155));
 
 $pdf->SetFont('Arial','',14);
 
-$bandera=1;
-if($bandera==0){
-        $codigo = $_POST["correlativo"];
-        $cliente = $_POST["cliente"];
-        $tipo_comprobante = $_POST["tipo_comprobante"];
-        $productos = $_POST["productos"];
-        $total = $_POST["total"];
-        $efectivo = $_POST["efectivo"];
-        $cambio = $_POST["cambio"];
 
-        $array_producto = $_POST["product"];
-        $array_cantidad = $_POST["cantida"];
-        $array_precio_venta = $_POST["precio_vent"];
-        
-      //  include ("../../buid/controladores/conexion.php");
-
-        $stmt = $pdo->prepare("SELECT * FROM sucursal WHERE 1");
-        $stmt->execute();
-        $result= $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        foreach($result as $lista_sucursal){}
-       
-}else{
     //Esta parte solo es el es logan de la factura
     $titulo_1_factura='TITULO 1';
     $titulo_2_factura='TITULO 2';
@@ -545,7 +523,8 @@ if($bandera==0){
 
     //carnet o pasaporte
     $carnet_pasaporte='';
-    $can_fact=0;
+    $can_fact=count($array_producto)/10; 
+	
     //$can_fact=cantidad_facturas(count($array_producto),0);//es obligatorio por esta funcion extrae el numero de facturas
     $can=$can_fact;//para saber el numero de vuelta 1 representa a diez productos que sean mostrado en una factura
     $vueltas=ceil($can_fact);//el numero de vueltas es decir facturas cuantas son
@@ -566,7 +545,7 @@ if($bandera==0){
         
     }
     
-}
+
 
 $pdf->Output(); //mostrar el pdf
 
