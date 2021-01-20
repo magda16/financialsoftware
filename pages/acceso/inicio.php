@@ -60,8 +60,66 @@ if($logueo=='si'){
     <!-- Main content -->
     <section class="content">
       <div class="row">
- 
-       
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-aqua">
+            <div class="inner">
+              <h3>Registro</h3>
+
+              <p>Clientes</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-user-plus"></i>
+            </div>
+            <a href="../../pages/cliente/cliente_add.php" class="small-box-footer">Más Información <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-green">
+            <div class="inner">
+              <h3>Calcular</h3>
+
+              <p>Depreciación</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-calculator"></i>
+            </div>
+            <a href="../../pages/depreciacion/depreciacion_add.php" class="small-box-footer">Más Información <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-yellow">
+            <div class="inner">
+              <h3>Registro</h3>
+
+              <p>Compras</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-cart-plus"></i>
+            </div>
+            <a href="../../pages/compra/compra_add" class="small-box-footer">Más Información <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-red">
+            <div class="inner">
+              <h3>Registro</h3>
+
+              <p>Ventas</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-cart-arrow-down"></i>
+            </div>
+            <a href="../../pages/venta/venta_add.php" class="small-box-footer">Más Información <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
       </div>
       <!-- /.row -->
     </section>
