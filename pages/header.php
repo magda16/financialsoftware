@@ -17,48 +17,50 @@
 
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
-         
+        
           <!-- Notifications: style can be found in dropdown.less -->
           <li class="dropdown notifications-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-bell-o"></i>
-              <span class="label label-warning">10</span>
+              <?php
+              include ("../../build/controladores/conexion.php");
+                        
+              $stmt1= $pdo->prepare("SELECT COUNT(id_producto) AS contador FROM producto WHERE cantidad < stock_minimo");
+              $stmt1->execute();
+              $result=$stmt1->fetchAll(PDO::FETCH_ASSOC);
+              
+              foreach($result as $cont){ 
+              $contador_prod=$cont['contador'];
+              }
+            
+        ?>
+
+              <span class="label label-warning"><?php echo $contador_prod; ?></span>
             </a>
             <ul class="dropdown-menu">
-              <li class="header">You have 10 notifications</li>
+              <li class="header">Tienes <?php echo $contador_prod; ?> notificaciones</li>
               <li>
                 <!-- inner menu: contains the actual data -->
                 <ul class="menu">
+                  <?php      
+                  $stmt1= $pdo->prepare("SELECT nombre, cantidad, stock_minimo FROM producto WHERE cantidad < stock_minimo ORDER BY cantidad");
+                  $stmt1->execute();
+                  $result=$stmt1->fetchAll(PDO::FETCH_ASSOC);
+                  
+                  foreach($result as $lista_productos){  
+                   ?>
                   <li>
                     <a href="#">
-                      <i class="fa fa-users text-aqua"></i> 5 new members joined today
+                      <i class="fa fa-warning text-yellow"></i> <?php echo $lista_productos['nombre']."</br>Existencias: ".$lista_productos['cantidad'] ; ?>
                     </a>
                   </li>
-                  <li>
-                    <a href="#">
-                      <i class="fa fa-warning text-yellow"></i> Very long description here that may not fit into the
-                      page and may cause design problems
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i class="fa fa-users text-red"></i> 5 new members joined
-                    </a>
-                  </li>
-
-                  <li>
-                    <a href="#">
-                      <i class="fa fa-shopping-cart text-green"></i> 25 sales made
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i class="fa fa-user text-red"></i> You changed your username
-                    </a>
-                  </li>
+              <?php
+                $contador_prod++;
+                }
+              ?>
                 </ul>
               </li>
-              <li class="footer"><a href="#">View all</a></li>
+              <li class="footer"><a href="../../pages/compra/compra_add.php">Agregar Productos</a></li>
             </ul>
           </li>
          
